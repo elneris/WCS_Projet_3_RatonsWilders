@@ -115,5 +115,4 @@ class Media
 
         return $this;
     }
-
 }

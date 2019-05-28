@@ -32,9 +32,9 @@ class Activity
     private $skill;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="activities")
+     * @ORM\ManyToOne(targetEntity="Style", inversedBy="activities")
      */
-    private $status;
+    private $style;
 
     public function getId(): ?int
     {
@@ -77,14 +77,14 @@ class Activity
         return $this;
     }
 
-    public function getStatus(): ?Status
+    public function getStyle(): ?Style
     {
-        return $this->status;
+        return $this->style;
     }
 
-    public function setStatus(?Status $status): self
+    public function setStyle(?Style $style): self
     {
-        $this->status = $status;
+        $this->style = $style;
 
         return $this;
     }

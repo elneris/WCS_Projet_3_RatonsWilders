@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StatusRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\StyleRepository")
  */
-class Status
+class Style
 {
     /**
      * @ORM\Id()
@@ -24,7 +24,7 @@ class Status
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="style")
      */
     private $activities;
 
@@ -62,7 +62,7 @@ class Status
     {
         if (!$this->activities->contains($activity)) {
             $this->activities[] = $activity;
-            $activity->setStatus($this);
+            $activity->setStyle($this);
         }
 
         return $this;
@@ -73,8 +73,8 @@ class Status
         if ($this->activities->contains($activity)) {
             $this->activities->removeElement($activity);
             // set the owning side to null (unless already changed)
-            if ($activity->getStatus() === $this) {
-                $activity->setStatus(null);
+            if ($activity->getStyle() === $this) {
+                $activity->setStyle(null);
             }
         }
 

@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Status;
+use App\Entity\Style;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Status|null find($id, $lockMode = null, $lockVersion = null)
- * @method Status|null findOneBy(array $criteria, array $orderBy = null)
- * @method Status[]    findAll()
- * @method Status[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Style|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Style|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Style[]    findAll()
+ * @method Style[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StatusRepository extends ServiceEntityRepository
+class StyleRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Status::class);
+        parent::__construct($registry, Style::class);
     }
 
     // /**
-    //  * @return Status[] Returns an array of Status objects
+    //  * @return Style[] Returns an array of Style objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class StatusRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Status
+    public function findOneBySomeField($value): ?Style
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
