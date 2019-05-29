@@ -26,6 +26,4 @@ class AdminController extends AbstractController
     {
         return $this->render('Admin/search.html.twig');
     }
-
-
 }
