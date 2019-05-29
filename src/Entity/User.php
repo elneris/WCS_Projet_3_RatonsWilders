@@ -332,7 +332,7 @@ class User
         return $this;
     }
 
-    public function getLink(): ?Link
+    public function getLink(): ?Collection
     {
         return $this->link;
     }
@@ -344,7 +344,7 @@ class User
         return $this;
     }
 
-    public function getMedia(): ?Media
+    public function getMedia(): ?Collection
     {
         return $this->media;
     }
