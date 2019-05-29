@@ -31,7 +31,7 @@ class User
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $artist_name;
+    private $artistName;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -41,7 +41,7 @@ class User
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $phone_number;
+    private $phoneNumber;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -51,7 +51,7 @@ class User
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $poste_code;
+    private $posteCode;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -71,7 +71,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $geo_area;
+    private $geoArea;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -147,12 +147,12 @@ class User
 
     public function getArtistName(): ?string
     {
-        return $this->artist_name;
+        return $this->artistName;
     }
 
-    public function setArtistName(?string $artist_name): self
+    public function setArtistName(?string $artistName): self
     {
-        $this->artist_name = $artist_name;
+        $this->artistName = $artistName;
 
         return $this;
     }
@@ -171,12 +171,12 @@ class User
 
     public function getPhoneNumber(): ?int
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(?int $phone_number): self
+    public function setPhoneNumber(?int $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
@@ -195,12 +195,12 @@ class User
 
     public function getPosteCode(): ?int
     {
-        return $this->poste_code;
+        return $this->posteCode;
     }
 
-    public function setPosteCode(?int $poste_code): self
+    public function setPosteCode(?int $posteCode): self
     {
-        $this->poste_code = $poste_code;
+        $this->posteCode = $posteCode;
 
         return $this;
     }
@@ -243,12 +243,12 @@ class User
 
     public function getGeoArea(): ?string
     {
-        return $this->geo_area;
+        return $this->geoArea;
     }
 
-    public function setGeoArea(?string $geo_area): self
+    public function setGeoArea(?string $geoArea): self
     {
-        $this->geo_area = $geo_area;
+        $this->geoArea = $geoArea;
 
         return $this;
     }
