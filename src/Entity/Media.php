@@ -34,15 +34,14 @@ class Media
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="media")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="medias")
      */
-    private $users;
+    private $user;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -54,7 +53,7 @@ class Media
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -66,7 +65,7 @@ class Media
         return $this->url;
     }
 
-    public function setUrl(?string $url): self
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -78,40 +77,21 @@ class Media
         return $this->type;
     }
 
-    public function setType(?string $type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function addUser(User $user): self
+    public function setUser(?User $user): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setMedia($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getMedia() === $this) {
-                $user->setMedia(null);
-            }
-        }
+        $this->user = $user;
 
         return $this;
     }

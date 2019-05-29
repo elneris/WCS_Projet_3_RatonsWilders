@@ -91,7 +91,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $status;
+    //private $status;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="user")
@@ -99,21 +99,21 @@ class User
     private $activities;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Link", inversedBy="users")
+     * @ORM\OneToMany(targetEntity="App\Entity\Link", mappedBy="user")
      */
-    private $link;
+    private $links;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Media", inversedBy="users")
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="user")
      */
-    private $media;
+    private $medias;
 
 
     public function __construct()
     {
         $this->activities = new ArrayCollection();
-        $this->link = new ArrayCollection();
-        $this->media = new ArrayCollection();
+        $this->links = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -332,26 +332,66 @@ class User
         return $this;
     }
 
-    public function getLink(): ?Collection
+    /**
+     * @return Collection|Link[]
+     */
+    public function getLinks(): Collection
     {
-        return $this->link;
+        return $this->links;
     }
 
-    public function setLink(?Link $link): self
+
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedias(): Collection
     {
-        $this->link = $link;
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias[] = $media;
+            $media->setUser($this);
+        }
 
         return $this;
     }
 
-    public function getMedia(): ?Collection
+    public function removeMedia(Media $media): self
     {
-        return $this->media;
+        if ($this->medias->contains($media)) {
+            $this->medias->removeElement($media);
+            // set the owning side to null (unless already changed)
+            if ($media->getUser() === $this) {
+                $media->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
-    public function setMedia(?Media $media): self
+    public function addLink(Link $link): self
     {
-        $this->media = $media;
+        if (!$this->links->contains($link)) {
+            $this->links[] = $link;
+            $link->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLink(Link $link): self
+    {
+        if ($this->links->contains($link)) {
+            $this->links->removeElement($link);
+            // set the owning side to null (unless already changed)
+            if ($link->getUser() === $this) {
+                $link->setUser(null);
+            }
+        }
 
         return $this;
     }

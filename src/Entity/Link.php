@@ -29,15 +29,14 @@ class Link
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="link")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="links")
      */
-    private $users;
+    private $user;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -49,7 +48,7 @@ class Link
         return $this->url;
     }
 
-    public function setUrl(?string $url): self
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -61,40 +60,21 @@ class Link
         return $this->type;
     }
 
-    public function setType(?string $type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function addUser(User $user): self
+    public function setUser(?User $user): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setLink($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getLink() === $this) {
-                $user->setLink(null);
-            }
-        }
+        $this->user = $user;
 
         return $this;
     }
