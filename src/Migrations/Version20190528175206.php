@@ -39,7 +39,8 @@ final class Version20190528175206 extends AbstractMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()
+                ->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE activity DROP FOREIGN KEY FK_AC74095ABACD6074');
         $this->addSql('CREATE TABLE status (id INT AUTO_INCREMENT NOT NULL,
