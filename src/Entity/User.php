@@ -11,6 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+
+    public function __construct()
+    {
+        $this->activities = new ArrayCollection();
+        $this->links = new ArrayCollection();
+        $this->medias = new ArrayCollection();
+    }
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -109,13 +118,6 @@ class User
     private $medias;
 
 
-    public function __construct()
-    {
-        $this->activities = new ArrayCollection();
-        $this->links = new ArrayCollection();
-        $this->medias = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -126,7 +128,7 @@ class User
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
 
@@ -169,12 +171,12 @@ class User
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(?int $phoneNumber): self
+    public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 
@@ -289,18 +291,6 @@ class User
         return $this;
     }
 
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Activity[]
      */
@@ -340,7 +330,28 @@ class User
         return $this->links;
     }
 
+    public function addLink(Link $link): self
+    {
+        if (!$this->links->contains($link)) {
+            $this->links[] = $link;
+            $link->setUser($this);
+        }
 
+        return $this;
+    }
+
+    public function removeLink(Link $link): self
+    {
+        if ($this->links->contains($link)) {
+            $this->links->removeElement($link);
+            // set the owning side to null (unless already changed)
+            if ($link->getUser() === $this) {
+                $link->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * @return Collection|Media[]
@@ -367,29 +378,6 @@ class User
             // set the owning side to null (unless already changed)
             if ($media->getUser() === $this) {
                 $media->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function addLink(Link $link): self
-    {
-        if (!$this->links->contains($link)) {
-            $this->links[] = $link;
-            $link->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLink(Link $link): self
-    {
-        if ($this->links->contains($link)) {
-            $this->links->removeElement($link);
-            // set the owning side to null (unless already changed)
-            if ($link->getUser() === $this) {
-                $link->setUser(null);
             }
         }
 
