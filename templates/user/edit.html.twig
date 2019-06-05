@@ -5,18 +5,22 @@
 {% block body %}
     <h1>Editer mon profil</h1>
 
-    <div class="container-fluid">
+    <a class="container-fluid">
 
 
         <h2>Informations personnelles</h2>
 
-        <div class="col-sm-12 col-md-6 ">{{ form_row(form.firstname) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.lastname) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.artistName) }}</div>
+        <div class="row">
 
-        <div class="col-md-6 col-sm-12">{{ form_row(form.birthdate) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.password) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.password) }}</div>
+            <div class="col-lg-4">  {{ form_row(form.firstname) }} </div>
+            <div class="col-lg-4"> {{ form_row(form.lastname) }} </div>
+            <div class="col-lg-4"> {{ form_row(form.artistName) }}</div>
+
+        </div>
+
+        <div class="col-lg-4">{{ form_row(form.birthdate) }}</div>
+        <div class="col-lg-4">{{ form_row(form.password) }}</div>
+        <div class="col-lg-4">{{ form_row(form.password) }}</div>
 
         <h2>Coordonnées</h2>
 
@@ -26,12 +30,24 @@
         <div class="col-md-6 col-sm-12">{{ form_row(form.city) }}</div>
         <div class="col-md-6 col-sm-12">{{ form_row(form.posteCode) }}</div>
 
-        <h2>Informations professionnelles</h2>
+        <a href="{{ path('user_edit_activities', {'id': user.id}) }}"><h2>Editer mes activités</h2></a>
 
-        <div class="col-md-6 col-sm-12"><h1>Ajouter le champs domaine</h1></div>
         <div class="col-md-6 col-sm-12">{{ form_row(form.activities) }}</div>
+        <div class="col-md-6 col-sm-12">{{ form_row(form.activities) }}</div>
+
         <div class="col-md-6 col-sm-12">{{ form_row(form.geoArea) }}</div>
         <div class="col-md-6 col-sm-12">{{ form_row(form.price) }}</div>
+
+
+        <h2>Liens et médias</h2>
+
+        <div class="row">
+
+            <div class="col-lg-4">  {{ form_row(form.links) }} </div>
+            <div class="col-lg-4"> {{ form_row(form.lastname) }} </div>
+            <div class="col-lg-4"> {{ form_row(form.artistName) }}</div>
+
+        </div>
 
         <button class="btn btn-secondary">Valider</button>
 

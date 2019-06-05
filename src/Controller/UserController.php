@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\ActivityType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,6 +62,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function edit(Request $request, User $user): Response
     {
@@ -76,6 +81,31 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit_activities", name="user_edit_activities", methods={"GET","POST"})
+     * @param Request $request
+     * @param Activity $activity
+     * @return Response
+     */
+    public function editActivities(Request $request, Activity $activity): Response
+    {
+        $form = $this->createForm(ActivityType::class, $activity);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_index', [
+                'id' => $activity->getId(),
+            ]);
+        }
+
+        return $this->render('user/edit_activities.html.twig', [
+            'activity' => $activity,
             'form' => $form->createView(),
         ]);
     }

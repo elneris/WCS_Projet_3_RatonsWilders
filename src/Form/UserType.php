@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Domain;
+use App\Entity\Media;
+use App\Entity\Skill;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -80,13 +82,27 @@ class UserType extends AbstractType
                 'label'=>'Description'
             ])
 
-            ->add('role')
             ->add('activities', EntityType::class, [
 
                 'label' => 'Domaine',
                 'class' => Domain::class,
+                'choice_label' => 'name',
+            ])
+
+            ->add('activities', EntityType::class, [
+
+                'label' => 'Accessoire',
+                'class' => Skill::class,
                 'choice_label' => 'name'
-            ]);
+            ])
+
+
+            ->add('links', EntityType::class, [
+
+                'label' => 'Liens photos',
+                'class' => Media::class,
+                'choice_label' => 'url'
+    ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
