@@ -4,8 +4,9 @@
 
 {% block body %}
     <h1>Editer mon profil</h1>
+    {{ form_start(form) }}
 
-    <a class="container-fluid">
+    <div class="container-fluid">
 
 
         <h2>Informations personnelles</h2>
@@ -18,22 +19,27 @@
 
         </div>
 
-        <div class="col-lg-4">{{ form_row(form.birthdate) }}</div>
-        <div class="col-lg-4">{{ form_row(form.password) }}</div>
-        <div class="col-lg-4">{{ form_row(form.password) }}</div>
+        <div class="row">
 
+            <div class="col-lg-4">{{ form_row(form.password.first) }}</div>
+            <div class="col-lg-4">{{ form_row(form.password.second) }}</div>
+            <div class="col-lg-4">{{ form_row(form.birthdate) }}</div>
+
+
+        </div>
         <h2>Coordonnées</h2>
 
-        <div class="col-md-6 col-sm-12">{{ form_row(form.email) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.phoneNumber) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.address) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.city) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.posteCode) }}</div>
+        <div class="row">
+
+        <div class="col-md-4 col-sm-12">{{ form_row(form.email) }}</div>
+        <div class="col-md-4 col-sm-12">{{ form_row(form.phoneNumber) }}</div>
+        <div class="col-md-4 col-sm-12">{{ form_row(form.address) }}</div>
+        <div class="col-md-4 col-sm-12">{{ form_row(form.city) }}</div>
+        <div class="col-md-4 col-sm-12">{{ form_row(form.posteCode) }}</div>
+
+        </div>
 
         <a href="{{ path('user_edit_activities', {'id': user.id}) }}"><h2>Editer mes activités</h2></a>
-
-        <div class="col-md-6 col-sm-12">{{ form_row(form.activities) }}</div>
-        <div class="col-md-6 col-sm-12">{{ form_row(form.activities) }}</div>
 
         <div class="col-md-6 col-sm-12">{{ form_row(form.geoArea) }}</div>
         <div class="col-md-6 col-sm-12">{{ form_row(form.price) }}</div>
@@ -48,8 +54,9 @@
             <div class="col-lg-4"> {{ form_row(form.artistName) }}</div>
 
         </div>
+        {{ form_end(form) }}
+        <button class="btn btn-secondary">{{ button_label|default('Valider') }}</button>
 
-        <button class="btn btn-secondary">Valider</button>
 
 
         <a href="{{ path('user_index') }}">back to list</a>

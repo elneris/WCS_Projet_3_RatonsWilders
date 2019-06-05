@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>Editer mes activités</h1>
+    {{ form_start(form) }}
 
     <div class="container-fluid">
 
@@ -18,7 +19,10 @@
         <button class="btn btn-secondary">Valider</button>
 
 
+
         <a href="{{ path('user_index') }}">back to list</a>
 
     </div>
+    {{ form_end(form) }}
+
 {% endblock %}
