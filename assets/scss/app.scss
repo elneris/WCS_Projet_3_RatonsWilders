@@ -1,10 +1,13 @@
 @import "vars";
 @import "~bootstrap";
 
-body {
-    background-color: $secondary-color;
-}
+$bg-cards: #EFEFE1;
+$margin-cards: 30px;
 
-a {
-    color: $warm-color;
+.card{
+  background-color: $bg-cards;
+}
+.card-deck{
+  margin-left: $margin-cards;
+  margin-right: $margin-cards ;
 }
