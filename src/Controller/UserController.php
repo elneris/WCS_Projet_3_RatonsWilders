@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Media;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\ActivityType;
+use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,10 +82,12 @@ class UserController extends AbstractController
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
+     * @param Media $medias
      * @return Response
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, Media $medias): Response
     {
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -98,6 +102,7 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
+            'medias' => $medias,
             'form' => $form->createView(),
         ]);
     }

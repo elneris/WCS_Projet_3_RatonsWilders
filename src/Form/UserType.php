@@ -76,13 +76,13 @@ class UserType extends AbstractType
 
             ->add('geoArea', ChoiceType::class,[
                 'choices'  => [
-                    'Région Nord' => null,
-                    'Région Nord Ouest' => null,
-                    'Région Nord Est' => null,
-                    'Région Centre' => null,
-                    'Région Sud' => null,
-                    'Région Sud Ouest' => null,
-                    'Région Sud Est' => null,
+                    'Région Nord' => true,
+                    'Région Nord Ouest' => true,
+                    'Région Nord Est' => true,
+                    'Région Centre' => true,
+                    'Région Sud' => true,
+                    'Région Sud Ouest' => true,
+                    'Région Sud Est' => true,
 
 
                 ]])
@@ -95,14 +95,8 @@ class UserType extends AbstractType
 
             ->add('about',TextareaType::class,[
                 'label'=>'Description'
-            ])
-
-            ->add('links', EntityType::class, [
-
-                'label' => 'Liens photos',
-                'class' => Media::class,
-                'choice_label' => 'type'
             ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
