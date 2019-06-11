@@ -30,7 +30,6 @@
   text-align: center;
 }
 .profile, h4{
-
   font-size: 15px;
   color: white;
   line-height: 30px;
@@ -150,3 +149,15 @@
   text-align: center;
 }
 
+/* ==================================== Page administrateur - Card ======================================*/
+
+$bg-cards: #EFEFE1;
+$margin-cards: 30px;
+
+.card{
+  background-color: $bg-cards;
+}
+.card-deck{
+  margin-left: $margin-cards;
+  margin-right: $margin-cards ;
+}
