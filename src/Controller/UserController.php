@@ -82,27 +82,25 @@ class UserController extends AbstractController
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
-     * @param Media $medias
      * @return Response
      */
-    public function edit(Request $request, User $user, Media $medias): Response
+    public function edit(Request $request, User $user): Response
     {
 
         $form = $this->createForm(UserType::class, $user);
+        $form->remove('password');
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($user);
+            $this->getDoctrine()->getManager()->persist($user);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index', [
                 'id' => $user->getId(),
             ]);
-        }
 
+        }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'medias' => $medias,
             'form' => $form->createView(),
         ]);
     }

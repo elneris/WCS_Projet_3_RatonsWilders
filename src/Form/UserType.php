@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Link;
 use App\Entity\Media;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,6 +23,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -93,9 +98,21 @@ class UserType extends AbstractType
                 'label' => 'Tarif',
             ])
 
-            ->add('about',TextareaType::class,[
-                'label'=>'Description'
+            ->add('about',TextareaType::class, [
+
+                'label'=>'Description',
+            ])
+
+
+            ->add('links', EntityType::class, [
+
+                'label' => 'Liens',
+                'class' => Link::class,
+                'choice_label' => 'type',
+
             ]);
+
+
 
     }
 
