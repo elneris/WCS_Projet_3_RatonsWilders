@@ -1,78 +1,153 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}User{% endblock %}
-
-{% block body %}
-    <h1>User</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ user.lastname }}</td>
-            </tr>
-            <tr>
-                <th>ArtistName</th>
-                <td>{{ user.artistName }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>PhoneNumber</th>
-                <td>{{ user.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ user.city }}</td>
-            </tr>
-            <tr>
-                <th>PosteCode</th>
-                <td>{{ user.posteCode }}</td>
-            </tr>
-            <tr>
-                <th>Birthdate</th>
-                <td>{{ user.birthdate ? user.birthdate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ user.address }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>GeoArea</th>
-                <td>{{ user.geoArea }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ user.price }}</td>
-            </tr>
-            <tr>
-                <th>About</th>
-                <td>{{ user.about }}</td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td>{{ user.role }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('user/_delete_form.html.twig') }}
+{% block body%}
+<div class="class body-profile">
+    <div class=" container-top">
+        <p>
+            {% for userlink in user.links %}
+                <a href="{{ userlink.url }}" target=_blank>
+                    <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
+                </a>
+            {% endfor %}
+        </p>
+    </div>
+    <div class="container-middle">
+        <div class="profile">
+            {% if user.artistName | e %}
+                <p><img class="avatar" src="{{ asset('assets/img/download/'~ user.firstname ~'.png') }}" alt="card image"></p>
+            {% else %}
+                <p><img class="avatar" src="{{ asset('assets/img/download/avatar.jpg') }}" alt="card image"></p>
+            {% endif %}
+            <h2>{{ user.firstname | upper }} {{ user.lastname | upper  }}</h2>
+            <h2>{% for activity in user.activities %}{{ activity.Domain.Name | capitalize }} {% endfor %}</h2>
+            <h4 class="col-xl-6 col-md-8 text-align"> {{ user.about }} </h4>
+        </div>
+    </div>
+    <div class="container-bottom ">
+        <div class="row justify-content-center">
+            <div>
+                <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
+                    {{ user.email }}
+            </div>
+            <div>
+                {% if user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
+                    <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
+                    {{ user.phoneNumber }}
+                {% endif %}
+            </div>
+            <div>
+            {% for media in user.medias %}
+                {% if media.type == 'internet' %}
+                    <a class="lien" href="{{ media.url }}"  target=_blank>
+                     <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
+                    {{ media.url }}</a>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+<!-- Nav Media -->
+    <div class="profile-body">
+        <h2>Portfolio</h2>
+        <ul class="nav nav-pills pills-media mb-3 sm-5 " id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="link-media-p active" id="pills-photo-tab" data-toggle="pill" href="#pills-photo" role="tab"
+                   aria-selected="true">Photos</a>
+            </li>
+            <li class="nav-item">
+                <a class="link-media-v" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                   aria-controls="pills-profile" aria-selected="false">Videos</a>
+            </li>
+            <li class="nav-item">
+                <a class="link-media-m" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                   aria-controls="pills-contact" aria-selected="false">Musics</a>
+            </li>
+        </ul>
+<!-- Media | Photos -->
+        <div class="tab-content" id="pills-tabContent">
+            <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
+                {% for media in user.medias %}
+                    {% if media.type == 'Photo' %}
+                        <img class="media-img" src="{{ asset(  media.url ) }}" alt="{{ media.Name }}">
+                    {% endif %}
+                {% endfor %}
+            </div>
+<!-- Media | Videos -->
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                {% for media in user.medias %}
+                    {% if media.type == 'video' %}
+                <object class="media-img">
+                    <param name="movie" value="https://www.youtube.com/embed/KMvuZgLj_fI">
+                </object>
+                    {% endif %}
+                {% endfor %}
+            </div>
+<!-- Media | Musics -->
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                {% for media in user.medias %}
+                    {% if media.type == 'music' %}
+                        Lien vers votre music
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<!-- Informations utilisateur -->
+    <div class="profile-body justify-content-center">
+        <h2>Renseignement supplémentaire</h2>
+        <div class="col-12 row container-rs">
+            <div class="col-md-5 col-12 row rs-body">
+                <div class="rs-left">
+                    Nom de scène<br><br>
+                    Nom<br>
+                    Prénom<br><br>
+                    Adresse<br>
+                    Code Postal<br>
+                    Ville<br><br>
+                    Tél<br>
+                    E_mail<Br>
+                </div>
+                <div class="rs-rigth">
+                    {{ user.artistName }}<br><br>
+                    {{ user.firstname }}<br>
+                    {{ user.lastname }}<br><br>
+                    {{ user.address }}<br>
+                    {{ user.posteCode }}<br>
+                    {{ user.city }}<br><br>
+                    {{ user.phoneNumber }}<br>
+                    {{ user.email }}<br>
+                </div>
+            </div>
+                <div class="col-md-6 col-12 array-rs">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Métier(s)</th>
+                            <th scope="col">Accessoire(s)</th>
+                            <th scope="col">style(s): </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for activity in user.activities %}
+                                <tr>
+                                    <td>{% if activity.style.type is defined%}{{activity.domain.Name }} {% endif %}</td>
+                                    <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
+                                    <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <div class="col-10 rs-info-sup">
+                Zone géographique: {{ user.geoArea }} -
+                Nombre de perseonne: 5 -
+                Type de facturation: GUSO -
+                Prix: {{ user.price }}€ <Br>
+                Besoin téchnique: SONO DJ
+            </div>
+        </div>
+    </div>
+    <p class="copyright">Copyright@LesRatonsWilders</p>
+</div>
 {% endblock %}
+
