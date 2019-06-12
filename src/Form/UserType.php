@@ -30,48 +30,48 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname',TextType::class, [
+            ->add('firstname', TextType::class, [
 
                 'label' => 'Prénom'
             ])
 
-            ->add('lastname',TextType::class, [
+            ->add('lastname', TextType::class, [
 
                 'label' => 'Nom'
             ])
-            ->add('artistName',TextType::class,[
+            ->add('artistName', TextType::class, [
 
                 'label'=>"Nom d'artiste"
             ])
 
-            ->add('email',EmailType::class)
+            ->add('email', EmailType::class)
 
-            ->add('phoneNumber',TelType::class,[
+            ->add('phoneNumber', TelType::class, [
 
                 'label' => 'N° de téléphone'
             ])
 
-            ->add('city',CountryType::class,[
+            ->add('city', CountryType::class, [
 
                 'label'=>'Ville'
             ])
 
-            ->add('posteCode',NumberType::class, [
+            ->add('posteCode', NumberType::class, [
 
                 'label'=>'Code postal'
             ])
 
-            ->add('birthdate',BirthdayType::class,[
+            ->add('birthdate', BirthdayType::class, [
 
                 'label'=>'Date de naissance'
             ])
 
-            ->add('address',TextType::class,[
+            ->add('address', TextType::class, [
 
                 'label'=>'Adresse'
             ])
 
-            ->add('password',RepeatedType::class, [
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe'],
@@ -79,7 +79,7 @@ class UserType extends AbstractType
 
             ])
 
-            ->add('geoArea', ChoiceType::class,[
+            ->add('geoArea', ChoiceType::class, [
                 'choices'  => [
                     'Région Nord' => true,
                     'Région Nord Ouest' => true,
@@ -98,22 +98,11 @@ class UserType extends AbstractType
                 'label' => 'Tarif',
             ])
 
-            ->add('about',TextareaType::class, [
+            ->add('about', TextareaType::class, [
 
                 'label'=>'Description',
-            ])
-
-
-            ->add('links', EntityType::class, [
-
-                'label' => 'Liens',
-                'class' => Link::class,
-                'choice_label' => 'type',
 
             ]);
-
-
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Link;
 use App\Entity\Media;
 use App\Entity\User;
+use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
 use App\Repository\MediaRepository;
@@ -16,17 +18,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @property ObjectManager em
  * @property UserRepository repository
  * @Route("/user")
  */
 class UserController extends AbstractController
 {
-    public function __construct(UserRepository $repository, ObjectManager $em)
+    public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
-        $this->em = $em;
-
     }
 
     /**
@@ -97,7 +96,6 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index', [
                 'id' => $user->getId(),
             ]);
-
         }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
@@ -111,6 +109,7 @@ class UserController extends AbstractController
      * @param Activity $activity
      * @return Response
      */
+
     public function editActivities(Request $request, Activity $activity): Response
     {
         $form = $this->createForm(ActivityType::class, $activity);
@@ -127,6 +126,34 @@ class UserController extends AbstractController
 
         return $this->render('user/edit_activities.html.twig', [
             'activity' => $activity,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit_links", name="user_edit_links", methods={"GET","POST"})
+     * @param Request $request
+     * @param Link $links
+     * @return Response
+     */
+
+    public function editLinks(Request $request, Link $links, User $user): Response
+    {
+        $form = $this->createForm(LinkType::class, $links);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->persist($links);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_index', [
+                'id' => $links->getId(),
+            ]);
+        }
+
+        return $this->render('user/edit_links.html.twig', [
+            'links' => $links,
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
