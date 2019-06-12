@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+
     /**
      * @Route("/", name="user_index", methods={"GET"})
      * @param UserRepository $userRepository
@@ -102,7 +103,7 @@ class UserController extends AbstractController
      * @return Response
      */
 
-    public function editActivities(Request $request, Activity $activity): Response
+    public function editActivities(Request $request, Activity $activity, User $user): Response
     {
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
@@ -118,6 +119,7 @@ class UserController extends AbstractController
 
         return $this->render('user/edit_activities.html.twig', [
             'activity' => $activity,
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
