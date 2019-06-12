@@ -20,7 +20,7 @@
            <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Informations personnelles</a>
             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-infoperso" role="tab" aria-controls="nav-infoperso" aria-selected="false">Informations professionnelles</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Coordonnées</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Liens et médias</a>
+           <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Liens et médias</a> -->
         </div>
     </nav>
     <form method="post">
@@ -46,7 +46,6 @@
 
             <div class="tab-pane fade" id="nav-infoperso" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <p>Informations professionnelles</p>
-                <a href="#">frfrfrfrfrfrff</a>
 
                 <div class="row">
                     <div class="col-md-6">{{ form_row(form.geoArea) }}</div>
@@ -76,7 +75,7 @@
             </div>
             {{ form_rest(form) }}
 
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <!--    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 <h2>Liens et médias</h2>
 
                 <div class="container-fluid">
@@ -105,7 +104,7 @@
                     </div>
                 </div>
 
-                <a href="{{ path('user_edit_links', {'id': user.id}) }}">Aller à l'édition</a>
+                <a href="{{ path('user_edit_links', {'id': user.id}) }}">Aller à l'édition</a> -->
 
                 {% endblock %}
                 {% block javascripts  %}
