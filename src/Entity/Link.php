@@ -29,7 +29,7 @@ class Link
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="links")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="links")
      */
     private $user;
 

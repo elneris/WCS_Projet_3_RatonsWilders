@@ -1,5 +1,10 @@
 @import "vars";
 @import "~bootstrap";
+@import "_global";
+
+body {
+    background-color: $secondary-color;
+
 /* ==================================== Page profile ======================================*/
 .body-profile{
   background: #f9f9f9;
@@ -88,6 +93,7 @@
 {
   color: #607D8B;
   margin: 20px;
+
 }
 .link-media-p:hover,
 .link-media-v:hover,

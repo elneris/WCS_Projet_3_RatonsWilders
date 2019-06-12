@@ -17,7 +17,7 @@ class Activity
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="activities")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="activities")
      */
     private $user;
 

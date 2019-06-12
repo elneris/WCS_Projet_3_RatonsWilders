@@ -14,16 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/", name="")
+     * @Route("/", name="index")
      * @return Response A response instance
      */
     public function index(): Response
     {
-        $users = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findAll();
+        $arrayUser = $this->getDoctrine()
+            ->getRepository(User::class);
 
-        return $this->render('Admin/index.html.twig', ['users' => $users]);
+        $users = $arrayUser->findBy([], ['id' => 'DESC'], 5);
+
+        return $this->render('Admin/index.html.twig', [
+            'users' => $users
+        ]);
     }
 
     /**
