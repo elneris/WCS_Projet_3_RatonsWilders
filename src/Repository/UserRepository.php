@@ -19,12 +19,22 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function filterByDomain($result)
+    {
+
+        return $this->createQueryBuilder('user')
+            ->join('user.activities', 'activities')
+            ->where('activities.domain = :activitiesDomain')
+            ->setParameter("activitiesDomain", $result)
+            ->getQuery()
+            ->getResult();
+    }
+
 
     /**
      * @param string $value
      * @return User[] Returns an array of User objects
      */
-
     public function searchByNames(string $value = null)
     {
         return $this->createQueryBuilder('u')
