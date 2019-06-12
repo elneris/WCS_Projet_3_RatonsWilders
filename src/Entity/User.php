@@ -44,7 +44,7 @@ class User implements UserInterface
     private $artistName;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $email;
 
@@ -92,11 +92,6 @@ class User implements UserInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $about;
-
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $username;
 
     /**
      * @ORM\Column(type="json")
@@ -280,14 +275,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
+        return (string) $this->email;
     }
 
     /**

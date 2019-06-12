@@ -30,7 +30,6 @@ class UserFixtures extends Fixture
             $user->setFirstname('test');
             $user->setLastname($i);
             $user->setArtistName("test $i");
-            $user->setUsername("test $i");
             $user->setRoles(['ROLE_USER']);
 
 
@@ -44,7 +43,6 @@ class UserFixtures extends Fixture
         $admin->setFirstname('test');
         $admin->setLastname($i);
         $admin->setArtistName("testAdmin");
-        $admin->setUsername("testAdmin");
         $admin->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($admin);
