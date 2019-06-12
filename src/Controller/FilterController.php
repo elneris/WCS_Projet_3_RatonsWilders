@@ -26,7 +26,7 @@ class FilterController extends AbstractController
         }
 
         return $this->render('admin/filter.html.twig', [
-            'searchDomainForm' => $searchDomainForm->createView(),
+            'filterDomainForm' => $searchDomainForm->createView(),
             'users' => $users
             ]);
     }
