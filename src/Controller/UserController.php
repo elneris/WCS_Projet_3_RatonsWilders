@@ -9,25 +9,17 @@ use App\Entity\User;
 use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
-use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @property UserRepository repository
  * @Route("/user")
  */
 class UserController extends AbstractController
 {
-    public function __construct(UserRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
     /**
      * @Route("/", name="user_index", methods={"GET"})
      * @param UserRepository $userRepository
