@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer mes activités{% endblock %}
+
+{% block body %}
+    <h1>Editer mes activités</h1>
+    {{ form_start(form) }}
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-lg-4">  {{ form_row(form.domain) }} </div>
+            <div class="col-lg-4"> {{ form_row(form.skill) }} </div>
+            <div class="col-lg-4"> {{ form_row(form.style) }}</div>
+
+        </div>
+
+        <button class="btn btn-secondary">Valider</button>
+
+
+
+        <a href="{{ path('user_edit', {'id': user.id}) }}">Retour à l'édition</a>
+
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

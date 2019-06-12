@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer mes liens{% endblock %}
+
+{% block body %}
+    <h1>Editer mes liens</h1>
+
+    <div class="container-fluid">
+        <div class="row">
+            <table>
+                {% for link in user.links %}
+                    <tr id="row_{{ link.id }}">
+                        <td class="form">
+                        <form action="{{ path('user_edit_links', {'id':link.id}) }}" method="post">
+                            <input type="text" name="url" value="{{ link.url }}">
+                            <select name="type">
+                                <option>Facebook</option>
+                                <option>Site personnel</option>
+                                <option>Youtube</option>
+                            </select>
+                            <input type="submit" class="btn btn-secondary">
+                        </form>
+                        </td>
+                        <td>
+                            <button class="btn btn-secondary" onclick="editRow(this)">Edit</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+        <button class="btn btn-secondary">Valider</button>
+
+
+        <a href="{{ path('user_edit', {'id': user.id}) }}">Retour à l'édition</a>
+
+    </div>
+
+{% endblock %}
+{% block javascripts  %}
+ {{ parent() }}
+<script>
+    function editRow(btn) {
+        $(btn).parent().find('form').toggle();
+    }
+</script>
+{% endblock %}
