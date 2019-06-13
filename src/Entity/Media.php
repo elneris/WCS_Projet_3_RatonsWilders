@@ -34,7 +34,7 @@ class Media
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="medias")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="medias")
      */
     private $user;
 
