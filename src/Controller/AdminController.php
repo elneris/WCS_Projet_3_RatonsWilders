@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserSearchType;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,11 +37,11 @@ class AdminController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function search(Request $request): Response
+    public function search(Request $request, UserRepository $userRepository): Response
     {
         $form = $this->createForm(UserSearchType::class);
         $form->handleRequest($request);
-        $users = $this->getDoctrine()->getRepository(User::class)->searchByNames($form->getData()['searchField']);
+        $users = $userRepository->searchByNames($form->getData()['searchField']);
 
             return $this->render(
                 'Admin/search.html.twig',
