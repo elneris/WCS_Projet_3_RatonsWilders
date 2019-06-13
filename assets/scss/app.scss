@@ -1,9 +1,11 @@
 @import "vars";
 @import "~bootstrap";
+@import "form";
 @import "_global";
 
 body {
     background-color: $secondary-color;
+}
 
 /* ==================================== Page profile ======================================*/
 .body-profile{

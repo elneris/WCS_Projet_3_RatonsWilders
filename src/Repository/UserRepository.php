@@ -31,22 +31,22 @@ class UserRepository extends ServiceEntityRepository
     }
 
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $value
+     * @return User[] Returns an array of User objects
+     */
+    public function searchByNames(string $value = null)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('u.lastname LIKE :val')
+            ->orWhere('u.firstname LIKE :val')
+            ->orWhere('u.artistName LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
             ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?User
