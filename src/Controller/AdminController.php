@@ -35,6 +35,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/rechercher", name="search")
      * @param Request $request
+     * @param UserRepository $userRepository
      * @return Response
      */
     public function search(Request $request, UserRepository $userRepository): Response
