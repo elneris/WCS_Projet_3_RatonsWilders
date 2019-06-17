@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Inscription</h1>
+
+    <div class="container">
+        {{ form_start(registrationForm, { 'attr': {'class': 'form-group'}} ) }}
+            {{ form_row(registrationForm.email, { 'attr': {'class': 'form-control'}, 'name': 'Email'}) }}
+            {{ form_row(registrationForm.password)}}
+        <br>
+        <button class="btn btn-outline-secondary">Valider</button>
+        {{ form_end(registrationForm) }}
+    </div>
+
+{% endblock %}
