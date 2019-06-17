@@ -24,6 +24,7 @@
             <div class="card col-12 col-md-3">
                 <img src="{{ asset('build/images/Photos_CV_Xavier.png') }}"
                      class="card-img-top rounded-circle w-75 mx-auto mt-3" alt="{{ user.firstname }}">
+                <a href="{{ path ('user_show', {id : user.id }) }}">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ user.firstname }} {{ user.lastname }}</h5>
                     <p class="card-text text-center">
@@ -32,6 +33,7 @@
                         {% endfor %}</p>
                     <p class="card-text text-center">{{ user.about }}</p>
                 </div>
+                </a>
             </div>
         {% endfor %}
     </div>

@@ -20,19 +20,21 @@
             <th scope="col">Groupe</th>
             <th scope="col">E_mail</th>
             <th scope="col">Téléphone</th>
+            <th scope="col">Voir le profil</th>
 
         </tr>
         </thead>
         <tbody>
         {% for user in users %}
-        <tr>
-            <td>{{ user.lastname }}</td>
-            <td>{{ user.firstname }}</td>
-            <td>{{ user.artistName }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.phoneNumber }}</td>
+            <tr>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.artistName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phoneNumber }}</td>
+                <td><a href="{{ path ('user_show', {id : user.id }) }}"><i class="fas fa-chevron-circle-right"></i></a></td>
+            </tr>
 
-        </tr>
         {% endfor %}
         </tbody>
     </table>
