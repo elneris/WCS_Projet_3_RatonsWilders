@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Filtre Domain </h1>
+
+    {{ form(filterDomainForm) }}
+
+    <div class="card-deck">
+        {% for user in users %}
+            {% include 'inc/cardAdmin.html.twig' %}
+        {%  endfor %}
+    </div>
+{% endblock %}
