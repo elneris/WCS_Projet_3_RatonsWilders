@@ -50,12 +50,14 @@
             <div class="card col-12 col-md-3">
                 <img src="{{asset('build/images/Photos_CV_Xavier.png')}}" class="card-img-top rounded-circle w-75 mx-auto mt-3"  alt="{{ user.firstname }}">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{ user.firstname }} {{ user.lastname }}</h5>
+                    <h5 class="card-title text-center">{{ user.lastname | upper }} {{ user.firstname }}</h5>
+                    <p class="card-title text-center">{{ user.phoneNumber }}</p>
+                    <p class="card-title text-center">{{ user.email }}</p>
+                    <p class="card-title text-center">{{ user.price }}</p>
                     <p class="card-text text-center">
                         {% for activity in user.activities %}
                             {{ activity.domain.name }}
                         {% endfor %}</p>
-                    <p class="card-text text-center">{{ user.about }}</p>
                 </div>
             </div>
         {%  endfor %}
