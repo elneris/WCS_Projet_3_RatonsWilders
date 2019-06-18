@@ -27,7 +27,7 @@ class AdminController extends AbstractController
 
         $users = $arrayUser->findBy([], ['id' => 'DESC'], 5);
 
-        return $this->render('Admin/index.html.twig', [
+        return $this->render('admin/index.html.twig', [
             'users' => $users
         ]);
     }
@@ -35,6 +35,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/rechercher", name="search")
      * @param Request $request
+     * @param UserRepository $userRepository
      * @return Response
      */
     public function search(Request $request, UserRepository $userRepository): Response
@@ -44,7 +45,7 @@ class AdminController extends AbstractController
         $users = $userRepository->searchByNames($form->getData()['searchField']);
 
             return $this->render(
-                'Admin/search.html.twig',
+                'admin/search.html.twig',
                 [
                     'users'=> $users,
                     'form' => $form->createView()
