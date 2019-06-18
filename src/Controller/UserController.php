@@ -22,15 +22,12 @@ class UserController extends AbstractController
 {
 
     /**
-     * @Route("/{id}", name="user_index", methods={"GET"})
-     * @param User $user
+     * @Route("/", name="user_index", methods={"GET"})
      * @return Response
      */
-    public function index(User $user): Response
+    public function index(): Response
     {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
+        return $this->render('user/show.html.twig');
     }
 
     /**
@@ -56,15 +53,6 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/", name="user_show")
-     * @return Response
-     */
-    public function show(): Response
-    {
-        return $this->render('user/show.html.twig');
     }
 
     /**

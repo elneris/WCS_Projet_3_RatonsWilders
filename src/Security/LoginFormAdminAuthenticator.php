@@ -99,7 +99,7 @@ class LoginFormAdminAuthenticator extends AbstractFormLoginAuthenticator
         if (in_array('ROLE_ADMIN', $rolesTab, true)) {
             return new RedirectResponse($this->urlGenerator->generate('admin_index'));
         } else {
-            return new RedirectResponse($this->urlGenerator->generate('user_show'));
+            return new RedirectResponse($this->urlGenerator->generate('user_index'));
         }
     }
 
