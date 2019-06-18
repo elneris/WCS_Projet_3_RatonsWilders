@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {{ form_start(form, {'attr' : {'class' : 'search'}}) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.searchField) }}
+            </div>
+            <div class="col-4">
+                <button class="btn btn-secondary" type="submit" name="btnSearch">Rechercher</button>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+
+    <div class="card-deck">
+        {% for user in users %}
+            {% include 'inc/cardAdmin.html.twig' %}
+        {% endfor %}
+    </div>
+{% endblock %}
