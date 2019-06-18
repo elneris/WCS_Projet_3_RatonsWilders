@@ -112,7 +112,7 @@ class UserFixtures extends Fixture
         $admin->setPassword($this->passwordEncoder->encodePassword($admin, 'root'));
         $admin->setFirstname('raton');
         $admin->setLastname('admin');
-        $admin->setArtistName("raton Admin");
+        $admin->setArtistName("raton admin");
         $admin->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($admin);
