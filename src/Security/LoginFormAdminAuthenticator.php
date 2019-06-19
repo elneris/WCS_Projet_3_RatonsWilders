@@ -74,7 +74,6 @@ class LoginFormAdminAuthenticator extends AbstractFormLoginAuthenticator
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
-
         return $user;
     }
 
@@ -85,6 +84,7 @@ class LoginFormAdminAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
@@ -98,7 +98,7 @@ class LoginFormAdminAuthenticator extends AbstractFormLoginAuthenticator
 
         if (in_array('ROLE_ADMIN', $rolesTab, true)) {
             return new RedirectResponse($this->urlGenerator->generate('admin_index'));
-        } else {// TODO: mettre la BONNE redirection de l'user
+        } else {
             return new RedirectResponse($this->urlGenerator->generate('user_index'));
         }
     }
