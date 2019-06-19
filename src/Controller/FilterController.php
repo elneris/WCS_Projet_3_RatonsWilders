@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FilterController extends AbstractController
 {
     /**
-     * @Route("admin/filter", name="filter_by_domain")
+     * @Route("Admin/filter", name="filter_by_domain")
      **/
     public function filterByDomain(Request $request, UserRepository $userRepository)
     {
@@ -25,7 +25,7 @@ class FilterController extends AbstractController
             $users = $userRepository->filterByDomain($result['name']);
         }
 
-        return $this->render('admin/filter.html.twig', [
+        return $this->render('Admin/filter.html.twig', [
             'filterDomainForm' => $searchDomainForm->createView(),
             'users' => $users
             ]);

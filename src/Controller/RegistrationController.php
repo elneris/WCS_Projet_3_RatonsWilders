@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Media;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,6 +33,15 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+
+            $media = new Media();
+            $media->setName('MonAvatar');
+            $media->setUrl('assets/img/download/avatar.jpg');
+            $media->setType('avatar');
+            $media->setUser($user);
+
+            $entityManager->persist($media);
+
             $entityManager->flush();
 
             // do anything else you need here, like send an email
