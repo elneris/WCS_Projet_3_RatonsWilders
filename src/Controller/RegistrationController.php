@@ -36,7 +36,7 @@ class RegistrationController extends AbstractController
 
             $media = new Media();
             $media->setName('MonAvatar');
-            $media->setUrl('assets/img/download/avatar.jpg');
+            $media->setUrl('assets/img/avatar.jpg');
             $media->setType('avatar');
             $media->setUser($user);
 
