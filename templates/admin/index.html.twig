@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>Navbar</h1>
+    <h1>Barre de recherche</h1>
+    <h1>Filtres</h1>
+
+
+    <!-- Tableau des 5 derniers utilisateurs inscrits -->
+
+    <div class="container">
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Groupe</th>
+                <th scope="col">E_mail</th>
+                <th scope="col">Téléphone</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.artistName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phoneNumber }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Fin du tableau -->
+
+
+
+
+{% endblock %}
