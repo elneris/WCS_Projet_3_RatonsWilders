@@ -3,6 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
+    <div class="main-page bloc-admin">
     {{ form_start(form, {'attr' : {'class' : 'search'}}) }}
     <div class="container">
         <div class="row">
@@ -36,5 +37,6 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
     </div>
 {% endblock %}
