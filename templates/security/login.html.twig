@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block title %}User{% endblock %}
+{% block title %}Se connecter{% endblock %}
 {% block body%}
-    <body class="login-body">
+    <div class="login-body">
         <form method="post">
 
             <div class="login">
                 <div class="login-screen">
                     <div class="login-title">
-                        <img class="avatar" src="{{ asset('assets/img/upload/logo_lesratons.png') }}" alt="card image">
+                        <img class="avatar" src="{{ asset('assets/img/logo_lesratons.png') }}" alt="card image">
                     </div>
                     {% if error %}
                         <div class="text-center alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -31,5 +31,5 @@
                 </div>
             </div>
         </form>
-    </body>
+    </div>
 {% endblock %}
