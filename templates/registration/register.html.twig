@@ -3,15 +3,22 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">Inscription</h1>
+    <div class="register-body">
+        <div class="register-screen d-flex">
+            <div class="register-title">
+                <img class="avatar" src="{{ asset('assets/img/upload/logo_lesratons.png') }}" alt="card image">
+                <a class="login-link" href="{{ path('app_login') }}">Déjà inscrit? Se connecter</a>
 
-    <div class="container">
-        {{ form_start(registrationForm, { 'attr': {'class': 'form-group'}} ) }}
-            {{ form_row(registrationForm.email, { 'attr': {'class': 'form-control'}, 'name': 'Email'}) }}
-            {{ form_row(registrationForm.password)}}
-        <br>
-        <button class="btn btn-outline-secondary">Valider</button>
-        {{ form_end(registrationForm) }}
+            </div>
+            <div class="register-control-group">
+                {{ form_start(registrationForm, { 'attr': {'class': 'register-form-group'}} ) }}
+                {{ form_row(registrationForm.email, { 'attr': {'class': 'register-input'}}) }}
+                {{ form_row(registrationForm.password , {'attr': {'class': 'register-input'}})}}
+                <br>
+                <button class="register-btn btn-outline-secondary">Valider</button>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

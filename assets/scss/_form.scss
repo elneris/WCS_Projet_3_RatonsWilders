@@ -1,7 +1,13 @@
 form {
-  &.search{
+  &.search {
     label{
       display: none;
     }
   }
 }
+.register-control-group{
+    label {
+      display: none;
+  }
+}
+
