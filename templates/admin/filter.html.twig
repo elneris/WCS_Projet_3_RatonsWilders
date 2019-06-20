@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Filtre Domain </h1>
+    <div class="bloc-admin main-page">
 
     {{ form(filterDomainForm) }}
 
@@ -20,5 +20,6 @@
                 </div>
             </div>
         {%  endfor %}
+    </div>
     </div>
 {% endblock %}
