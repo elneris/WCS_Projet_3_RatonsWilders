@@ -16,11 +16,11 @@
     </div>
     <div class="container-middle">
         <div class="profile">
-            {% if app.user.artistName | e %}
-                <p><img class="avatar" src="{{ asset('assets/img/download/'~ app.user.firstname ~'.png') }}" alt="card image"></p>
-            {% else %}
-                <p><img class="avatar" src="{{ asset('assets/img/download/avatar.jpg') }}" alt="card image"></p>
-            {% endif %}
+            {% for usermedia in app.user.medias %}
+                {% if usermedia.type == 'avatar'%}
+                    <p><img class="avatar" src="{{ asset(usermedia.url) }}" alt="card image"></p>
+                {% endif %}
+            {% endfor %}
             <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
             <h2>{% for activity in app.user.activities %}{{ activity.Domain.Name | capitalize }} {% endfor %}</h2>
             <h4 class="col-xl-6 col-md-8 text-align"> {{ app.user.about }} </h4>
