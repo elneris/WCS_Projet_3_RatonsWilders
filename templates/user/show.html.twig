@@ -3,6 +3,7 @@
 {% block body%}
 
 
+
 <div class="class body-profile">
     <div class=" container-top">
        <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">EDITER</a> </button>
@@ -25,29 +26,30 @@
             <h2>{% for activity in app.user.activities %}{{ activity.Domain.Name | capitalize }} {% endfor %}</h2>
             <h4 class="col-xl-6 col-md-8 text-align"> {{ app.user.about }} </h4>
         </div>
-    </div>
-    <div class="container-bottom ">
-        <div class="row justify-content-center">
-            <div>
-                <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
-                    {{ app.user.email }}
-            </div>
-            <div>
-                {% if app.user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
-                    <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
-                    {{ app.user.phoneNumber }}
+        <div class="container-middle">
+            <div class="profile">
+                {% if app.user.artistName | e %}
+                    <p><img class="avatar" src="{{ asset('assets/img/download/'~ app.user.firstname ~'.png') }}" alt="card image"></p>
+                {% else %}
+                    <p><img class="avatar" src="{{ asset('assets/img/download/avatar.jpg') }}" alt="card image"></p>
                 {% endif %}
-            </div>
-            <div>
-            {% for media in app.user.medias %}
-                {% if media.type == 'internet' %}
-                    <a class="lien" href="{{ media.url }}"  target=_blank>
-                     <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
-                    {{ media.url }}</a>
-                {% endif %}
-            {% endfor %}
+                <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
+                <h2>{% for activity in app.user.activities %}{{ activity.Domain.Name | capitalize }} {% endfor %}</h2>
+                <h4 class="col-xl-6 col-md-8 text-align"> {{ app.user.about }} </h4>
             </div>
         </div>
+
+        <div class="container-bottom ">
+            <div class="row justify-content-center">
+                <div>
+                    <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
+                    {{ app.user.email }}
+                </div>
+                <div>
+                    {% if app.user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
+                        <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
+                        {{ app.user.phoneNumber }}
+
     </div>
 <!-- Nav Media -->
     <div class="profile-body">
@@ -91,35 +93,55 @@
                     {% if media.type == 'music' %}
                         Lien vers votre musique
                     {% endif %}
-                {% endfor %}
+                </div>
+                <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">EDITER</a> </button>
+                <div>
+                    {% for media in app.user.medias %}
+                        {% if media.type == 'internet' %}
+                            <a class="lien" href="{{ media.url }}"  target=_blank>
+                                <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
+                                {{ media.url }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
-<!-- Informations utilisateur -->
-    <div class="profile-body justify-content-center">
-        <h2>Renseignements supplémentaires</h2>
-        <div class="col-12 row container-rs">
-            <div class="col-md-5 col-12 row rs-body">
-                <div class="rs-left">
-                    Nom de scène<br><br>
-                    Nom<br>
-                    Prénom<br><br>
-                    Adresse<br>
-                    Code Postal<br>
-                    Ville<br><br>
-                    Tél<br>
-                    E_mail<Br>
                 </div>
-                <div class="rs-rigth">
-                    {{ app.user.firstname }}<br>
-                    {{ app.user.lastname }}<br><br>
-                    {{ app.user.address }}<br>
-                    {{ app.user.posteCode }}<br>
-                    {{ app.user.city }}<br><br>
-                    {{ app.user.phoneNumber }}<br>
-                    {{ app.user.email }}<br>
+                <!-- Media | Musics -->
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    {% for media in app.user.medias %}
+                        {% if media.type == 'music' %}
+                            Lien vers votre music
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
+        </div>
+        <!-- Informations utilisateur -->
+        <div class="profile-body justify-content-center">
+            <h2>Renseignement supplémentaire</h2>
+            <div class="col-12 row container-rs">
+                <div class="col-md-5 col-12 row rs-body">
+                    <div class="rs-left">
+                        Nom de scène<br><br>
+                        Nom<br>
+                        Prénom<br><br>
+                        Adresse<br>
+                        Code Postal<br>
+                        Ville<br><br>
+                        Tél<br>
+                        E_mail<Br>
+                    </div>
+                    <div class="rs-rigth">
+                        {{ app.user.firstname }}<br>
+                        {{ app.user.lastname }}<br><br>
+                        {{ app.user.address }}<br>
+                        {{ app.user.posteCode }}<br>
+                        {{ app.user.city }}<br><br>
+                        {{ app.user.phoneNumber }}<br>
+                        {{ app.user.email }}<br>
+                    </div>
+                </div>
                 <div class="col-md-6 col-12 array-rs">
                     <table class="table table-striped">
                         <thead>
@@ -130,13 +152,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                            {% for activity in app.user.activities %}
-                                <tr>
-                                    <td>{% if activity.style.type is defined%}{{activity.domain.Name }} {% endif %}</td>
-                                    <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
-                                    <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
-                                </tr>
-                            {% endfor %}
+                        {% for activity in app.user.activities %}
+                            <tr>
+                                <td>{% if activity.style.type is defined%}{{activity.domain.Name }} {% endif %}</td>
+                                <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
+                                <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -148,8 +170,7 @@
                 Besoin technique: SONO DJ
             </div>
         </div>
-    </div>
-    <p class="copyright">Copyright@LesRatonsWilders</p>
-</div>#}
+        <p class="copyright">Copyright@LesRatonsWilders</p>
+    </div>#}
 {% endblock %}
 
