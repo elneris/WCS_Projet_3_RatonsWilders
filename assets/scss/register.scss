@@ -1,4 +1,5 @@
 .register-screen {
+  display: flex;
   background-color: #FFF;
   padding-top: 35px;
   padding-bottom: 10px;
@@ -60,4 +61,23 @@
   padding-bottom: 10px;
   padding-right: 12px;
   padding-left: 12px;
+}
+
+@media (max-width: 640px) {
+
+  .register-screen {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    padding-top: 35px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    width: 300px;
+    margin: auto;
+  }
+  .register-body{
+    padding-top: 90px;
+
+  }
+
 }
