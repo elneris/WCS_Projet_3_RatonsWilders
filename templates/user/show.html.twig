@@ -89,7 +89,7 @@
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 {% for media in app.user.medias %}
                     {% if media.type == 'music' %}
-                        Lien vers votre music
+                        Lien vers votre musique
                     {% endif %}
                 {% endfor %}
             </div>
@@ -97,7 +97,7 @@
     </div>
 <!-- Informations utilisateur -->
     <div class="profile-body justify-content-center">
-        <h2>Renseignement supplémentaire</h2>
+        <h2>Renseignements supplémentaires</h2>
         <div class="col-12 row container-rs">
             <div class="col-md-5 col-12 row rs-body">
                 <div class="rs-left">
@@ -142,10 +142,10 @@
                 </div>
             <div class="col-10 rs-info-sup">
                 Zone géographique: {{ app.user.geoArea }} -
-                Nombre de perseonne: 5 -
+                Nombre de personnes: 5 -
                 Type de facturation: GUSO -
                 Prix: {{ app.user.price }}€ <Br>
-                Besoin téchnique: SONO DJ
+                Besoin technique: SONO DJ
             </div>
         </div>
     </div>
