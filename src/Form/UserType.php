@@ -32,23 +32,27 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
 
-                'label' => 'Prénom'
+                'label' => 'Prénom',
+                'required'=>false
             ])
 
             ->add('lastname', TextType::class, [
 
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'required'=>false
             ])
             ->add('artistName', TextType::class, [
 
-                'label'=>"Nom d'artiste"
+                'label'=>'Nom d\'artiste',
+                'required'=>false
             ])
 
             ->add('email', EmailType::class)
 
             ->add('phoneNumber', TelType::class, [
 
-                'label' => 'N° de téléphone'
+                'label' => 'N° de téléphone',
+                'required'=>false
             ])
 
             ->add('city', CountryType::class, [
@@ -58,17 +62,20 @@ class UserType extends AbstractType
 
             ->add('posteCode', NumberType::class, [
 
-                'label'=>'Code postal'
+                'label'=>'Code postal',
+                'required'=>false
             ])
 
             ->add('birthdate', BirthdayType::class, [
 
-                'label'=>'Date de naissance'
+                'label'=>'Date de naissance',
+                'required'=>false
             ])
 
             ->add('address', TextType::class, [
 
-                'label'=>'Adresse'
+                'label'=>'Adresse',
+                'required'=>false
             ])
 
             ->add('password', RepeatedType::class, [
@@ -81,6 +88,7 @@ class UserType extends AbstractType
 
             ->add('geoArea', ChoiceType::class, [
                 'choices'  => [
+                    '' => true,
                     'Région Nord' => true,
                     'Région Nord Ouest' => true,
                     'Région Nord Est' => true,
@@ -96,11 +104,13 @@ class UserType extends AbstractType
 
                 'divisor' => 100,
                 'label' => 'Tarif',
+                'required'=>false
             ])
 
             ->add('about', TextareaType::class, [
 
                 'label'=>'Description',
+                'required'=>false
 
             ]);
     }
