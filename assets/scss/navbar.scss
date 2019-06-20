@@ -9,7 +9,6 @@
   left: 0;
   background-color: #111;
   overflow-x: hidden;
-  padding-top: 20px;
 }
 
 .sidenav a {
@@ -28,6 +27,12 @@
   margin-left: 160px;
   font-size: 28px;
   padding: 0 10px;
+}
+
+.avatar_navbar{
+  width: 50%;
+  border-radius: 50px;
+  margin-top: -15px;
 }
 
 @media screen and (max-height: 450px) {
