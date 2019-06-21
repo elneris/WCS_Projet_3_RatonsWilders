@@ -120,6 +120,11 @@ class User implements UserInterface
      */
     private $medias;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enable = false;
+
 
     public function getId(): ?int
     {
@@ -420,6 +425,18 @@ class User implements UserInterface
                 $media->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEnable(): ?bool
+    {
+        return $this->enable;
+    }
+
+    public function setEnable(bool $enable): self
+    {
+        $this->enable = $enable;
 
         return $this;
     }
