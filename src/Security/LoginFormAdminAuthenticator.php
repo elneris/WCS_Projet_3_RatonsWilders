@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -98,8 +99,10 @@ class LoginFormAdminAuthenticator extends AbstractFormLoginAuthenticator
 
         if (in_array('ROLE_ADMIN', $rolesTab, true)) {
             return new RedirectResponse($this->urlGenerator->generate('admin_index'));
-        } else {
+        } elseif ($token->getUser()->getEnable()) {
             return new RedirectResponse($this->urlGenerator->generate('user_index'));
+        } else {
+            throw new HttpException(404, 'veuillez valider votre compte');
         }
     }
 
