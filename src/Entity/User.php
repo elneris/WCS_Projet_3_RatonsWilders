@@ -120,6 +120,15 @@ class User implements UserInterface
      */
     private $medias;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetPassword;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $resetCreatedAt;
 
     public function getId(): ?int
     {
@@ -422,5 +431,34 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getResetPassword(): ?string
+    {
+        return $this->resetPassword;
+    }
+
+    public function setResetPassword(string $resetPassword): self
+    {
+        $this->resetPassword = $resetPassword;
+
+        return $this;
+    }
+
+    public function getResetCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->resetCreatedAt;
+    }
+
+    public function setResetCreatedAt(\DateTimeInterface $resetCreatedAt): self
+    {
+        $this->resetCreatedAt = $resetCreatedAt;
+        return $this;
+    }
+
+    public function expiredReset()
+    {
+        $interval = new \DateInterval('PT1M');
+        return $this->resetCreatedAt->add($interval) >= new \DateTime();
     }
 }
