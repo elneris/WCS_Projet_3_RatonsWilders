@@ -6,7 +6,7 @@ namespace App\Services;
 use App\Entity\Token;
 use App\Entity\User;
 
-class TokenSend
+class TokenManager
 {
     private $mailer;
 
@@ -18,7 +18,7 @@ class TokenSend
         $this->twig = $twig;
     }
 
-    public function sendToken(User $user, Token $token)
+    public function send(User $user, Token $token)
     {
         $message = (new \Swift_Message('Validez votre inscription'))
             ->setFrom('ratonsguincheur@admin.com')

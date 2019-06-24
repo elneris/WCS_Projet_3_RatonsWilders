@@ -6,7 +6,7 @@ use App\Entity\Media;
 use App\Entity\Token;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Services\TokenSend;
+use App\Services\TokenManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +19,11 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, TokenSend $tokenSend)
-    {
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        TokenManager $tokenManager
+    ) {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -51,7 +54,7 @@ class RegistrationController extends AbstractController
 
             $entityManager->flush();
 
-            $tokenSend->sendToken($user, $token);
+            $tokenManager->send($user, $token);
 
             $this->addFlash(
                 'success',
