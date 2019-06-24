@@ -6,6 +6,7 @@
     <div class="class body-profile">
         <div class=" container-top">
             <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">EDITER</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">CHANGER MDP</a> </button>
             <p>
                 {% for userlink in app.user.links %}
                     <a href="{{ userlink.url }}" target=_blank>

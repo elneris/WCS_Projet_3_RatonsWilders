@@ -6,6 +6,7 @@ use App\Entity\Activity;
 use App\Entity\Link;
 use App\Entity\Media;
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
@@ -145,7 +147,28 @@ class UserController extends AbstractController
     public function show(User $user): Response
     {
         return $this->render('admin/show.html.twig', [
-            'user' => $user,
+            'user' => $user]);
+    }
+
+    /**
+     * @Route("/change-password", methods={"GET", "POST"}, name="user_change_password")
+     */
+    public function changePassword(Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($encoder->encodePassword($user, $form->get('newPassword')->getData()));
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Mot de passe bien modifier'
+            );
+            return $this->redirectToRoute('user_index');
+        }
+        return $this->render('user/change_password.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }
