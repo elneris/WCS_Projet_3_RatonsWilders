@@ -1,0 +1,32 @@
+$bg-cards: #d6d6d621;
+$font-color: rgb(255,255,255);
+.card {
+  background-color: $bg-cards;
+  border-radius: 0;
+  margin-bottom: 10%;
+  color: $font-color;
+}
+
+hr {
+  margin-bottom: 0;
+  background-color: #5b5b5b;
+}
+
+.card-body{
+  padding: 0;
+}
+
+.activities{
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+
+  li{
+    list-style-type: none;
+    background: lightgrey;
+    padding: 6px;
+    border-radius: 10px;
+    color: black;
+
+  }
+}

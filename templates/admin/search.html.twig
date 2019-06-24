@@ -4,39 +4,19 @@
 
 {% block body %}
     <div class="main-page bloc-admin">
-    {{ form_start(form, {'attr' : {'class' : 'search'}}) }}
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                {{ form_row(form.searchField) }}
-            </div>
-            <div class="col-4">
-                <button class="btn btn-secondary" type="submit" name="btnSearch">Rechercher</button>
-            </div>
-        </div>
-    </div>
-    {{ form_end(form) }}
-
-
-    <div class="card-deck">
-
-        {% for user in users %}
-
-            <div class="card col-12 col-md-3">
-                <img src="{{ asset('build/images/Photos_CV_Xavier.png') }}"
-                     class="card-img-top rounded-circle w-75 mx-auto mt-3" alt="{{ user.firstname }}">
-                <div class="card-body">
-                    <h5 class="card-title text-center">{{ user.lastname | upper }} {{ user.firstname }}</h5>
-                    <p class="card-title text-center">{{ user.phoneNumber }}</p>
-                    <p class="card-title text-center">{{ user.email }}</p>
-                    <p class="card-title text-center">{{ user.price }}</p>
-                    <p class="card-text text-center">
-                        {% for activity in user.activities %}
-                            {{ activity.domain.name }}
-                        {% endfor %}</p>
+        {{ form_start(form, {'attr' : {'class' : 'search'}}) }}
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.searchField) }}
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-secondary" type="submit" name="btnSearch">Rechercher</button>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+        {{ form_end(form) }}
+        {% include 'inc/cardAdmin.html.twig' %}
     </div>
-    </div>
+
 {% endblock %}
