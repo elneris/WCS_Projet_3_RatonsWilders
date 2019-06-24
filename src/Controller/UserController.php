@@ -86,18 +86,27 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit_activities", name="user_edit_activities", methods={"GET","POST"})
      * @param Request $request
-     * @param Activity $activity
      * @return Response
      */
 
-    public function editActivities(Request $request, Activity $activity, User $user): Response
+    public function addActivities(Request $request): Response
     {
+        $activity = new Activity();
+        $user = $this->getUser();
+
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $activity = $form->getData();
+            $activity->setUser($user);
             $this->getDoctrine()->getManager()->persist($activity);
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'success',
+                'Activité bien ajouter'
+            );
 
             return $this->redirectToRoute('user_index', [
                 'id' => $activity->getId(),
@@ -159,5 +168,23 @@ class UserController extends AbstractController
         return $this->render('user/change_password.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/delete-activity/{id}", name="delete_activity")
+     */
+    public function deleteActivity(Activity $activity, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
+            $this->getDoctrine()->getManager()->remove($activity);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'success',
+                'Vous avez bien supprimé cette activité'
+            );
+        }
+
+        return $this->redirectToRoute('user_index');
     }
 }
