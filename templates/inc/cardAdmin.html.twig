@@ -6,23 +6,27 @@
 
                 <div class="card">
                     <a href="{{ path('user_show', { 'id': user.id }) }}">
-                    <div class="card-body text-center">
-                        <img src="{{ asset('build/images/Photos_CV_Xavier.png') }}"
-                             class="card-img-top rounded-circle w-75 mx-auto mt-3" alt="{{ user.firstname }}">
-                        <h5 class="card-title text-center pt-2">{{ user.lastname | upper }} {{ user.firstname }}</h5>
-                        <hr>
-                        <div class="card-text text-center">{{ user.price }} € GUSO ou Facture </div>
+                        <div class="card-body text-center">
+                            <img src="{{ asset('build/images/Photos_CV_Xavier.png') }}"
+                                 class="card-img-top rounded-circle w-75 mx-auto mt-3" alt="{{ user.firstname }}">
+                            <h5 class="card-title text-center pt-2">{{ user.lastname | upper }} {{ user.firstname }}</h5>
+                            <hr>
+                            <div class="card-text text-center">{{ user.price }} € GUSO ou Facture </div>
 
-                        <p class="card-text text-center">{{ user.email }}</p>
-                        <div class="card-text text-center">
-                            <ul class="activities">
-                                {% for activity in user.activities %}
-                                    <li>{{ activity.domain.name }}</li>
-                                    <li>{{ activity.style.type }}</li>
-                                {% endfor %}
-                            </ul>
+                            <p class="card-text text-center">{{ user.email }}</p>
+                            <div class="card-text text-center">
+                                <ul class="activities">
+                                    {% for activity in user.activities %}
+                                     <li>{{ activity.domain.name }}</li>
+                                            <li>{{ activity.style.type }}</li>
+
+
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         {% endfor %}
