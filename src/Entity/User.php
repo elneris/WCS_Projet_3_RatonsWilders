@@ -458,7 +458,7 @@ class User implements UserInterface
 
     public function expiredReset()
     {
-        $interval = new \DateInterval('PT1M');
+        $interval = new \DateInterval('PT24H');
         return $this->resetCreatedAt->add($interval) >= new \DateTime();
     }
 }
