@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\FilterDomainType;
+use App\Form\Filter;
 use App\Form\UserSearchType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,20 +36,29 @@ class AdminController extends AbstractController
     /**
      * @Route("/filter", name="filter")
      **/
-    public function filterByDomain(Request $request, UserRepository $userRepository)
+    public function filter(Request $request, UserRepository $userRepository)
     {
-        $searchDomainForm = $this->createForm(FilterDomainType::class);
+        $filter = $this->createForm(Filter::class);
         $users = [];
 
-        $form = $searchDomainForm->handleRequest($request);
-        if ($form->isSubmitted() && $searchDomainForm->isValid()
+        $form = $filter->handleRequest($request);
+
+        if ($form->isSubmitted() && $filter->isValid()
         ) {
-            $result = $searchDomainForm->getData();
-            $users = $userRepository->filterByDomain($result['name']);
+            $result = $filter->getData();
+            if ($result['style'] && $result['skill']) {
+                $users = $userRepository->filter($result);
+            } elseif ($result['style']) {
+                $users = $userRepository->filterByStyle($result);
+            } elseif ($result['skill']) {
+                $users = $userRepository->filterBySkill($result);
+            } else {
+                $users = $userRepository->filterOnlyByDomain($result);
+            }
         }
 
         return $this->render('admin/filter.html.twig', [
-            'filterDomainForm' => $searchDomainForm->createView(),
+            'filterDomainForm' => $filter->createView(),
             'users' => $users
         ]);
     }

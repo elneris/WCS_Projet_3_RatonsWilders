@@ -19,13 +19,50 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function filterByDomain($result)
+    public function filter($result)
     {
-
         return $this->createQueryBuilder('user')
             ->join('user.activities', 'activities')
             ->where('activities.domain = :activitiesDomain')
-            ->setParameter("activitiesDomain", $result)
+            ->andWhere('activities.style = :activitiesStyle')
+            ->andWhere('activities.skill = :activitiesSkill')
+            ->setParameter("activitiesDomain", $result['metier'])
+            ->setParameter("activitiesStyle", $result['style'])
+            ->setParameter("activitiesSkill", $result['skill'])
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function filterOnlyByDomain($result)
+    {
+        return $this->createQueryBuilder('user')
+            ->join('user.activities', 'activities')
+            ->where('activities.domain = :activitiesDomain')
+            ->setParameter("activitiesDomain", $result['metier'])
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function filterByStyle($result)
+    {
+        return $this->createQueryBuilder('user')
+            ->join('user.activities', 'activities')
+            ->where('activities.domain = :activitiesDomain')
+            ->andWhere('activities.style = :activitiesStyle')
+            ->setParameter("activitiesDomain", $result['metier'])
+            ->setParameter("activitiesStyle", $result['style'])
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function filterBySkill($result)
+    {
+        return $this->createQueryBuilder('user')
+            ->join('user.activities', 'activities')
+            ->where('activities.domain = :activitiesDomain')
+            ->andWhere('activities.skill = :activitiesSkill')
+            ->setParameter("activitiesDomain", $result['metier'])
+            ->setParameter("activitiesSkill", $result['skill'])
             ->getQuery()
             ->getResult();
     }
