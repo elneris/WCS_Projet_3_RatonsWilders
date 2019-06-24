@@ -76,7 +76,7 @@ class RegistrationController extends AbstractController
 
         if ($user->getEnable()) {
             $this->addFlash(
-                'notice',
+                'danger',
                 "Ce token est déjà validé !"
             );
 
@@ -86,6 +86,11 @@ class RegistrationController extends AbstractController
         if ($token->isValid()) {
             $user->setEnable(true);
             $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Votre inscription a bien été validé, vous pouvez vous connecter !"
+            );
 
             return $this->redirectToRoute('app_login');
         }
