@@ -4,8 +4,12 @@ $font-color: rgb(255,255,255);
   background-color: $bg-cards;
   border-radius: 0;
   margin-bottom: 10%;
-  color: $font-color;
+  a{
+    text-decoration: none;
+    color: $font-color;
+   }
 }
+
 
 hr {
   margin-bottom: 0;
