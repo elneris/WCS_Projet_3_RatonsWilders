@@ -127,15 +127,23 @@
                         <tr>
                             <th scope="col">Métier(s)</th>
                             <th scope="col">Accessoire(s)</th>
-                            <th scope="col">style(s): </th>
+                            <th scope="col">Style(s): </th>
+                            <th scope="col">Supprimer: </th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for activity in app.user.activities %}
                             <tr>
-                                <td>{% if activity.style.type is defined%}{{activity.domain.Name }} {% endif %}</td>
+                                <td>{{activity.domain.Name }}</td>
                                 <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
                                 <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
+                                <td>
+                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}" onsubmit="return confirm('Êtes vous sure de le supprimer ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
+                                        <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
