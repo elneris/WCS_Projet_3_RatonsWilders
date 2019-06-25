@@ -24,10 +24,8 @@ class AdminController extends AbstractController
      */
     public function index(): Response
     {
-        $arrayUser = $this->getDoctrine()
-            ->getRepository(User::class);
-
-        $users = $arrayUser->findBy([], ['id' => 'DESC'], 5);
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $users = $repo->findLastTenUsers();
 
         return $this->render('admin/index.html.twig', [
             'users' => $users
