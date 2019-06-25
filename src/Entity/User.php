@@ -123,12 +123,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $resetPassword;
+    private $resetToken;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $resetCreatedAt;
+    private $sentToken;
 
     public function getId(): ?int
     {
@@ -433,32 +433,32 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getResetPassword(): ?string
+    public function getResetToken(): ?string
     {
-        return $this->resetPassword;
+        return $this->resetToken;
     }
 
-    public function setResetPassword(string $resetPassword): self
+    public function setResetToken(string $resetToken): self
     {
-        $this->resetPassword = $resetPassword;
+        $this->resetToken = $resetToken;
 
         return $this;
     }
 
-    public function getResetCreatedAt(): ?\DateTimeInterface
+    public function getSentToken(): ?\DateTimeInterface
     {
-        return $this->resetCreatedAt;
+        return $this->sentToken;
     }
 
-    public function setResetCreatedAt(\DateTimeInterface $resetCreatedAt): self
+    public function setSentToken(\DateTimeInterface $sentToken): self
     {
-        $this->resetCreatedAt = $resetCreatedAt;
+        $this->sentToken = $sentToken;
         return $this;
     }
 
     public function expiredReset()
     {
         $interval = new \DateInterval('PT24H');
-        return $this->resetCreatedAt->add($interval) >= new \DateTime();
+        return $this->sentToken->add($interval) >= new \DateTime();
     }
 }

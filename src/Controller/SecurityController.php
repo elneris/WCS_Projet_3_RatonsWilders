@@ -43,8 +43,8 @@ class SecurityController extends AbstractController
                 ->findOneBy(['email' => $form->getData()['email']]);
             if ($user !== null) {
                 $token = uniqid('mdp', true);
-                $user->setResetPassword($token);
-                $user->setResetCreatedAt(new \DateTime('now'));
+                $user->setResetToken($token);
+                $user->setSentToken(new \DateTime('now'));
                 $entityManager->persist($user);
                 $entityManager->flush();
 
@@ -87,7 +87,7 @@ class SecurityController extends AbstractController
         UserPasswordEncoderInterface $encoder
     ) {
         if ($token !== null) {
-            $user = $entityManager->getRepository(User::class)->findOneBy(['resetPassword' => $token]);
+            $user = $entityManager->getRepository(User::class)->findOneBy(['resetToken' => $token]);
 
             if ($user->expiredReset() == false) {
                 $this->addFlash(
@@ -104,7 +104,7 @@ class SecurityController extends AbstractController
                     $password = $form->getData()->getPassword();
                     $encoded = $encoder->encodePassword($user, $password);
                     $user->setPassword($encoded);
-                    $user->setResetPassword('');
+                    $user->setResetToken('');
                     $entityManager->persist($user);
                     $entityManager->flush();
 
