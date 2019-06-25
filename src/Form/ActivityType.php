@@ -29,6 +29,9 @@ class ActivityType extends AbstractType
                 'label' => 'Accessoire',
                 'class' => Skill::class,
                 'choice_label' => 'name',
+                'required' => false,
+                'empty_data' => '',
+                'placeholder' => 'Aucun accessoire correspondant'
 
             ])
 
@@ -37,6 +40,9 @@ class ActivityType extends AbstractType
                 'label' => 'Style',
                 'class' => Style::class,
                 'choice_label' => 'type',
+                'required' => false,
+                'empty_data' => '',
+                'placeholder' => 'Aucun style correspondant'
 
             ])
         ;

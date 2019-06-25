@@ -3,40 +3,40 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<div class="main-page bloc-admin">
+    <div class="main-page bloc-admin">
 
-    <!-- Tableau des 5 derniers utilisateurs inscrits -->
+        <!-- Tableau des 5 derniers utilisateurs inscrits -->
 
-    <div class="container">
-        <table class="table table-sm">
-            <thead>
-            <tr>
-                <th scope="col">Prénom</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Groupe</th>
-                <th scope="col">E_mail</th>
-                <th scope="col">Téléphone</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
+        <div class="container">
+            <h1 class="text-center board-title">Les derniers inscrits</h1>
+            <table class="table table-responsive-lg table-striped">
+                <thead>
                 <tr>
-                    <td>{{ user.lastname }}</td>
-                    <td>{{ user.firstname }}</td>
-                    <td>{{ user.artistName }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.phoneNumber }}</td>
-
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Groupe</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Voir</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.artistName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phoneNumber }}</td>
+                        <td><a href="{{ path('admin_user_show', {id : user.id}) }}"><i class="far fa-eye"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Fin du tableau -->
+
     </div>
-
-    <!-- Fin du tableau -->
-
-
-</div>
 
 {% endblock %}

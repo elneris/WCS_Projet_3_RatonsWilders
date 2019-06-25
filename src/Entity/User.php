@@ -125,6 +125,14 @@ class User implements UserInterface
      */
     private $enable = false;
 
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $sentToken;
 
     public function getId(): ?int
     {
@@ -439,5 +447,34 @@ class User implements UserInterface
         $this->enable = $enable;
 
         return $this;
+    }
+  
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    public function getSentToken(): ?\DateTimeInterface
+    {
+        return $this->sentToken;
+    }
+
+    public function setSentToken(\DateTimeInterface $sentToken): self
+    {
+        $this->sentToken = $sentToken;
+        return $this;
+    }
+
+    public function expiredReset()
+    {
+        $interval = new \DateInterval('PT24H');
+        return $this->sentToken->add($interval) >= new \DateTime();
     }
 }
