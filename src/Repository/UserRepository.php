@@ -19,6 +19,16 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findLastTenUsers()
+    {
+        return $this->createQueryBuilder('u')
+                    ->where('u.roles LIKE :role')
+                    ->setParameter('role', '%"'.'ROLE_USER'.'"%')
+                    ->orderBy('u.id', 'DESC')
+                    ->setMaxResults(10)
+                    ->getQuery()->getResult();
+    }
+
     public function filter($result)
     {
         return $this->createQueryBuilder('user')
