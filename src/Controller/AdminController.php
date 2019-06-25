@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\Filter;
+use App\Form\FilterType;
 use App\Form\UserSearchType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +38,7 @@ class AdminController extends AbstractController
      **/
     public function filter(Request $request, UserRepository $userRepository)
     {
-        $filter = $this->createForm(Filter::class);
+        $filter = $this->createForm(FilterType::class);
         $users = [];
 
         $form = $filter->handleRequest($request);
