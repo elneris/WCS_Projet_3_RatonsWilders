@@ -57,10 +57,19 @@ class MediaController extends AbstractController
                 $em->persist($media);
                 $em->flush();
 
+                $this->addFlash(
+                    'success',
+                    'Avatar bien enregistré'
+                );
+
                 // ... persist the $media variable or any other work
                 //return $this->redirect($this->generateUrl('user_index'));
             } else {
-                $this->redirect($this->generateUrl('app_login'));
+                $this->addFlash(
+                    'danger',
+                    'Erreur lors de l\'upload'
+                );
+                $this->redirect($this->generateUrl('avatar_new'));
             }
         }
         return $this->render('media/image.html.twig', [
@@ -108,10 +117,19 @@ class MediaController extends AbstractController
                 $em->persist($media);
                 $em->flush();
 
+                $this->addFlash(
+                    'success',
+                    'Image bien enregistré'
+                );
+
                 // ... persist the $media variable or any other work
                 //return $this->redirect($this->generateUrl('user_index'));
             } else {
-                $this->redirect($this->generateUrl('app_login'));
+                $this->addFlash(
+                    'danger',
+                    'Erreur lors de l\'upload'
+                );
+                $this->redirect($this->generateUrl('image_new'));
             }
         }
         return $this->render('media/image.html.twig', [
@@ -144,10 +162,19 @@ class MediaController extends AbstractController
                 $em->persist($media);
                 $em->flush();
 
+                $this->addFlash(
+                    'success',
+                    'Lien bien enregistré'
+                );
+
                 // ... persist the $media variable or any other work
                 //return $this->redirect($this->generateUrl('user_index'));
             } else {
-                $this->redirect($this->generateUrl('app_login'));
+                $this->addFlash(
+                    'danger',
+                    'Erreur lors de l\'upload'
+                );
+                $this->redirect($this->generateUrl('video_new'));
             }
         }
         return $this->render('media/link.html.twig', [
@@ -180,10 +207,19 @@ class MediaController extends AbstractController
                 $em->persist($media);
                 $em->flush();
 
+                $this->addFlash(
+                    'success',
+                    'Lien bien enregistré'
+                );
+
                 // ... persist the $media variable or any other work
                 //return $this->redirect($this->generateUrl('user_index'));
             } else {
-                $this->redirect($this->generateUrl('app_login'));
+                $this->addFlash(
+                    'danger',
+                    'Erreur lors de l\'upload'
+                );
+                $this->redirect($this->generateUrl('musique_new'));
             }
         }
         return $this->render('media/link.html.twig', [
