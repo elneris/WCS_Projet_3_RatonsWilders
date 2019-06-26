@@ -121,6 +121,11 @@ class User implements UserInterface
     private $medias;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enable = false;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resetToken;
@@ -433,6 +438,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getEnable(): ?bool
+    {
+        return $this->enable;
+    }
+
+    public function setEnable(bool $enable): self
+    {
+        $this->enable = $enable;
+
+        return $this;
+    }
+  
     public function getResetToken(): ?string
     {
         return $this->resetToken;

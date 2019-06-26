@@ -24,9 +24,7 @@ class AdminController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-
         $users = $userRepository->findLastTenUsers();
-
 
         return $this->render('admin/index.html.twig', [
             'users' => $users
