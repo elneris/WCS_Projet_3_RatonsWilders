@@ -21,12 +21,10 @@ class AdminController extends AbstractController
      * @Route("/", name="index")
      * @return Response A response instance
      */
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
-        $arrayUser = $this->getDoctrine()
-            ->getRepository(User::class);
 
-        $users = $arrayUser->findBy([], ['id' => 'DESC'], 5);
+        $users = $userRepository->findLastTenUsers();
 
         return $this->render('admin/index.html.twig', [
             'users' => $users
