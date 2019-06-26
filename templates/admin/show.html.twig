@@ -4,7 +4,6 @@
 <div class="main-page">
 <div class="class body-profile">
     <div class=" container-top">
-       <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': user.id}) }}">EDITER</a> </button>
         <p>
             {% for userlink in user.links %}
                 <a href="{{ userlink.url }}" target=_blank>
