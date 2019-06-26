@@ -19,17 +19,36 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function filterByDomain($result)
+    public function findLastTenUsers()
     {
-
-        return $this->createQueryBuilder('user')
-            ->join('user.activities', 'activities')
-            ->where('activities.domain = :activitiesDomain')
-            ->setParameter("activitiesDomain", $result)
-            ->getQuery()
-            ->getResult();
+        return $this->createQueryBuilder('u')
+                    ->where('u.roles LIKE :role')
+                    ->setParameter('role', '%"'.'ROLE_USER'.'"%')
+                    ->orderBy('u.id', 'DESC')
+                    ->setMaxResults(10)
+                    ->getQuery()->getResult();
     }
 
+    public function myFilter($filters)
+    {
+        $qb = $this->createQueryBuilder('user')
+                    ->join('user.activities', 'activities')
+                    ->where('activities.domain = :activitiesDomain')
+        ;
+
+        if ($filters['skill']) {
+            $qb->andWhere('activities.skill = :activitiesSkill')
+               ->setParameter("activitiesSkill", $filters['skill']);
+        }
+
+        if ($filters['style']) {
+            $qb->andWhere('activities.style = :activitiesStyle')
+                ->setParameter("activitiesStyle", $filters['style']);
+        }
+
+        return $qb->setParameter("activitiesDomain", $filters['metier'])
+                  ->getQuery()->getResult();
+    }
 
     /**
      * @param string $value
@@ -46,17 +65,4 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
