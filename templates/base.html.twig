@@ -21,19 +21,18 @@
     {% include 'navbar.html.twig' %}
 {% endif %}
 
-
-<div class="row">
-    <div class="col-6 offset-3">
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}">
-                    {{ message }}
-                </div>
+    <div class="row">
+        <div class="col-6 offset-3">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        </div>
     </div>
-</div>
-
+    
     {% block body %}{% endblock %}
 
 {% block javascripts %}
