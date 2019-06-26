@@ -14,7 +14,7 @@ class LinkMediaType extends AbstractType
         $builder
             // ...
             ->add('type', TextType::class, [
-                'label' => 'Poster un lien',
+                'label' => 'Postez un lien',
             ]);
     }
 

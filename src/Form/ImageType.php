@@ -14,7 +14,7 @@ class ImageType extends AbstractType
         $builder
             // ...
             ->add('type', FileType::class, [
-                'label' => 'Choisissez votre Avatar',
+                'label' => 'Choisissez une image',
             ]);
     }
 
