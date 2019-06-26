@@ -3,7 +3,7 @@
         {% for user in users %}
             <div class="col-xs-12 col-sm-6 col-md-3">
                 <div class="card">
-                    <a href="{{ path('user_show', { 'id': user.id }) }}">
+                    <a href="{{ path('admin_user_show', { 'id': user.id }) }}">
                         <div class="card-body text-center">
                             <img src="{{ asset('build/images/Photos_CV_Xavier.png') }}"
                                  class="card-img-top rounded-circle w-75 mx-auto mt-3" alt="{{ user.firstname }}">
