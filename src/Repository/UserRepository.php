@@ -29,17 +29,26 @@ class UserRepository extends ServiceEntityRepository
                     ->getQuery()->getResult();
     }
 
-    public function filterByDomain($result)
+    public function myFilter($filters)
     {
+        $qb = $this->createQueryBuilder('user')
+                    ->join('user.activities', 'activities')
+                    ->where('activities.domain = :activitiesDomain')
+        ;
 
-        return $this->createQueryBuilder('user')
-            ->join('user.activities', 'activities')
-            ->where('activities.domain = :activitiesDomain')
-            ->setParameter("activitiesDomain", $result)
-            ->getQuery()
-            ->getResult();
+        if ($filters['skill']) {
+            $qb->andWhere('activities.skill = :activitiesSkill')
+               ->setParameter("activitiesSkill", $filters['skill']);
+        }
+
+        if ($filters['style']) {
+            $qb->andWhere('activities.style = :activitiesStyle')
+                ->setParameter("activitiesStyle", $filters['style']);
+        }
+
+        return $qb->setParameter("activitiesDomain", $filters['metier'])
+                  ->getQuery()->getResult();
     }
-
 
     /**
      * @param string $value
@@ -56,17 +65,4 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
