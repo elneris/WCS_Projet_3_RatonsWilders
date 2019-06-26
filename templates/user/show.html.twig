@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block title %}User{% endblock %}
+{% block title %} {{ app.user.firstname }} {{ app.user.lastname }}{% endblock %}
 {% block body%}
-
-
     <div class="class body-profile">
         <div class=" container-top">
             <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">EDITER</a> </button>
@@ -23,8 +21,10 @@
                     {% endif %}
                 {% endfor %}
                 <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
-                <h2>{% for activity in app.user.activities %}{{ activity.Domain.Name | capitalize }} {% endfor %}</h2>
-                <h4 class="col-xl-6 col-md-8 text-align"> {{ app.user.about }} </h4>
+                <h2>{% for activity in app.user.activities %}
+                        {{ activity.Domain.Name | capitalize }}
+                    {% endfor %}</h2>
+                <h4 class="col-xl-6 col-md-8 text-center m-auto"> {{ app.user.about }} </h4>
             </div>
         </div>
         <div class="container-bottom ">
@@ -64,7 +64,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="link-media-m" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-                       aria-controls="pills-contact" aria-selected="false">Musics</a>
+                       aria-controls="pills-contact" aria-selected="false">Musiques</a>
                 </li>
             </ul>
             <!-- Media | Photos -->
@@ -102,23 +102,31 @@
             <div class="col-12 row container-rs">
                 <div class="col-md-5 col-12 row rs-body">
                     <div class="rs-left">
-                        Nom de scène<br><br>
-                        Nom<br>
-                        Prénom<br><br>
-                        Adresse<br>
-                        Code Postal<br>
-                        Ville<br><br>
-                        Tél<br>
-                        E_mail<Br>
+                        <ul>
+                            <li>Nom de scène :</li>
+                            <li>Nom :</li>
+                            <li>Prénom :</li>
+                            <li>Adresse :</li><br>
+                            <li>Code Postal :</li>
+                            <li>Ville :</li>
+                            <li>Téléphone :</li>
+                            <li>Email :</li>
+                            <li>Zone d'activité :</li>
+                            <li>Tarif :</li>
+                            <li>Besoin technique :</li>
+                        </ul>
                     </div>
                     <div class="rs-rigth">
+                        {{ app.user.artistname }}<br>
+                        {{ app.user.lastname }}<br>
                         {{ app.user.firstname }}<br>
-                        {{ app.user.lastname }}<br><br>
                         {{ app.user.address }}<br>
                         {{ app.user.posteCode }}<br>
-                        {{ app.user.city }}<br><br>
+                        {{ app.user.city }}<br>
                         {{ app.user.phoneNumber }}<br>
                         {{ app.user.email }}<br>
+                        {{ app.user.geoArea }}<br>
+                        {{ app.user.price }} € - GUSO ? FACTURE ?<br>
                     </div>
                 </div>
                 <div class="col-md-6 col-12 array-rs">
@@ -148,13 +156,6 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                </div>
-                <div class="col-10 rs-info-sup">
-                    Zone géographique: {{ app.user.geoArea }} -
-                    Nombre de personnes: 5 -
-                    Type de facturation: GUSO -
-                    Prix: {{ app.user.price }}€ <Br>
-                    Besoin technique: SONO DJ
                 </div>
             </div>
         </div>

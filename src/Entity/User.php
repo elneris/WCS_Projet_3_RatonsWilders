@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -32,16 +33,28 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      max = 25,
+     *      maxMessage = "le champ prénom ne peut pas contenir plus de de {{ limit }} caractères"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "le champ nom ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "le champ nom d'artiste ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $artistName;
 
@@ -92,7 +105,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "La description ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
+
     private $about;
 
     /**
