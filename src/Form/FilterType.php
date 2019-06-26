@@ -32,7 +32,6 @@ class FilterType extends AbstractType
                     'choice_label' => 'type',
                     'label' => 'Style',
                     'required' => false,
-                    'empty_data' => '',
                     'placeholder' => 'Tous'
                 ]
             )
@@ -44,7 +43,6 @@ class FilterType extends AbstractType
                     'choice_label' => 'name',
                     'label' => 'Skill',
                     'required' => false,
-                    'empty_data' => '',
                     'placeholder' => 'Tous'
                 ]
             )
