@@ -14,5 +14,9 @@ const $ = require('jquery');
 
 import 'bootstrap';
 
+$('#image_type').on('change',function(){
+    var fileName = $(this).val();
+    $(this).next('.custom-file-label').html(fileName);
+})
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+console.log('popopop Webpack Encore! Edit me in assets/js/app.js');
