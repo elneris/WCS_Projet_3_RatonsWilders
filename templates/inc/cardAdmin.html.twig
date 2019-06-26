@@ -15,7 +15,7 @@
                                 <ul class="activities">
                                     {% for activity in user.activities %}
                                         <li>{{ activity.domain.name }}</li>
-                                        <li>{{ activity.style.type }}</li>
+                                        {%  if activity.style %}<li>{{ activity.style.type }}</li>{% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>
