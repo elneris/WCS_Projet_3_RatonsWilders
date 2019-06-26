@@ -29,6 +29,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles(["ROLE_USER"]);
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -41,9 +42,6 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($token);
-
-
-
             $media = new Media();
             $media->setName('MonAvatar');
             $media->setUrl('assets/img/avatar.jpg');
