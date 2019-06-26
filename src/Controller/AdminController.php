@@ -41,18 +41,8 @@ class AdminController extends AbstractController
 
         $form = $filter->handleRequest($request);
 
-        if ($form->isSubmitted() && $filter->isValid()
-        ) {
-            $result = $filter->getData();
-            if ($result['style'] && $result['skill']) {
-                $users = $userRepository->filter($result);
-            } elseif ($result['style']) {
-                $users = $userRepository->filterByStyle($result);
-            } elseif ($result['skill']) {
-                $users = $userRepository->filterBySkill($result);
-            } else {
-                $users = $userRepository->filterOnlyByDomain($result);
-            }
+        if ($form->isSubmitted() && $filter->isValid()) {
+            $users = $userRepository->myFilter($filter->getData());
         }
 
         return $this->render('admin/filter.html.twig', [

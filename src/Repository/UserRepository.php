@@ -29,54 +29,26 @@ class UserRepository extends ServiceEntityRepository
                     ->getQuery()->getResult();
     }
 
-    public function filter($result)
+    public function myFilter($filters)
     {
-        return $this->createQueryBuilder('user')
-            ->join('user.activities', 'activities')
-            ->where('activities.domain = :activitiesDomain')
-            ->andWhere('activities.style = :activitiesStyle')
-            ->andWhere('activities.skill = :activitiesSkill')
-            ->setParameter("activitiesDomain", $result['metier'])
-            ->setParameter("activitiesStyle", $result['style'])
-            ->setParameter("activitiesSkill", $result['skill'])
-            ->getQuery()
-            ->getResult();
-    }
+        $qb = $this->createQueryBuilder('user')
+                    ->join('user.activities', 'activities')
+                    ->where('activities.domain = :activitiesDomain')
+        ;
 
-    public function filterOnlyByDomain($result)
-    {
-        return $this->createQueryBuilder('user')
-            ->join('user.activities', 'activities')
-            ->where('activities.domain = :activitiesDomain')
-            ->setParameter("activitiesDomain", $result['metier'])
-            ->getQuery()
-            ->getResult();
-    }
+        if ($filters['skill']) {
+            $qb->andWhere('activities.skill = :activitiesSkill')
+               ->setParameter("activitiesSkill", $filters['skill']);
+        }
 
-    public function filterByStyle($result)
-    {
-        return $this->createQueryBuilder('user')
-            ->join('user.activities', 'activities')
-            ->where('activities.domain = :activitiesDomain')
-            ->andWhere('activities.style = :activitiesStyle')
-            ->setParameter("activitiesDomain", $result['metier'])
-            ->setParameter("activitiesStyle", $result['style'])
-            ->getQuery()
-            ->getResult();
-    }
+        if ($filters['style']) {
+            $qb->andWhere('activities.style = :activitiesStyle')
+                ->setParameter("activitiesStyle", $filters['style']);
+        }
 
-    public function filterBySkill($result)
-    {
-        return $this->createQueryBuilder('user')
-            ->join('user.activities', 'activities')
-            ->where('activities.domain = :activitiesDomain')
-            ->andWhere('activities.skill = :activitiesSkill')
-            ->setParameter("activitiesDomain", $result['metier'])
-            ->setParameter("activitiesSkill", $result['skill'])
-            ->getQuery()
-            ->getResult();
+        return $qb->setParameter("activitiesDomain", $filters['metier'])
+                  ->getQuery()->getResult();
     }
-
 
     /**
      * @param string $value
@@ -93,17 +65,4 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
