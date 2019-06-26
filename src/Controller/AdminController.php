@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+
     /**
      * @Route("/", name="index")
      * @return Response A response instance
@@ -25,6 +26,7 @@ class AdminController extends AbstractController
     {
 
         $users = $userRepository->findLastTenUsers();
+
 
         return $this->render('admin/index.html.twig', [
             'users' => $users
