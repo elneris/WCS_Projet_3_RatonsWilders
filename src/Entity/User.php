@@ -125,6 +125,7 @@ class User implements UserInterface
      */
     private $enable = false;
 
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resetToken;
