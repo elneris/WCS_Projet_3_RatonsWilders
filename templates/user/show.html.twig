@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} {{ app.user.firstname }} {{ app.user.lastname }}{% endblock %}
+{% block title %} Bienvenue sur ta page profil{% endblock %}
 {% block body%}
     <div class="class body-profile">
         <div class=" container-top">
@@ -36,7 +36,7 @@
                 <div>
                     {% if app.user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
                         <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
-                        {{ app.user.phoneNumber }}
+                        {{ app.user.phoneNumber }}   {# //TODO: Problème de regex, pourtant l'input est en type=tel #}
                     {% endif %}
                 </div>
                 <div>
@@ -160,5 +160,5 @@
             </div>
         </div>
         <p class="copyright">Copyright@LesRatonsWilders</p>
-    </div>#}
+    </div>
 {% endblock %}

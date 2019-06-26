@@ -35,7 +35,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(
      *      max = 25,
-     *      maxMessage = "le champ prénom ne peut pas contenir plus de de {{ limit }} caractères"
+     *      maxMessage = "le champ prénom ne peut pas contenir plus de {{ limit }} caractères"
      * )
      */
     private $firstname;
@@ -60,11 +60,16 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     *  @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "le champ email ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     *
      */
     private $phoneNumber;
 
@@ -85,6 +90,10 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *  @Assert\Length(
+     *      max = 40,
+     *      maxMessage = "le champ adresse ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $address;
 
