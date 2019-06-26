@@ -46,6 +46,6 @@ class FilterType extends AbstractType
                     'placeholder' => 'Tous'
                 ]
             )
-            ->add('Recherche', SubmitType::class);
+            ->add('Filtrer', SubmitType::class);
     }
 }
