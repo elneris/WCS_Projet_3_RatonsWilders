@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Filtrer un Artiste{% endblock %}
+
 {% block body %}
     <div class="bloc-admin main-page">
         {{ form_start(filterDomainForm) }}
@@ -17,21 +19,7 @@
         {{ form_end(filterDomainForm) }}
 
 
-    <div class="card-deck">
-        {% for user in users %}
-            <div class="card col-12 col-md-3">
-                <img src="{{asset('assets/img/avatar.jpg')}}"
-                     class="card-img-top rounded-circle w-75 mx-auto mt-3"  alt="{{ user.firstname }}">
-                <div class="card-body">
-                    <h5 class="card-title text-center">{{ user.firstname }} {{ user.lastname }}</h5>
-                    <p class="card-text text-center">
-                        {% for activity in user.activities %}
-                            {{ activity.domain.name }}
-                        {% endfor %}</p>
-                    <p class="card-text text-center">{{ user.about }}</p>
-                </div>
-            </div>
-        {%  endfor %}
-    </div>
+        {% include 'inc/cardAdmin.html.twig' %}
+
     </div>
 {% endblock %}

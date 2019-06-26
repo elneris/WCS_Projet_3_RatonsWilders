@@ -150,8 +150,20 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @param User $user
+     * @return Response
+     */
+    public function show(User $user): Response
+    {
+        return $this->render('admin/show.html.twig', [
+            'user' => $user]);
+    }
+
+    /**
      * @Route("/change-password", methods={"GET", "POST"}, name="change_password")
      */
+
     public function changePassword(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = $this->getUser();
@@ -168,6 +180,7 @@ class UserController extends AbstractController
         }
         return $this->render('user/change_password.html.twig', [
             'form' => $form->createView(),
+
         ]);
     }
 
