@@ -28,7 +28,7 @@ class AdminController extends AbstractController
 
         $users = $arrayUser->findBy([], ['id' => 'DESC'], 5);
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/new.html.twig', [
             'users' => $users
         ]);
     }
