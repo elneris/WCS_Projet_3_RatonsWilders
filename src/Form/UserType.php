@@ -63,7 +63,7 @@ class UserType extends AbstractType
             ->add('posteCode', NumberType::class, [
 
                 'label'=>'Code postal',
-                'required'=>false
+                'required'=>false,
             ])
 
             ->add('birthdate', BirthdayType::class, [
