@@ -138,17 +138,17 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $persons_number;
+    private $personsNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $billing_type;
+    private $billingType;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $technical_needs;
+    private $technicalNeeds;
 
     public function getId(): ?int
     {
@@ -496,36 +496,36 @@ class User implements UserInterface
 
     public function getPersonsNumber(): ?string
     {
-        return $this->persons_number;
+        return $this->personsNumber;
     }
 
-    public function setPersonsNumber(?string $persons_number): self
+    public function setPersonsNumber(?string $personsNumber): self
     {
-        $this->persons_number = $persons_number;
+        $this->personsNumber = $personsNumber;
 
         return $this;
     }
 
     public function getBillingType(): ?string
     {
-        return $this->billing_type;
+        return $this->billingType;
     }
 
-    public function setBillingType(?string $billing_type): self
+    public function setBillingType(?string $billingType): self
     {
-        $this->billing_type = $billing_type;
+        $this->billingType = $billingType;
 
         return $this;
     }
 
     public function getTechnicalNeeds(): ?string
     {
-        return $this->technical_needs;
+        return $this->technicalNeeds;
     }
 
-    public function setTechnicalNeeds(?string $technical_needs): self
+    public function setTechnicalNeeds(?string $technicalNeeds): self
     {
-        $this->technical_needs = $technical_needs;
+        $this->technicalNeeds = $technicalNeeds;
 
         return $this;
     }
