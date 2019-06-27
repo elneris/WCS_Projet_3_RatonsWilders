@@ -125,6 +125,7 @@ class UserController extends AbstractController
      * @Route("/{id}/edit_links", name="edit_links", methods={"GET","POST"})
      * @param Request $request
      * @param Link $links
+     * @param User $user
      * @return Response
      */
 
@@ -149,19 +150,12 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
-     * @param User $user
-     * @return Response
-     */
-    public function show(User $user): Response
-    {
-        return $this->render('admin/show.html.twig', [
-            'user' => $user]);
-    }
 
     /**
      * @Route("/change-password", methods={"GET", "POST"}, name="change_password")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
      */
 
     public function changePassword(Request $request, UserPasswordEncoderInterface $encoder): Response
@@ -174,7 +168,7 @@ class UserController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash(
                 'success',
-                'Mot de passe bien modifier'
+                'Mot de passe modifié'
             );
             return $this->redirectToRoute('user_index');
         }
@@ -186,6 +180,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/delete-activity/{id}", name="delete_activity")
+     * @param Activity $activity
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteActivity(Activity $activity, EntityManagerInterface $em, Request $request)
     {

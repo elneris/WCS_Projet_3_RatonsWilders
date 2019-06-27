@@ -30,6 +30,7 @@ class ChangePasswordType extends AbstractType
                     new NotBlank(),
                     new Length([
                         'min' => 6,
+                        'minMessage' =>'Votre mot de passe doit contenir un minimum de {{ limit }} caractères'
                     ]),
                 ],
                 'first_options' => [
