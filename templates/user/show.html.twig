@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}User{% endblock %}
+{% block title %}Profil Utilisateur{% endblock %}
 {% block body%}
 
 
     <div class="class body-profile">
         <div class=" container-top">
-            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">EDITER</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">ÉDITER</a> </button>
             <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">CHANGER MDP</a> </button>
             <p>
                 {% for userlink in app.user.links %}
@@ -60,11 +60,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="link-media-v" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-                       aria-controls="pills-profile" aria-selected="false">Videos</a>
+                       aria-controls="pills-profile" aria-selected="false">Vidéos</a>
                 </li>
                 <li class="nav-item">
                     <a class="link-media-m" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-                       aria-controls="pills-contact" aria-selected="false">Musics</a>
+                       aria-controls="pills-contact" aria-selected="false">Musiques</a>
                 </li>
             </ul>
             <!-- Media | Photos -->
@@ -138,7 +138,7 @@
                                 <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
                                 <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
                                 <td>
-                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}" onsubmit="return confirm('Êtes vous sure de le supprimer ?');">
+                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
                                         <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
@@ -151,10 +151,10 @@
                 </div>
                 <div class="col-10 rs-info-sup">
                     Zone géographique: {{ app.user.geoArea }} -
-                    Nombre de personnes: 5 -
-                    Type de facturation: GUSO -
+                    Nombre de personnes: {{ app.user.personsNumber }} -
+                    Type de facturation: {{ app.user.billingType }} -
                     Prix: {{ app.user.price }}€ <Br>
-                    Besoin technique: SONO DJ
+                    Besoin(s) technique(s): {{ app.user.technicalNeeds }}
                 </div>
             </div>
         </div>
