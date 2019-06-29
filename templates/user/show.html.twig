@@ -5,6 +5,8 @@
         <div class=" container-top">
             <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">ÉDITER</a> </button>
             <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">CHANGER MDP</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('app_logout') }}">SE DECONNECTER</a> </button>
+
             <p>
                 {% for userlink in app.user.links %}
                     <a href="{{ userlink.url }}" target=_blank>
