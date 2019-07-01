@@ -63,7 +63,7 @@ class MediaController extends AbstractController
                 );
 
                 // ... persist the $media variable or any other work
-                //return $this->redirect($this->generateUrl('user_index'));
+                return $this->redirect($this->generateUrl('user_index'));
             } else {
                 $this->addFlash(
                     'danger',

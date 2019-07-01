@@ -5,6 +5,7 @@
         <div class=" container-top">
             <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">ÉDITER</a> </button>
             <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">CHANGER MDP</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">CHANGER Avatar</a> </button>
             <p>
                 {% for userlink in app.user.links %}
                     <a href="{{ userlink.url }}" target=_blank>
@@ -15,11 +16,9 @@
         </div>
         <div class="container-middle">
             <div class="profile">
-                {% for usermedia in app.user.medias %}
-                    {% if usermedia.type == 'avatar'%}
-                        <p><img class="avatar" src="{{ asset(usermedia.url) }}" alt="card image"></p>
-                    {% endif %}
-                {% endfor %}
+                {% if avatar is defined %}
+                <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}} " alt="card image"></p>
+                {% endif %}
                 <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
                 <h2>{% for activity in app.user.activities %}
                         {{ activity.Domain.Name | capitalize }}

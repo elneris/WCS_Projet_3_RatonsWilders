@@ -19,6 +19,23 @@ class MediaRepository extends ServiceEntityRepository
         parent::__construct($registry, Media::class);
     }
 
+    public function findLastAvatar(int $id)
+    {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        return $qb->select('m.url')
+            ->from('App\Entity\Media', 'm')
+            ->join('m.user', 'u')
+            ->where('m.type = :avatar AND u.id = ' . $id)
+            ->setParameter('avatar', 'avatar')
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
     // /**
     //  * @return Media[] Returns an array of Media objects
     //  */
