@@ -11,10 +11,6 @@
     {% endblock %}
 </head>
 
-{% if app.user != null %}
-    <a href="/logout">Logout</a>
-{% endif %}
-
 <body>
 
 {% if is_granted('ROLE_ADMIN') %}
