@@ -1,3 +1,99 @@
-<h1>Bonjour</h1>
 
-<p>Veuillez confirmez votre inscription en cliquant sur ce lien <a href="{{ url('token_validation', {value:token}) }}">{{ token }}</a></p>
+
+<!doctype html>
+<html lang="fr">
+<head>
+
+    <style>
+
+        body {
+            padding: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px;
+            color: black;
+        }
+
+        .center-div {
+            margin: 0 auto;
+            width: 300px;
+            border-radius: 5px;
+            border: 2px black solid;
+            padding: 20px ;
+            text-align: center;
+        }
+
+        .btn-lien {
+            text-decoration: none;
+        }
+
+        .login-btn {
+            border: 2px solid transparent;
+            background: #303030;
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 25px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-shadow: none;
+            border-radius: 3px;
+            box-shadow: none;
+            transition: 0.25s;
+            display: block;
+            width: 252px;
+            margin: 0 auto;
+        }
+
+        .btn-lien:hover {
+            text-decoration: none;
+        }
+
+        .login-btn:focus, :active {
+            outline: none;
+        }
+
+        .title-mail {
+            font-size: 15px;
+            text-align: center;
+            color: black;
+        }
+
+        img {
+            position: relative;
+            width: 200px;
+            border: 0;
+            margin: 0 auto;
+        }
+
+        .ps {
+            padding-top: 50px;
+            color: black;
+        }
+
+    </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Les Ratons Guincheurs</title>
+</head>
+<body>
+<h2>Les ratons guincheurs, vous souhaitent la bienvenue.</h2>
+
+<div class="center-div">
+    <img src="{{ img }}" alt="logo_les_ratons_guincheur">
+
+
+    <p class="title-mail">Veuillez confirmez votre inscription</p><br>
+    <a class="btn-lien" href="{{ url('token_validation', {value:token}) }}">
+        <button class="btn-lien login-btn">Validé</button>
+    </a>
+</div>
+
+<p class="ps">En cas de difficultés d'activation faites un copier/coller du lien ci-desous directement dans votre navigateur.</p>
+<p>{{ url('token_validation', {value:token}) }}</p>
+
+</body>
+</html>
