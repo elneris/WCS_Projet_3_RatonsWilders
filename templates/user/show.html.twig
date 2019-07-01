@@ -18,6 +18,8 @@
             <div class="profile">
                 {% if avatar is defined %}
                 <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}} " alt="card image"></p>
+                    {% else %}
+                        <img class="avatar" src="https://education.fsu.edu/wp-content/uploads/2016/09/staff-avatar-man.png" alt="card image"></p>
                 {% endif %}
                 <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
                 <h2>{% for activity in app.user.activities %}
