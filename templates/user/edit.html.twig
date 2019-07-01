@@ -8,7 +8,7 @@
 
     {% for media in user.medias %}
         {% if media.type == 'photo' | e %}
-            <div class="d-flex justify-content-center"> <img src="{{ media.url }}" alt="profil" class="w-25 "> </div>
+            <div class="d-flex justify-content-center"> <img src="{{ media.url }}" alt="profil" class="w-25"> </div>
         {% else %}
 
         {% endif %}
@@ -50,10 +50,10 @@
                     <div class="col-md-6">{{ form_row(form.billingType) }}</div>
 
                 </div>
-
-                <div class="col-md-8">{{ form_row(form.about) }}</div>
-                <div class="col-md-8">{{ form_row(form.technicalNeeds) }}</div>
-
+                <div class="row">
+                    <div class="col-md-8">{{ form_row(form.about) }}</div>
+                    <div class="col-md-8">{{ form_row(form.technicalNeeds) }}</div>
+                </div>
 
                 <a href="{{ path('user_add_activity', {'id': user.id}) }}"><h2>Ajouter des activités</h2></a>
 
@@ -100,5 +100,4 @@
         </div>
     </form>
 </div>
-
 {% endblock %}

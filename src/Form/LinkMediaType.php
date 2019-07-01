@@ -13,9 +13,7 @@ class LinkMediaType extends AbstractType
     {
         $builder
             // ...
-            ->add('type', TextType::class, [
-                'label' => 'Postez un lien',
-            ]);
+            ->add('type', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

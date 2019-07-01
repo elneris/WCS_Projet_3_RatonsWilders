@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\City;
 use App\Entity\Link;
 use App\Entity\Media;
 use App\Entity\User;
@@ -10,6 +11,7 @@ use App\Form\ChangePasswordType;
 use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
+use App\Repository\CityRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,9 +64,10 @@ class UserController extends AbstractController
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
+     * @param CityRepository $city
      * @return Response
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, CityRepository $city): Response
     {
 
         $form = $this->createForm(UserType::class, $user);
@@ -76,10 +79,12 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('user_index', [
                 'id' => $user->getId(),
+
             ]);
         }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
+            'city' => $city,
             'form' => $form->createView(),
         ]);
     }
