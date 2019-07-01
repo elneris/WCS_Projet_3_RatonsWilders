@@ -62,7 +62,7 @@ class SecurityController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'Un mail viens de vous être envoyé pour réinitialiser votre mot de passe'
+                    'Un mail vient de vous être envoyé pour réinitialiser votre mot de passe'
                 );
 
                 return $this->redirectToRoute('app_login');
@@ -110,7 +110,7 @@ class SecurityController extends AbstractController
 
                     $this->addFlash(
                         'success',
-                        'Votre mot de passe à bien été modifié'
+                        'Votre mot de passe a bien été modifié'
                     );
 
                     return $this->redirectToRoute('app_login');

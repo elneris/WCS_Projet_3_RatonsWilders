@@ -158,9 +158,24 @@ class User implements UserInterface
     private $resetToken;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $sentToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $personsNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $billingType;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $technicalNeeds;
 
     public function getId(): ?int
     {
@@ -504,5 +519,41 @@ class User implements UserInterface
     {
         $interval = new \DateInterval('PT24H');
         return $this->sentToken->add($interval) >= new \DateTime();
+    }
+
+    public function getPersonsNumber(): ?string
+    {
+        return $this->personsNumber;
+    }
+
+    public function setPersonsNumber(?string $personsNumber): self
+    {
+        $this->personsNumber = $personsNumber;
+
+        return $this;
+    }
+
+    public function getBillingType(): ?string
+    {
+        return $this->billingType;
+    }
+
+    public function setBillingType(?string $billingType): self
+    {
+        $this->billingType = $billingType;
+
+        return $this;
+    }
+
+    public function getTechnicalNeeds(): ?string
+    {
+        return $this->technicalNeeds;
+    }
+
+    public function setTechnicalNeeds(?string $technicalNeeds): self
+    {
+        $this->technicalNeeds = $technicalNeeds;
+
+        return $this;
     }
 }

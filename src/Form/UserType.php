@@ -87,22 +87,21 @@ class UserType extends AbstractType
             ])
 
             ->add('geoArea', ChoiceType::class, [
+                'label' => 'Région',
                 'choices'  => [
-                    '' => true,
-                    'Région Nord' => true,
-                    'Région Nord Ouest' => true,
-                    'Région Nord Est' => true,
-                    'Région Centre' => true,
-                    'Région Sud' => true,
-                    'Région Sud Ouest' => true,
-                    'Région Sud Est' => true,
+                    'Région Nord' => 'Région Nord',
+                    'Région Nord Ouest' => 'Région Nord Ouest',
+                    'Région Nord Est' => 'Région Nord Est',
+                    'Région Centre' => 'Région Centre',
+                    'Région Sud' => 'Région Sud',
+                    'Région Sud Ouest' => 'Région Sud Ouest',
+                    'Région Sud Est' => 'Région Sud Est',
 
 
                 ]])
 
             ->add('price', MoneyType::class, [
 
-                'divisor' => 100,
                 'label' => 'Tarif',
                 'required'=>false
             ])
@@ -112,7 +111,35 @@ class UserType extends AbstractType
                 'label'=>'Description',
                 'required'=>false
 
-            ]);
+            ])
+
+            ->add('personsNumber', ChoiceType::class, [
+                'label' => 'Nombre de personnes',
+                'choices'  => [
+                    'Solo' => 'Solo',
+                    'Duo' => 'Duo',
+                    'Trio' => 'Trio',
+                    'Quatuor' => 'Quatuor',
+                    '5 +' => '5 +',
+                ],
+                'required'=>false,
+            ])
+
+            ->add('billingType', ChoiceType::class, [
+                'label' => 'Type de facturation',
+                'choices' => [
+                    'Guso' => 'Guso',
+                    'Facture' => 'Facture',
+                    'Autres' => 'Autres',
+                ],
+                'required'=>false,
+            ])
+
+            ->add('technicalNeeds', TextareaType::class, [
+                'label' => 'Besoin(s) technique(s)',
+                'required' => false,
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

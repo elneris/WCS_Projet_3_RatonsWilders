@@ -21,7 +21,7 @@ class FilterType extends AbstractType
                 [
                     'class' => Domain::class,
                     'choice_label' => 'name',
-                    'label' => 'Métier'
+                    'label' => 'Domaine'
                 ]
             )
             ->add(
@@ -30,7 +30,7 @@ class FilterType extends AbstractType
                 [
                     'class' => Style::class,
                     'choice_label' => 'type',
-                    'label' => 'Style',
+                    'label' => 'Style (Rock,Blues..)',
                     'required' => false,
                     'placeholder' => 'Tous'
                 ]
@@ -41,11 +41,11 @@ class FilterType extends AbstractType
                 [
                     'class' => Skill::class,
                     'choice_label' => 'name',
-                    'label' => 'Skill',
+                    'label' => 'Accessoire (Guitare, violon..)',
                     'required' => false,
                     'placeholder' => 'Tous'
                 ]
             )
-            ->add('Recherche', SubmitType::class);
+            ->add('Filtrer', SubmitType::class);
     }
 }

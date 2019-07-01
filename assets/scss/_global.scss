@@ -1,10 +1,38 @@
 body {
   > .container {
     background-color: white;
+<<<<<<< HEAD
   }
 }
+=======
+
+  }
+}
+
+>>>>>>> 84ef8367ca29434e20876c4e037dd7ffcc6f08d9
 ul{
   li{
     list-style-type: none;
+    }
+ }
+
   }
 }
+
+.bloc-admin{
+  padding:40px 115px 0 115px;
+}
+
+.btn-primary{
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  transition: 0.5s;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
