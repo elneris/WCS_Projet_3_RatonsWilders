@@ -13,23 +13,20 @@
 
         {% endif %}
     {% endfor %}
-<div class="container-fluid edition">
+<div class="container edition">
 
     <nav class="d-flex justify-content-center">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-           <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Informations personnelles</a>
+            <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Informations personnelles</a>
             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-infoperso" role="tab" aria-controls="nav-infoperso" aria-selected="false">Informations professionnelles</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Coordonnées</a>
-           <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Liens et médias</a> -->
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Liens et médias</a>
         </div>
     </nav>
     <form method="post">
         <div class="tab-content" id="nav-tabContent">
 
-             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
-                <h2>Informations personnelles</h2>
-
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
                 <div class="row">
 
@@ -45,7 +42,6 @@
             </div>
 
             <div class="tab-pane fade" id="nav-infoperso" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <p>Informations professionnelles</p>
 
                 <div class="row">
                     <div class="col-md-6">{{ form_row(form.geoArea) }}</div>
@@ -64,8 +60,6 @@
             </div>
 
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <h2>Coordonnées</h2>
-
                 <div class="row">
 
                     <div class="col-md-4 col-sm-12">{{ form_row(form.email) }}</div>
@@ -76,22 +70,35 @@
 
                 </div>
             </div>
+
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                <div class="upload">
+                    <ul>
+
+                        <li><a href="{{ path('avatar_new') }}">Ajouter un avatar</a></li>
+                        <li><a href="{{ path('image_new') }}">Ajouter une image</a></li>
+                        <li><a href="{{ path('video_new') }}">Ajouter une vidéo</a></li>
+                        <li><a href="{{ path('musique_new') }}">Ajouter une musique</a></li>
+                    </ul>
+                </div>
+
+            </div>
             {{ form_rest(form) }}
 
 
-                {% endblock %}
-                {% block javascripts  %}
-                {{ parent() }}
-                <script>
-                    function editRow(btn) {
-                        $(btn).parent().find('form').toggle();
-                    }
-                </script>
+            {% endblock %}
+            {% block javascripts  %}
+            {{ parent() }}
+            <script>
+                function editRow(btn) {
+                    $(btn).parent().find('form').toggle();
+                }
+            </script>
 
-
-                <button class="btn btn-secondary m-4">{{ button_label|default('Valider') }}</button>
-            </div>
+            <button class="btn btn-secondary m-4">{{ button_label|default('Valider') }}</button>
         </div>
     </form>
 </div>
+
 {% endblock %}

@@ -3,4 +3,18 @@ h1{
 }
 .edition{
   color: white;
+  a{
+    color:white;
+  }
 }
+
+.tab-content{
+  background-color: rgba(2, 2, 3, 0.2);
+  padding: 30px;
+  margin: 25px;
+}
+
+body{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://image.jimcdn.com/app/cms/image/transf/none/path/s5dde8bff85c81b2f/image/i377786d82ea2c6ba/version/1560246528/raton-laveur.jpg");
+}
+
