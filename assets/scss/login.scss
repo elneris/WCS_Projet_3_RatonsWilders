@@ -79,6 +79,14 @@
   display: block;
   width: 252px;
   margin: 0 auto;
+
+  :focus, :active{
+    outline: none;
+  }
+}
+
+.login-btn:hover {
+  text-decoration: none;
 }
 
 .login-link {
