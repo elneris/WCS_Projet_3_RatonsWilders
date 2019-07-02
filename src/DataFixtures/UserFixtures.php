@@ -47,7 +47,7 @@ class UserFixtures extends Fixture
         $user1->setLastname($lastname);
         $user1->setArtistName('chacha');
         $user1->setRoles(['ROLE_USER']);
-        $user->setEnable(true);
+        $user1->setEnable(true);
 
         $manager->persist($user1);
         $this->addReference('user_' . 1, $user1);
@@ -62,7 +62,7 @@ class UserFixtures extends Fixture
         $user2->setLastname($lastname);
         $user2->setArtistName('Florent33');
         $user2->setRoles(['ROLE_USER']);
-        $user->setEnable(true);
+        $user2->setEnable(true);
 
         $manager->persist($user2);
         $this->addReference('user_' . 2, $user2);
@@ -77,7 +77,7 @@ class UserFixtures extends Fixture
         $user3->setLastname($lastname);
         $user3->setArtistName('Zertexx');
         $user3->setRoles(['ROLE_USER']);
-        $user->setEnable(true);
+        $user3->setEnable(true);
 
         $manager->persist($user3);
         $this->addReference('user_' . 3, $user3);
@@ -92,7 +92,7 @@ class UserFixtures extends Fixture
         $user4->setLastname($lastname);
         $user4->setArtistName('Pascalou');
         $user4->setRoles(['ROLE_USER']);
-        $user->setEnable(true);
+        $user4->setEnable(true);
 
         $manager->persist($user4);
         $this->addReference('user_' . 4, $user4);
@@ -107,7 +107,7 @@ class UserFixtures extends Fixture
         $user5->setLastname($lastname);
         $user5->setArtistName('Xav');
         $user5->setRoles(['ROLE_USER']);
-        $user->setEnable(true);
+        $user5->setEnable(true);
 
         $manager->persist($user5);
         $this->addReference('user_' . 5, $user5);
@@ -120,7 +120,7 @@ class UserFixtures extends Fixture
         $admin->setLastname('admin');
         $admin->setArtistName("raton admin");
         $admin->setRoles(['ROLE_ADMIN']);
-        $user->setEnable(true);
+        $admin->setEnable(true);
 
         $manager->persist($admin);
         $this->addReference('admin', $admin);
