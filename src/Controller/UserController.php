@@ -106,7 +106,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Activité bien ajouter'
+                'Activité bien ajoutée'
             );
 
             return $this->redirectToRoute('user_index', [
