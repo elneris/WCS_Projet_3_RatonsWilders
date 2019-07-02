@@ -22,14 +22,22 @@ class TokenManager
     {
         $message = (new \Swift_Message('Validez votre inscription'))
             ->setFrom('ratonsguincheur@admin.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->twig->render(
+            ->setTo($user->getEmail());
+
+        $img = $message->embed(\Swift_Image::fromPath('assets/img/logo_lesratons.png'));
+
+
+        $message->setBody(
+            $this->twig
+                ->render(
                     'emails/registration.html.twig',
-                    ['token' => $token->getValue()]
+                    [
+                        'token' => $token->getValue(),
+                        'img' => $img
+                    ]
                 ),
-                'text/html'
-            );
+            'text/html'
+        );
         $this->mailer->send($message);
     }
 }
