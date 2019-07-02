@@ -12,17 +12,17 @@
 </head>
 
 <body>
+
 {% if app.user != null %}
     <a href="/logout">Logout</a>
 {% endif %}
-
 
 {% if is_granted('ROLE_ADMIN') %}
     {% include 'navbar.html.twig' %}
 {% endif %}
 
     <div class="row">
-        <div class="col-6 offset-3">
+        <div class="col-6 offset-3 mt-5">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">

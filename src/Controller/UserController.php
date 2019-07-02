@@ -32,7 +32,19 @@ class UserController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('user/show.html.twig');
+        $user = new User();
+
+        if ($user->getEnable()) {
+            return $this->render('user/show.html.twig');
+        }
+
+        $this->addFlash(
+            'danger',
+            'Votre compte n\'est pas validé, Merci de vérifier vos emails'
+        );
+
+        //return $this->redirectToRoute('app_login');
+        return $this->render('security/validation_mail.html.twig');
     }
 
     /**
