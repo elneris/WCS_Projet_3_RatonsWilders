@@ -200,7 +200,7 @@ class MediaController extends AbstractController
                 // updates the 'media' property to store the JPG file name
                 // instead of its contents
                 $media->setName('VideoUser');
-                $media->setUrl(str_replace('watch?v=', 'embed/', $media->getType()));
+                $media->setUrl(str_replace(['watch?v=', '&t'], ['embed/', '?t'], $media->getType()));
                 $media->setType('lienMusique');
                 $media->setUser($this->getUser());
 
