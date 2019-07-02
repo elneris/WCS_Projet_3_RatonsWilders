@@ -9,6 +9,8 @@
             <button class="btn badge-light"> <a href="{{ path('image_new') }}">AJOUTER des images</a> </button>
             <button class="btn badge-light"> <a href="{{ path('video_new') }}">AJOUTER des vidéo</a> </button>
             <button class="btn badge-light"> <a href="{{ path('musique_new') }}">AJOUTER des musique</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('app_logout') }}">SE DECONNECTER</a> </button>
+
             <p>
                 {% for userlink in app.user.links %}
                     <a href="{{ userlink.url }}" target=_blank>
