@@ -4,13 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Activity;
 use App\Entity\Link;
-use App\Entity\Media;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,14 +21,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-
     /**
      * @Route("/", name="index", methods={"GET"})
      * @return Response
      */
     public function index(): Response
     {
-        $user = new User();
+        $user = $this->getUser();
 
         if ($user->getEnable()) {
             return $this->render('user/show.html.twig');
@@ -41,9 +38,17 @@ class UserController extends AbstractController
             'Votre compte n\'est pas validé, Merci de vérifier vos emails'
         );
 
-        //return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('user_validation');
+    }
+
+    /**
+     * @ROUTE("/validation", name="validation")
+     */
+    public function show()
+    {
         return $this->render('security/validation_mail.html.twig');
     }
+
 
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
@@ -186,7 +191,6 @@ class UserController extends AbstractController
         }
         return $this->render('user/change_password.html.twig', [
             'form' => $form->createView(),
-
         ]);
     }
 
