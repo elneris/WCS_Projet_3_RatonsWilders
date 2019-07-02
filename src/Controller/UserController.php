@@ -12,6 +12,7 @@ use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
 use App\Repository\CityRepository;
+use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,12 +31,23 @@ class UserController extends AbstractController
      * @Route("/", name="index", methods={"GET"})
      * @return Response
      */
-    public function index(): Response
+    public function index(MediaRepository $mediaRepository): Response
     {
-        $user = new User();
+
+        $user = $this->getUser();
 
         if ($user->getEnable()) {
-            return $this->render('user/show.html.twig');
+            $id = $this->getUser()->getId();
+
+            if (!empty($mediaRepository->findLastAvatar($id))) {
+                $avatar = $mediaRepository->findLastAvatar($id);
+
+                return $this->render('user/show.html.twig', [
+                    'avatar' => $avatar
+                ]);
+            } else {
+                return $this->render('user/show.html.twig');
+            }
         }
 
         $this->addFlash(
@@ -123,7 +135,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Activité bien ajouter'
+                'Activité bien ajoutée'
             );
 
             return $this->redirectToRoute('user_index', [

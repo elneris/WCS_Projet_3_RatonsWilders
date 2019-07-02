@@ -1,13 +1,10 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block title %}Editer mon profil{% endblock %}
 
 {% block body %}
 
     <h1 class="text-center p-4">Editer mon profil</h1>
-    <a class="d-flex" href="{{ path('user_index', {'id': user.id}) }}"><button class="btn btn-secondary m-auto mb-3">Retour à mon profil</button> </a>
 
     {% for media in user.medias %}
         {% if media.type == 'photo' | e %}
@@ -72,6 +69,8 @@
                         <div class="col-md-4 col-sm-12">{{ form_row(form.city) }}</div>
                         <div class="col-md-4 col-sm-12">{{ form_row(form.posteCode) }}</div>
 
+                <a class="btn-secondary btn" href="{{ path('user_add_activity', {'id': user.id}) }}">Ajouter des activités</a>
+
                     </div>
                 </div>
 
@@ -101,7 +100,9 @@
                 </script>
 
                 <button class="btn btn-secondary m-4">{{ button_label|default('Valider') }}</button>
+                <a class="btn btn-secondary" href="{{ path('user_index') }}">Retour au profil</a>
             </div>
         </form>
     </div>
+
 {% endblock %}

@@ -15,7 +15,7 @@ h1{
 }
 
 body{
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://image.jimcdn.com/app/cms/image/transf/none/path/s5dde8bff85c81b2f/image/i377786d82ea2c6ba/version/1560246528/raton-laveur.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/assets/img/raton.jpg");
 }
 
 .edition{
@@ -26,8 +26,6 @@ body{
     }
   }
   .form-control{
-    display: block;
-    height: calc(1.5em + 0.75rem + 2px);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     font-weight: 600;

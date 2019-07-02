@@ -5,6 +5,10 @@
         <div class=" container-top">
             <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">ÉDITER</a> </button>
             <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">CHANGER MDP</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">CHANGER Avatar</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('image_new') }}">AJOUTER des images</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('video_new') }}">AJOUTER des vidéo</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('musique_new') }}">AJOUTER des musique</a> </button>
             <button class="btn badge-light"> <a href="{{ path('app_logout') }}">SE DECONNECTER</a> </button>
 
             <p>
@@ -17,11 +21,11 @@
         </div>
         <div class="container-middle">
             <div class="profile">
-                {% for usermedia in app.user.medias %}
-                    {% if usermedia.type == 'avatar'%}
-                        <p><img class="avatar" src="{{ asset(usermedia.url) }}" alt="card image"></p>
-                    {% endif %}
-                {% endfor %}
+                {% if avatar is defined %}
+                <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}} " alt="card image"></p>
+                    {% else %}
+                        <img class="avatar" src="{{ asset('build/images/avatarBase.png') }}" alt="card image"></p>
+                {% endif %}
                 <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
                 <h2>{% for activity in app.user.activities %}
                         {{ activity.Domain.Name | capitalize }}
@@ -73,17 +77,17 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
                     {% for media in app.user.medias %}
-                        {% if media.type == 'Photo' %}
-                            <img class="media-img" src="{{ asset(  media.url ) }}" alt="{{ media.Name }}">
+                        {% if media.type == 'Image' %}
+                            <img class="media-img" src="{{ asset('uploads/images/' ~ media.url)}}" alt="{{ media.Name }}">
                         {% endif %}
                     {% endfor %}
                 </div>
                 <!-- Media | Videos -->
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     {% for media in app.user.medias %}
-                        {% if media.type == 'video' %}
+                        {% if media.type == 'lienVideo' %}
                             <object class="media-img">
-                                <param name="movie" value="https://www.youtube.com/embed/KMvuZgLj_fI">
+                                <param name="movie" value="{{ media.url }}">
                             </object>
                         {% endif %}
                     {% endfor %}
@@ -91,8 +95,10 @@
                 <!-- Media | Musics -->
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                     {% for media in app.user.medias %}
-                        {% if media.type == 'music' %}
-                            Lien vers votre musique
+                        {% if media.type == 'lienMusique' %}
+                            <object class="media-img">
+                                <param name="movie" value="{{ media.url }}">
+                            </object>
                         {% endif %}
                     {% endfor %}
                 </div>

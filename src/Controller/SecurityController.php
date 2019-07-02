@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Token;
 use App\Entity\User;
 use App\Form\EmailResetType;
 use App\Form\ResetType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Class SecurityController
+ * @package App\Controller
+ */
 class SecurityController extends AbstractController
 {
     /**
@@ -66,8 +70,14 @@ class SecurityController extends AbstractController
                 );
 
                 return $this->redirectToRoute('app_login');
+            } else {
+                $this->addFlash(
+                    'danger',
+                    'Adresse non valide'
+                );
             }
         }
+
 
         return $this->render('authentication/reset-password.html.twig', array(
             'form' => $form->createView(),
@@ -76,12 +86,14 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reset_password/{token}", name="reset_password_confirmation")
+     * @param Token $token
      * @param Request $request
+     * @param EntityManagerInterface $entityManager
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function resetPasswordToken(
-        $token,
+        Token $token,
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $encoder
@@ -92,7 +104,7 @@ class SecurityController extends AbstractController
             if ($user->expiredReset() == false) {
                 $this->addFlash(
                     'danger',
-                    'Votre token à expiré ( 1 minute ), veuillez de nouveau réinitialiser votre mot de passe'
+                    'Votre token à expiré ( 24 heures ), veuillez de nouveau réinitialiser votre mot de passe'
                 );
                 return $this->redirectToRoute('forgot_password');
             }

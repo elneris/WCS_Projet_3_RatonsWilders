@@ -8,17 +8,18 @@
             <div class="register-title">
                 <img class="avatar" src="{{ asset('assets/img/logo_lesratons.png') }}" alt="card image">
                 <a class="login-link" href="{{ path('app_login') }}">Déjà inscrit? Se connecter</a>
-
             </div>
             <div class="register-control-group">
                 {{ form_start(registrationForm, { 'attr': {'class': 'register-form-group'}} ) }}
+                {{ form_errors(registrationForm.email ) }}
                 {{ form_row(registrationForm.email, { 'attr': {'class': 'register-input'}}) }}
-                {{ form_row(registrationForm.password , {'attr': {'class': 'register-input'}})}}
+                {{ form_errors(registrationForm.password.first ) }}
+                {{ form_errors(registrationForm.password.second ) }}
+                {{ form_widget(registrationForm.password , {'attr': {'class': 'register-input'}})}}
                 <br>
                 <button class="register-btn btn-outline-secondary">Valider</button>
                 {{ form_end(registrationForm) }}
             </div>
         </div>
     </div>
-
 {% endblock %}

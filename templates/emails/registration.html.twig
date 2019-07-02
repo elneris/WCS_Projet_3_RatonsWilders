@@ -1,3 +1,31 @@
-<h1>Bonjour</h1>
 
-<p>Veuillez confirmez votre inscription en cliquant sur ce lien <a href="{{ url('token_validation', {value:token}) }}">{{ token }}</a></p>
+
+<!doctype html>
+<html lang="fr">
+<head>
+
+   <style> {% include 'emails/style_registration_mail.css.twig' %}  </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Les Ratons Guincheurs</title>
+</head>
+<body>
+<h2>Les ratons guincheurs, vous souhaitent la bienvenue.</h2>
+
+<div class="center-div">
+    <img src="{{ img }}" alt="logo_les_ratons_guincheur">
+
+
+    <p class="title-mail">Veuillez confirmez votre inscription</p><br>
+    <a class="btn-lien" href="{{ url('token_validation', {value:token}) }}">
+        <button class="btn-lien login-btn">Validé</button>
+    </a>
+</div>
+
+<p class="ps">En cas de difficultés d'activation faites un copier/coller du lien ci-desous directement dans votre navigateur.</p>
+<p>{{ url('token_validation', {value:token}) }}</p>
+
+</body>
+</html>
