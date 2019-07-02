@@ -22,10 +22,14 @@ class ResetType extends AbstractType
         $builder
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe doivent être identiques',
+                'required' => true,
                 'constraints' => [
                     new NotBlank(),
                     new Length([
                         'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères',
+                        'max' => 4096,
                     ]),
                 ],
                 'first_options' => [
