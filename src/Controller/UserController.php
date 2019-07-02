@@ -36,7 +36,7 @@ class UserController extends AbstractController
             $avatar = $mediaRepository->findLastAvatar($id);
 
             return $this->render('user/show.html.twig', [
-                'avatar' => $avatar[0]
+                'avatar' => $avatar
             ]);
         } else {
             return $this->render('user/show.html.twig');

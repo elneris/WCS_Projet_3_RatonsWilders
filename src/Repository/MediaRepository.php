@@ -31,7 +31,7 @@ class MediaRepository extends ServiceEntityRepository
             ->orderBy('m.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
 

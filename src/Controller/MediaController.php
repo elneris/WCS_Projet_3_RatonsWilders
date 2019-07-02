@@ -123,7 +123,7 @@ class MediaController extends AbstractController
                 );
 
                 // ... persist the $media variable or any other work
-                //return $this->redirect($this->generateUrl('user_index'));
+                return $this->redirect($this->generateUrl('user_index'));
             } else {
                 $this->addFlash(
                     'danger',
@@ -155,7 +155,7 @@ class MediaController extends AbstractController
                 // updates the 'media' property to store the JPG file name
                 // instead of its contents
                 $media->setName('VideoUser');
-                $media->setUrl($media->getType());
+                $media->setUrl(str_replace('watch?v=', 'embed/', $media->getType()));
                 $media->setType('lienVideo');
                 $media->setUser($this->getUser());
 
@@ -168,7 +168,7 @@ class MediaController extends AbstractController
                 );
 
                 // ... persist the $media variable or any other work
-                //return $this->redirect($this->generateUrl('user_index'));
+                return $this->redirect($this->generateUrl('user_index'));
             } else {
                 $this->addFlash(
                     'danger',
@@ -200,8 +200,8 @@ class MediaController extends AbstractController
                 // updates the 'media' property to store the JPG file name
                 // instead of its contents
                 $media->setName('VideoUser');
-                $media->setUrl($media->getType());
-                $media->setType('lienVideo');
+                $media->setUrl(str_replace('watch?v=', 'embed/', $media->getType()));
+                $media->setType('lienMusique');
                 $media->setUser($this->getUser());
 
                 $em->persist($media);
@@ -213,7 +213,7 @@ class MediaController extends AbstractController
                 );
 
                 // ... persist the $media variable or any other work
-                //return $this->redirect($this->generateUrl('user_index'));
+                return $this->redirect($this->generateUrl('user_index'));
             } else {
                 $this->addFlash(
                     'danger',
