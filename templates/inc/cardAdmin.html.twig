@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         {% for user in users %}
+            {% if user.roles.0 == 'ROLE_USER' %}
             <div class="col-xs-12 col-sm-6 col-md-3">
                 <div class="card">
                     <a href="{{ path('admin_user_show', { 'id': user.id }) }}">
@@ -39,6 +40,7 @@
                     </a>
                 </div>
             </div>
+            {% endif %}
         {% endfor %}
     </div>
 </div>
