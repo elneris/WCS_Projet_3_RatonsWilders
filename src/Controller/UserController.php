@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/user", name="user_")
+ * @Route("/utilisateur", name="user_")
  */
 class UserController extends AbstractController
 {
@@ -34,31 +34,37 @@ class UserController extends AbstractController
 
         $user = $this->getUser();
 
-        if ($user->getEnable()) {
-            $id = $this->getUser()->getId();
+        if (!$user->getEnable()) {
+            $this->addFlash(
+                'danger',
+                'Votre compte n\'est pas validé, merci de vérifier vos emails'
+            );
 
-            if (!empty($mediaRepository->findLastAvatar($id))) {
-                $avatar = $mediaRepository->findLastAvatar($id);
-
-                return $this->render('user/show.html.twig', [
-                    'avatar' => $avatar
-                ]);
-            } else {
-                return $this->render('user/show.html.twig');
-            }
+            return $this->redirectToRoute('user_validation');
         }
 
-        $this->addFlash(
-            'danger',
-            'Votre compte n\'est pas validé, Merci de vérifier vos emails'
-        );
+        $id = $this->getUser()->getId();
+        $avatar = null;
 
-        //return $this->redirectToRoute('app_login');
+        if (!empty($mediaRepository->findLastAvatar($id))) {
+            $avatar = $mediaRepository->findLastAvatar($id);
+        }
+
+        return $this->render('user/show.html.twig', [
+            'avatar' => $avatar
+        ]);
+    }
+
+    /**
+     * @ROUTE("/validation", name="validation")
+     */
+    public function show()
+    {
         return $this->render('security/validation_mail.html.twig');
     }
 
     /**
-     * @Route("/new", name="new", methods={"GET","POST"})
+     * @Route("/nouvel-utilisateur", name="new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -83,7 +89,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     * @Route("/{id}/edition", name="edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
      * @return Response
@@ -109,7 +115,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/add_activity", name="add_activity", methods={"GET","POST"})
+     * @Route("/{id}/ajout-activite", name="add_activity", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -130,7 +136,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Activité bien ajoutée'
+                'Votre activité a bien été ajoutée'
             );
 
             return $this->redirectToRoute('user_index', [
@@ -146,7 +152,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit_links", name="edit_links", methods={"GET","POST"})
+     * @Route("/{id}/edition-liens", name="edit_links", methods={"GET","POST"})
      * @param Request $request
      * @param Link $links
      * @param User $user
@@ -176,7 +182,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/change-password", methods={"GET", "POST"}, name="change_password")
+     * @Route("/changement-mot-de-passe", methods={"GET", "POST"}, name="change_password")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
@@ -192,7 +198,7 @@ class UserController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash(
                 'success',
-                'Mot de passe modifié'
+                'Votre mot de passe a bien été modifié'
             );
             return $this->redirectToRoute('user_index');
         }
@@ -203,7 +209,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/delete-activity/{id}", name="delete_activity")
+     * @Route("/supprimer-activite/{id}", name="delete_activity")
      * @param Activity $activity
      * @param EntityManagerInterface $em
      * @param Request $request

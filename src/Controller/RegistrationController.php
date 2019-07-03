@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/inscription", name="app_register")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param TokenManager $tokenManager
@@ -46,13 +46,6 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($token);
-            $media = new Media();
-            $media->setName('MonAvatar');
-            $media->setUrl('assets/img/avatar.jpg');
-            $media->setType('avatar');
-            $media->setUser($user);
-
-            $entityManager->persist($media);
 
             $entityManager->flush();
 
@@ -82,7 +75,7 @@ class RegistrationController extends AbstractController
         if ($user->getEnable()) {
             $this->addFlash(
                 'danger',
-                "Ce token est déjà validé !"
+                "Cette clé de validation est déjà validée !"
             );
 
             return $this->redirectToRoute('app_login');
@@ -105,7 +98,7 @@ class RegistrationController extends AbstractController
 
         $this->addFlash(
             'notice',
-            "Le token est expiré, inscrivez-vous à nouveau"
+            "La clé de validation est expirée, inscrivez-vous à nouveau"
         );
 
         return $this->redirectToRoute('app_register');

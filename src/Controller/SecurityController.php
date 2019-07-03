@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/forgot_password", name="forgot_password")
+     * @Route("/mot-de-passe-oublie", name="forgot_password")
      */
     public function resetPassword(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
     {
@@ -91,14 +91,15 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/reset_password/{token}", name="reset_password_confirmation")
+     * @Route("/reinitialiser-mot-de-passe/{token}", name="reset_password_confirmation")
+     * @param string $token
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function resetPasswordToken(
-        $token,
+        string $token,
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $encoder
