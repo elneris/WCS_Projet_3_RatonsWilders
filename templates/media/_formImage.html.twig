@@ -1,4 +1,8 @@
-{{ form_start(form) }}
-    {{ form_row(form.type, {attr:{ 'placeholder' : 'Choisissez une image'}}) }}
-<button class="login-btn btn-secondary" type="submit">Ajouter</button>
-{{ form_end(form) }}
+<div class="container">
+
+    {{ form_start(form) }}
+    {{ form_row(form.type) }}
+    <button class="login-btn btn-secondary" type="submit">Ajouter</button>
+    {{ form_end(form) }}
+
+</div>
