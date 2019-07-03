@@ -13,27 +13,39 @@ class UserFixtures extends Fixture
         [
             'firstname' => 'Elnéris',
             'lastname' => 'Dang',
+            'role' => 'ROLE_USER',
+
         ],
         [
             'firstname' => 'Cha',
             'lastname' => 'Marvu',
+            'role' => 'ROLE_USER',
         ],
         [
             'firstname' => 'Florent',
             'lastname' => 'Duval',
+            'role' => 'ROLE_USER',
         ],
         [
             'firstname' => 'Maxime',
             'lastname' => 'Vasseur',
+            'role' => 'ROLE_USER',
         ],
         [
             'firstname' => 'Pascal',
             'lastname' => 'Encinas',
+            'role' => 'ROLE_USER',
         ],
         [
             'firstname' => 'Xavier',
             'lastname' => 'Crochet',
-        ]
+            'role' => 'ROLE_USER',
+        ],
+        [
+            'firstname' => 'raton',
+            'lastname' => 'admin',
+            'role' => 'ROLE_ADMIN',
+        ],
     ];
     /**
      * @param ObjectManager $manager
@@ -58,25 +70,17 @@ class UserFixtures extends Fixture
             $user->setFirstname($firstname);
             $user->setLastname($lastname);
             $user->setArtistName($firstname . rand(1, 100));
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles([$artist['role']]);
             $user->setEnable(true);
 
+            if ($artist['role'] == 'ROLE_ADMIN') {
+                $this->addReference('admin', $user);
+            } else {
+                $this->addReference('user_' . $key, $user);
+            }
             $manager->persist($user);
-            $this->addReference('user_' . $key, $user);
         }
 
-        $admin = new User();
-        $email = 'raton_admin@test.fr';
-        $admin->setEmail($email);
-        $admin->setPassword($this->passwordEncoder->encodePassword($admin, 'root'));
-        $admin->setFirstname('raton');
-        $admin->setLastname('admin');
-        $admin->setArtistName("raton admin");
-        $admin->setRoles(['ROLE_ADMIN']);
-        $admin->setEnable(true);
-
-        $manager->persist($admin);
-        $this->addReference('admin', $admin);
 
         $manager->flush();
     }
