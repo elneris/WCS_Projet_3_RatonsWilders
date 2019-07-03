@@ -24,7 +24,7 @@
                 {% if avatar is defined %}
                 <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}} " alt="card image"></p>
                     {% else %}
-                        <img class="avatar" src="{{ asset('build/images/avatarBase.png') }}" alt="card image"></p>
+                        <img class="avatar" src="{{ asset('assets/img/avatar.jpg') }}" alt="card image"></p>
                 {% endif %}
                 <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
                 <h2>{% for activity in app.user.activities %}
