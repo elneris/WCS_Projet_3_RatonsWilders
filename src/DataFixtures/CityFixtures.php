@@ -13,13 +13,11 @@ class CityFixtures extends Fixture
 
         $csv = fopen("public/assets/city.csv", 'r');
         while (($column = fgetcsv($csv, 700, ',', '"')) !== false) {
-
             $city = new City();
             $city->setName($column[1]);
             $city->setPopulation($column[3]);
             $manager->persist($city);
             $manager->flush();
-
         }
     }
 }
