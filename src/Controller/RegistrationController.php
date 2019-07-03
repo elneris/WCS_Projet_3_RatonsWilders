@@ -18,6 +18,10 @@ class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param TokenManager $tokenManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function register(
         Request $request,
@@ -90,7 +94,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "Votre inscription a bien été validé, vous pouvez vous connecter !"
+                "Votre inscription a bien été validée, vous pouvez vous connecter !"
             );
 
             return $this->redirectToRoute('app_login');
@@ -101,7 +105,7 @@ class RegistrationController extends AbstractController
 
         $this->addFlash(
             'notice',
-            "Le token est expiré, Inscrivez-vous à nouveau"
+            "Le token est expiré, inscrivez-vous à nouveau"
         );
 
         return $this->redirectToRoute('app_register');
