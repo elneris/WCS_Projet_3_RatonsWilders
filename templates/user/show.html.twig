@@ -24,7 +24,7 @@
                 {% if avatar is defined %}
                 <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}} " alt="card image"></p>
                     {% else %}
-                        <img class="avatar" src="{{ asset('build/images/avatarBase.png') }}" alt="card image"></p>
+                        <img class="avatar" src="{{ asset('assets/img/avatar.jpg') }}" alt="card image"></p>
                 {% endif %}
                 <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
                 <h2>{% for activity in app.user.activities %}
@@ -79,6 +79,11 @@
                     {% for media in app.user.medias %}
                         {% if media.type == 'Image' %}
                             <img class="media-img" src="{{ asset('uploads/images/' ~ media.url)}}" alt="{{ media.Name }}">
+                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                            </form>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -89,6 +94,11 @@
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
                             </object>
+                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                            </form>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -99,6 +109,11 @@
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
                             </object>
+                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                            </form>
                         {% endif %}
                     {% endfor %}
                 </div>
