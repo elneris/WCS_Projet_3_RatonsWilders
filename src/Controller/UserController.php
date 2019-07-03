@@ -53,7 +53,6 @@ class UserController extends AbstractController
             'Votre compte n\'est pas validé, merci de vérifier vos emails'
         );
 
-        //return $this->redirectToRoute('app_login');
         return $this->render('security/validation_mail.html.twig');
     }
 
