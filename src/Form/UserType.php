@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Link;
 use App\Entity\Media;
 use App\Entity\User;
@@ -55,9 +56,11 @@ class UserType extends AbstractType
                 'required'=>false
             ])
 
-            ->add('city', CountryType::class, [
+            ->add('city', EntityType::class, [
+                'label'=>'Ville',
+                'class' => City::class,
+                'choice_label' => 'name',
 
-                'label'=>'Ville'
             ])
 
             ->add('posteCode', NumberType::class, [
@@ -87,7 +90,7 @@ class UserType extends AbstractType
             ])
 
             ->add('geoArea', ChoiceType::class, [
-                'label' => 'Région',
+                'label' => 'Zone de déplacement',
                 'choices'  => [
                     'Région Nord' => 'Région Nord',
                     'Région Nord Ouest' => 'Région Nord Ouest',

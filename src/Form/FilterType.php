@@ -21,7 +21,7 @@ class FilterType extends AbstractType
                 [
                     'class' => Domain::class,
                     'choice_label' => 'name',
-                    'label' => 'Domaine'
+                    'label' => 'Domaine (Danse,Musique..)'
                 ]
             )
             ->add(
