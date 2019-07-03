@@ -79,6 +79,7 @@
                     {% for media in app.user.medias %}
                         {% if media.type == 'Image' %}
                             <img class="media-img" src="{{ asset('uploads/images/' ~ media.url)}}" alt="{{ media.Name }}">
+                            <button class="btn badge-light"> <a href="{{ path('media_delete', {'id': media.id}) }}">Supprimer</a> </button>
                         {% endif %}
                     {% endfor %}
                 </div>

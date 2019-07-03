@@ -236,4 +236,19 @@ class MediaController extends AbstractController
         // uniqid(), which is based on timestamps
         return md5(uniqid());
     }
+
+    /**
+     * @Route("/delete/{id}", name="media_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Media $media): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$media->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($media);
+            $entityManager->flush();
+            $this->addFlash('success', 'L\'image a bien été supprimé');
+        }
+
+        return $this->redirectToRoute('user_index');
+    }
 }
