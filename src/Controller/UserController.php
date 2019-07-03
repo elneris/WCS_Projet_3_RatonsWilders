@@ -32,26 +32,25 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($user->getEnable()) {
-            $id = $this->getUser()->getId();
+        if (!$user->getEnable()) {
+            $this->addFlash(
+                'danger',
+                'Votre compte n\'est pas validé, merci de vérifier vos emails'
+            );
 
-            if (!empty($mediaRepository->findLastAvatar($id))) {
-                $avatar = $mediaRepository->findLastAvatar($id);
-
-                return $this->render('user/show.html.twig', [
-                    'avatar' => $avatar
-                ]);
-            } else {
-                return $this->render('user/show.html.twig');
-            }
+            return $this->redirectToRoute('user_validation');
         }
 
-        $this->addFlash(
-            'danger',
-            'Votre compte n\'est pas validé, merci de vérifier vos emails'
-        );
+        $id = $this->getUser()->getId();
+        $avatar = null;
 
-        return $this->redirectToRoute('user_validation');
+        if (!empty($mediaRepository->findLastAvatar($id))) {
+            $avatar = $mediaRepository->findLastAvatar($id);
+        }
+
+        return $this->render('user/show.html.twig', [
+            'avatar' => $avatar
+        ]);
     }
 
     /**

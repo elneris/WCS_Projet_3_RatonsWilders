@@ -21,11 +21,12 @@
         </div>
         <div class="container-middle">
             <div class="profile">
-                {% if avatar is defined %}
-                <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}} " alt="card image"></p>
-                    {% else %}
-                        <img class="avatar" src="{{ asset('assets/img/avatar.jpg') }}" alt="card image"></p>
+                {% if avatar is empty %}
+                <img class="avatar" src="{{ asset('uploads/avatars/avatar.jpg')}}" alt="card image">
+                {% else %}
+                <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}}" alt="card image">
                 {% endif %}
+
                 <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
                 <h2>{% for activity in app.user.activities %}
                         {{ activity.Domain.Name | capitalize }}

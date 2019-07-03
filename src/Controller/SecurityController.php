@@ -86,14 +86,14 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reinitialiser-mot-de-passe/{token}", name="reset_password_confirmation")
-     * @param Token $token
+     * @param string $token
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function resetPasswordToken(
-        Token $token,
+        string $token,
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $encoder

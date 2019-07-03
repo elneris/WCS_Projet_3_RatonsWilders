@@ -46,13 +46,6 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($token);
-            $media = new Media();
-            $media->setName('MonAvatar');
-            $media->setUrl('assets/img/avatar.jpg');
-            $media->setType('avatar');
-            $media->setUser($user);
-
-            $entityManager->persist($media);
 
             $entityManager->flush();
 
