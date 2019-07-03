@@ -13,10 +13,6 @@
 
 <div>
 
-{% if app.user != null %}
-    <a href="/logout">Logout</a>
-{% endif %}
-
 {% if is_granted('ROLE_ADMIN') %}
     <div class="wrapper">
         {% include 'navbar.html.twig' %}
