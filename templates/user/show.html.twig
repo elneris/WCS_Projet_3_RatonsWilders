@@ -42,7 +42,7 @@
                 <div>
                     {% if app.user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
                         <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
-                        {{ app.user.phoneNumber }}   {# //TODO: Problème de regex, pourtant l'input est en type=tel #}
+                        {{ app.user.phoneNumber }}
                     {% endif %}
                 </div>
                 <div>
@@ -112,29 +112,45 @@
                     <div class="rs-left">
                         <ul>
                             <li>Nom de scène :</li>
+                            <li>Nombre de personnes :</li><br>
+
                             <li>Nom :</li>
                             <li>Prénom :</li>
-                            <li>Adresse :</li><br>
+                            <li>Age :</li><br>
+
+                            <li>Adresse :</li>
                             <li>Code Postal :</li>
-                            <li>Ville :</li>
+                            <li>Ville :</li><br>
+
                             <li>Téléphone :</li>
-                            <li>Email :</li>
+                            <li>Email :</li><br>
+
                             <li>Zone d'activité :</li>
                             <li>Tarif :</li>
-                            <li>Besoin technique :</li>
+                            <li>Type de facturation :</li><br>
+
+                            <li>Besoin technique(s) :</li>
                         </ul>
                     </div>
                     <div class="rs-rigth">
                         {{ app.user.artistname }}<br>
+                        {{ app.user.personsNumber }}<br><br>
+
                         {{ app.user.lastname }}<br>
                         {{ app.user.firstname }}<br>
+                        {{ app.user.birthdate }}<br><br>
+
                         {{ app.user.address }}<br>
                         {{ app.user.posteCode }}<br>
-                        {{ app.user.city }}<br>
+                        {{ app.user.city }}<br><br>
+
                         {{ app.user.phoneNumber }}<br>
-                        {{ app.user.email }}<br>
+                        {{ app.user.email }}<br><br>
+
                         {{ app.user.geoArea }}<br>
-                        {{ app.user.price }} € - GUSO ? FACTURE ?<br>
+                        {{ app.user.price }} {% if app.user.price %}€{% endif %}<br>
+                        {{ app.user.billingType }}<br>
+                        {{ app.user.technicalNeeds }}<br>
                     </div>
                 </div>
                 <div class="col-md-6 col-12 array-rs">
@@ -164,13 +180,6 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                </div>
-                <div class="col-10 rs-info-sup">
-                    Zone géographique: {{ app.user.geoArea }} -
-                    Nombre de personnes: {{ app.user.personsNumber }} -
-                    Type de facturation: {{ app.user.billingType }} -
-                    Prix: {{ app.user.price }}€ <Br>
-                    Besoin(s) technique(s): {{ app.user.technicalNeeds }}
                 </div>
             </div>
         </div>
