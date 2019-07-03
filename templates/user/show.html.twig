@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %} Bienvenue sur ta page profil{% endblock %}
+{% block title %} Bienvenue sur votre page profil{% endblock %}
 {% block body%}
     <div class="class body-profile">
         <div class=" container-top">
-            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">ÉDITER</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">CHANGER MDP</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">CHANGER Avatar</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('image_new') }}">AJOUTER des images</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('video_new') }}">AJOUTER des vidéo</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('musique_new') }}">AJOUTER des musique</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('app_logout') }}">SE DECONNECTER</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">Éditer</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">Changer le mot de passe</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">Changer l'avatar</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('image_new') }}">Ajouter des images</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('video_new') }}">Ajouter des vidéos</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('musique_new') }}">Ajouter des musiques</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('app_logout') }}">Se déconnecter</a> </button>
 
             <p>
                 {% for userlink in app.user.links %}
@@ -121,7 +121,7 @@
                             <li>Email :</li>
                             <li>Zone d'activité :</li>
                             <li>Tarif :</li>
-                            <li>Besoin technique :</li>
+                            <li>Besoin(s) technique(s) :</li>
                         </ul>
                     </div>
                     <div class="rs-rigth">

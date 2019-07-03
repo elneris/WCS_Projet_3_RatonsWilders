@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/forgot_password", name="forgot_password")
+     * @Route("/mot-de-passe-oublie", name="forgot_password")
      */
     public function resetPassword(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
     {
@@ -85,7 +85,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/reset_password/{token}", name="reset_password_confirmation")
+     * @Route("/reinitialiser-mot-de-passe/{token}", name="reset_password_confirmation")
      * @param Token $token
      * @param Request $request
      * @param EntityManagerInterface $entityManager
