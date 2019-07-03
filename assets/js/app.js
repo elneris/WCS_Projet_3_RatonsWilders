@@ -19,4 +19,12 @@ $('#image_type').on('change',function(){
     $(this).next('.custom-file-label').html(fileName);
 })
 
-console.log('popopop Webpack Encore! Edit me in assets/js/app.js');
+/*
+ * Js pour la sidebar
+ */
+
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});

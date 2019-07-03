@@ -11,10 +11,11 @@
     {% endblock %}
 </head>
 
-<body>
+<div>
 
 {% if is_granted('ROLE_ADMIN') %}
-    {% include 'navbar.html.twig' %}
+    <div class="wrapper">
+        {% include 'navbar.html.twig' %}
 {% endif %}
 
     <div class="row">
@@ -30,9 +31,12 @@
     </div>
     
     {% block body %}{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-{% endblock %}
+    {% if is_granted('ROLE_ADMIN') %}
+            </div>
+        </div>
+    {% endif %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
 </body>
 </html>
