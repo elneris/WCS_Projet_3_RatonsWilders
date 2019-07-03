@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %} Bienvenue sur votre page profil{% endblock %}
 {% block body%}
-    <div class="class body-profile">
+    <div class="body_show">
         <div class=" container-top">
             <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">Éditer</a> </button>
             <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">Changer le mot de passe</a> </button>

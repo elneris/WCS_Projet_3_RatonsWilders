@@ -61,7 +61,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=100, unique=true)
      *  @Assert\Length(
-     *      max = 100,
+     *      max = 50,
      *      maxMessage = "le champ email ne peut pas contenir plus de {{ limit }} caractères"
      * )
      */
@@ -69,6 +69,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$/",
+     *     message="N° invalide (ex :0610101010 où +33610101010)")
      *
      */
     private $phoneNumber;
@@ -80,6 +83,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Length(
+     *      max = 5,
+     *      min = 5,
+     *      maxMessage = "le code postal doit contenir 5 chiffres",
+     *      minMessage = "le code postal doit contenir 5 chiffres"
+     * )
      */
     private $posteCode;
 
