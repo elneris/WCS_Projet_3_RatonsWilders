@@ -24,11 +24,6 @@ class City
     /**
      * @ORM\Column(type="integer")
      */
-    private $pc;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $population;
 
     public function getId(): ?int
@@ -44,18 +39,6 @@ class City
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPc(): ?int
-    {
-        return $this->pc;
-    }
-
-    public function setPc(int $pc): self
-    {
-        $this->pc = $pc;
 
         return $this;
     }
