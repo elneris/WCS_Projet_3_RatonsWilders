@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editer mon profil{% endblock %}
+{% block title %}Éditer mon profil{% endblock %}
 
 {% block body %}
 
-    <h1 class="text-center p-4">Editer mon profil</h1>
+    <h1 class="text-center p-4">Éditer mon profil</h1>
 
     {% for media in user.medias %}
         {% if media.type == 'photo' | e %}
@@ -69,7 +69,7 @@
                         <div class="col-md-4 col-sm-12">{{ form_row(form.city) }}</div>
                         <div class="col-md-4 col-sm-12">{{ form_row(form.posteCode) }}</div>
 
-                <a class="btn-secondary btn" href="{{ path('user_add_activity', {'id': user.id}) }}">Ajouter des activités</a>
+                <a class="btn-secondary btn m-4" href="{{ path('user_add_activity', {'id': user.id}) }}">Ajouter des activités</a>
 
                     </div>
                 </div>

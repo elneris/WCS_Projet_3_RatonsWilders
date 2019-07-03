@@ -1,4 +1,9 @@
+<div class="container">
 {{ form_start(form) }}
     {{ form_row(form.type, {attr:{ 'placeholder' : 'Insérer un lien '}}) }}
-<button class="login-btn btn-secondary" type="submit">Ajouter</button>
+<div class="row">
+<button class="btn btn-secondary m-4" type="submit">Ajouter</button>
+<a class="btn btn-secondary m-4" href="{{ path('user_index') }}">Retour au profil</a>
+</div>
 {{ form_end(form) }}
+</div>
