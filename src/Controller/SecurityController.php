@@ -54,14 +54,20 @@ class SecurityController extends AbstractController
 
                 $message = (new \Swift_Message('Demande de réinitialisation du mot de passe'))
                     ->setFrom('ratonsguincheur@admin.com')
-                    ->setTo($user->getEmail())
-                    ->setBody(
-                        $this->render(
-                            'emails/reset-password-mail.html.twig',
-                            ['token' => $token]
-                        ),
-                        'text/html'
-                    );
+                    ->setTo($user->getEmail());
+
+                $img = $message->embed(\Swift_Image::fromPath('assets/img/logo_lesratons.png'));
+
+                $message->setBody(
+                    $this->render(
+                        'emails/reset-password-mail.html.twig',
+                        [
+                            'token' => $token,
+                            'img' => $img
+                        ]
+                    ),
+                    'text/html'
+                );
                 $mailer->send($message);
 
                 $this->addFlash(
@@ -86,14 +92,14 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reinitialiser-mot-de-passe/{token}", name="reset_password_confirmation")
-     * @param Token $token
+     * @param string $token
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function resetPasswordToken(
-        Token $token,
+        string $token,
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $encoder
