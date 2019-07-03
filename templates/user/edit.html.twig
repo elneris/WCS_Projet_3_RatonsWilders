@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editer mon profil{% endblock %}
+{% block title %}Éditer mon profil{% endblock %}
 
 {% block body %}
 
-    <h1 class="text-center p-4">Editer mon profil</h1>
+    <h1 class="text-center p-4">Éditer mon profil</h1>
 
     {% for media in user.medias %}
         {% if media.type == 'photo' | e %}

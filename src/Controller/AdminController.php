@@ -32,7 +32,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/filter", name="filter")
+     * @Route("/filtrer", name="filter")
      **/
     public function filter(Request $request, UserRepository $userRepository)
     {
