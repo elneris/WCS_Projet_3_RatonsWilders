@@ -9,6 +9,32 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    const USERS = [
+        [
+            'firstname' => 'Elnéris',
+            'lastname' => 'Dang',
+        ],
+        [
+            'firstname' => 'Cha',
+            'lastname' => 'Marvu',
+        ],
+        [
+            'firstname' => 'Florent',
+            'lastname' => 'Duval',
+        ],
+        [
+            'firstname' => 'Maxime',
+            'lastname' => 'Vasseur',
+        ],
+        [
+            'firstname' => 'Pascal',
+            'lastname' => 'Encinas',
+        ],
+        [
+            'firstname' => 'Xavier',
+            'lastname' => 'Crochet',
+        ]
+    ];
     /**
      * @param ObjectManager $manager
      */
@@ -22,95 +48,22 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $user = new User();
-        $firstname = 'Elnéris';
-        $lastname = 'Dang';
-        $email = $firstname . '@gmail.com';
-        $user->setEmail($email);
-        $user->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
-        $user->setFirstname($firstname);
-        $user->setLastname($lastname);
-        $user->setArtistName('elneris33');
-        $user->setRoles(['ROLE_USER']);
-        $user->setEnable(true);
+        foreach (self::USERS as $key => $artist) {
+            $user = new User();
+            $firstname = $artist['firstname'];
+            $lastname = $artist['lastname'];
+            $email = $firstname . '@gmail.com';
+            $user->setEmail($email);
+            $user->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
+            $user->setArtistName($firstname . rand(1, 100));
+            $user->setRoles(['ROLE_USER']);
+            $user->setEnable(true);
 
-        $manager->persist($user);
-        $this->addReference('user_' . 0, $user);
-
-        $user1 = new User();
-        $firstname = 'Cha';
-        $lastname = 'Marvu';
-        $email = $firstname . '@gmail.com';
-        $user1->setEmail($email);
-        $user1->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
-        $user1->setFirstname($firstname);
-        $user1->setLastname($lastname);
-        $user1->setArtistName('chacha');
-        $user1->setRoles(['ROLE_USER']);
-        $user1->setEnable(true);
-
-        $manager->persist($user1);
-        $this->addReference('user_' . 1, $user1);
-
-        $user2 = new User();
-        $firstname = 'Florent';
-        $lastname = 'Duval';
-        $email = $firstname . '@gmail.com';
-        $user2->setEmail($email);
-        $user2->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
-        $user2->setFirstname($firstname);
-        $user2->setLastname($lastname);
-        $user2->setArtistName('Florent33');
-        $user2->setRoles(['ROLE_USER']);
-        $user2->setEnable(true);
-
-        $manager->persist($user2);
-        $this->addReference('user_' . 2, $user2);
-
-        $user3 = new User();
-        $firstname = 'Maxime';
-        $lastname = 'Vasseur';
-        $email = $firstname . '@gmail.com';
-        $user3->setEmail($email);
-        $user3->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
-        $user3->setFirstname($firstname);
-        $user3->setLastname($lastname);
-        $user3->setArtistName('Zertexx');
-        $user3->setRoles(['ROLE_USER']);
-        $user3->setEnable(true);
-
-        $manager->persist($user3);
-        $this->addReference('user_' . 3, $user3);
-
-        $user4 = new User();
-        $firstname = 'Pascal';
-        $lastname = 'Encinas';
-        $email = $firstname . '@gmail.com';
-        $user4->setEmail($email);
-        $user4->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
-        $user4->setFirstname($firstname);
-        $user4->setLastname($lastname);
-        $user4->setArtistName('Pascalou');
-        $user4->setRoles(['ROLE_USER']);
-        $user4->setEnable(true);
-
-        $manager->persist($user4);
-        $this->addReference('user_' . 4, $user4);
-
-        $user5 = new User();
-        $firstname = 'Xavier';
-        $lastname = 'Crochet';
-        $email = $firstname . '@gmail.com';
-        $user5->setEmail($email);
-        $user5->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
-        $user5->setFirstname($firstname);
-        $user5->setLastname($lastname);
-        $user5->setArtistName('Xav');
-        $user5->setRoles(['ROLE_USER']);
-        $user5->setEnable(true);
-
-        $manager->persist($user5);
-        $this->addReference('user_' . 5, $user5);
+            $manager->persist($user);
+            $this->addReference('user_' . $key, $user);
+        }
 
         $admin = new User();
         $email = 'raton_admin@test.fr';
