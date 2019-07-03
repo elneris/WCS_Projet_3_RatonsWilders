@@ -3,15 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
-use App\Entity\City;
 use App\Entity\Link;
+use App\Entity\Media;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
-use App\Repository\CityRepository;
 use App\Repository\MediaRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +24,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
+
     /**
      * @Route("/", name="index", methods={"GET"})
      * @return Response
      */
     public function index(MediaRepository $mediaRepository): Response
     {
+
         $user = $this->getUser();
 
         if (!$user->getEnable()) {
@@ -61,7 +63,6 @@ class UserController extends AbstractController
         return $this->render('security/validation_mail.html.twig');
     }
 
-
     /**
      * @Route("/nouvel-utilisateur", name="new", methods={"GET","POST"})
      * @param Request $request
@@ -91,10 +92,9 @@ class UserController extends AbstractController
      * @Route("/{id}/edition", name="edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
-     * @param CityRepository $city
      * @return Response
      */
-    public function edit(Request $request, User $user, CityRepository $city): Response
+    public function edit(Request $request, User $user): Response
     {
 
         $form = $this->createForm(UserType::class, $user);
@@ -106,12 +106,10 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('user_index', [
                 'id' => $user->getId(),
-
             ]);
         }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'city' => $city,
             'form' => $form->createView(),
         ]);
     }
@@ -206,6 +204,7 @@ class UserController extends AbstractController
         }
         return $this->render('user/change_password.html.twig', [
             'form' => $form->createView(),
+
         ]);
     }
 
