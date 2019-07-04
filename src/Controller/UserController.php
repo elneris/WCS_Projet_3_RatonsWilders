@@ -12,6 +12,7 @@ use App\Form\UserType;
 use App\Form\ActivityType;
 use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
+use App\Services\ActivityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -120,7 +121,7 @@ class UserController extends AbstractController
      * @return Response
      */
 
-    public function addActivity(Request $request): Response
+    public function addActivity(Request $request, ActivityManager $activityManager): Response
     {
         $activity = new Activity();
         $user = $this->getUser();
@@ -131,13 +132,21 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $activity = $form->getData();
             $activity->setUser($user);
-            $this->getDoctrine()->getManager()->persist($activity);
-            $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash(
-                'success',
-                'Votre activité a bien été ajoutée'
-            );
+            if (!$activityManager->activityExist($activity)) {
+                $this->getDoctrine()->getManager()->persist($activity);
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre activité a bien été ajoutée'
+                );
+            } else {
+                $this->addFlash(
+                    'danger',
+                    'Votre activité existe déjà'
+                );
+            }
 
             return $this->redirectToRoute('user_index', [
                 'id' => $activity->getId(),
