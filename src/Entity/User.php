@@ -565,4 +565,11 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getAge()
+    {
+        $dateInterval = $this->birthdate->diff(new \DateTime());
+
+        return $dateInterval->y;
+    }
 }
