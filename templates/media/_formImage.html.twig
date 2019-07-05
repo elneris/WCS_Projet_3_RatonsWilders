@@ -1,7 +1,7 @@
 <div class="container">
 
     {{ form_start(form) }}
-    {{ form_row(form.type) }}
+    <div class="browse"> {{ form_row(form.type) }}</div>
     <button class="btn btn-secondary m-4" type="submit">Ajouter</button>
     <a class="btn btn-secondary m-4" href="{{ path('user_index') }}">Retour au profil</a>
     {{ form_end(form) }}
