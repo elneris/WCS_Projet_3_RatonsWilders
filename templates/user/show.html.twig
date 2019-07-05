@@ -1,153 +1,217 @@
 {% extends 'base.html.twig' %}
-{% block title %}User{% endblock %}
+{% block title %} Bienvenue sur votre page profil{% endblock %}
 {% block body%}
-<div class="class body-profile">
-    <div class=" container-top">
-        <p>
-            {% for userlink in user.links %}
-                <a href="{{ userlink.url }}" target=_blank>
-                    <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
-                </a>
-            {% endfor %}
-        </p>
-    </div>
-    <div class="container-middle">
-        <div class="profile">
-            {% if user.artistName | e %}
-                <p><img class="avatar" src="{{ asset('assets/img/download/'~ user.firstname ~'.png') }}" alt="card image"></p>
-            {% else %}
-                <p><img class="avatar" src="{{ asset('assets/img/download/avatar.jpg') }}" alt="card image"></p>
+    {% if app.user.roles.0 == 'ROLE_USER' %}
+        {% set lvl = app.user %}
+    {% else %}
+        {% set lvl = user %}
+    {% endif %}
+
+    <div class="body_show">
+
+        <div class=" container-top">
+            {% if lvl.roles.0 == 'ROLE_USER' %}
+            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': lvl.id}) }}">Éditer</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">Changer le mot de passe</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">Changer l'avatar</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('image_new') }}">Ajouter des images</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('video_new') }}">Ajouter des vidéos</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('musique_new') }}">Ajouter des musiques</a> </button>
+            <button class="btn badge-light"> <a href="{{ path('app_logout') }}">Se déconnecter</a> </button>
             {% endif %}
-            <h2>{{ user.firstname | upper }} {{ user.lastname | upper  }}</h2>
-            <h2>{% for activity in user.activities %}{{ activity.Domain.Name | capitalize }} {% endfor %}</h2>
-            <h4 class="col-xl-6 col-md-8 text-align"> {{ user.about }} </h4>
+            <p>
+                {% for userlink in lvl.links %}
+                    <a href="{{ userlink.url }}" target=_blank>
+                        <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
+                    </a>
+                {% endfor %}
+            </p>
         </div>
-    </div>
-    <div class="container-bottom ">
-        <div class="row justify-content-center">
-            <div>
-                <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
-                    {{ user.email }}
-            </div>
-            <div>
-                {% if user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
-                    <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
-                    {{ user.phoneNumber }}
+
+        <div class="container-middle">
+            <div class="profile">
+                {% if avatar is empty %}
+                <img class="avatar" src="{{ asset('uploads/avatars/avatar.jpg')}}" alt="card image">
+                {% else %}
+                <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}}" alt="card image">
                 {% endif %}
-            </div>
-            <div>
-            {% for media in user.medias %}
-                {% if media.type == 'internet' %}
-                    <a class="lien" href="{{ media.url }}"  target=_blank>
-                     <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
-                    {{ media.url }}</a>
-                {% endif %}
-            {% endfor %}
+
+                <h2>{{ lvl.firstname | upper }} {{ lvl.lastname | upper  }}</h2>
+                <h2>{% for activity in lvl.activities %}
+                        {{ activity.Domain.Name | capitalize }}
+                    {% endfor %}</h2>
+                <h4 class="col-xl-6 col-md-8 text-center m-auto"> {{ lvl.about }} </h4>
             </div>
         </div>
-    </div>
-<!-- Nav Media -->
-    <div class="profile-body">
-        <h2>Portfolio</h2>
-        <ul class="nav nav-pills pills-media mb-3 sm-5 " id="pills-tab" role="tablist">
-            <li class="nav-item">
-                <a class="link-media-p active" id="pills-photo-tab" data-toggle="pill" href="#pills-photo" role="tab"
-                   aria-selected="true">Photos</a>
-            </li>
-            <li class="nav-item">
-                <a class="link-media-v" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-                   aria-controls="pills-profile" aria-selected="false">Videos</a>
-            </li>
-            <li class="nav-item">
-                <a class="link-media-m" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-                   aria-controls="pills-contact" aria-selected="false">Musics</a>
-            </li>
-        </ul>
-<!-- Media | Photos -->
-        <div class="tab-content" id="pills-tabContent">
-            <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
-                {% for media in user.medias %}
-                    {% if media.type == 'Photo' %}
-                        <img class="media-img" src="{{ asset(  media.url ) }}" alt="{{ media.Name }}">
-                    {% endif %}
-                {% endfor %}
-            </div>
-<!-- Media | Videos -->
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                {% for media in user.medias %}
-                    {% if media.type == 'video' %}
-                <object class="media-img">
-                    <param name="movie" value="https://www.youtube.com/embed/KMvuZgLj_fI">
-                </object>
-                    {% endif %}
-                {% endfor %}
-            </div>
-<!-- Media | Musics -->
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                {% for media in user.medias %}
-                    {% if media.type == 'music' %}
-                        Lien vers votre music
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-<!-- Informations utilisateur -->
-    <div class="profile-body justify-content-center">
-        <h2>Renseignement supplémentaire</h2>
-        <div class="col-12 row container-rs">
-            <div class="col-md-5 col-12 row rs-body">
-                <div class="rs-left">
-                    Nom de scène<br><br>
-                    Nom<br>
-                    Prénom<br><br>
-                    Adresse<br>
-                    Code Postal<br>
-                    Ville<br><br>
-                    Tél<br>
-                    E_mail<Br>
+        <div class="container-bottom ">
+            <div class="row justify-content-center">
+                <div>
+                    <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
+                    {{ lvl.email }}
                 </div>
-                <div class="rs-rigth">
-                    {{ user.artistName }}<br><br>
-                    {{ user.firstname }}<br>
-                    {{ user.lastname }}<br><br>
-                    {{ user.address }}<br>
-                    {{ user.posteCode }}<br>
-                    {{ user.city }}<br><br>
-                    {{ user.phoneNumber }}<br>
-                    {{ user.email }}<br>
+                <div>
+                    {% if lvl.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
+                        <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
+                        {{ lvl.phoneNumber }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% for media in lvl.medias %}
+                        {% if media.type == 'internet' %}
+                            <a class="lien" href="{{ media.url }}"  target=_blank>
+                                <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
+                                {{ media.url }}</a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
+        </div>
+        <!-- Nav Media -->
+        <div class="profile-body">
+            <h2>Portfolio</h2>
+            <ul class="nav nav-pills pills-media mb-3 sm-5 " id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="link-media-p active" id="pills-photo-tab" data-toggle="pill" href="#pills-photo" role="tab"
+                       aria-selected="true">Photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="link-media-v" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                       aria-controls="pills-profile" aria-selected="false">Vidéos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="link-media-m" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                       aria-controls="pills-contact" aria-selected="false">Musiques</a>
+                </li>
+            </ul>
+            <!-- Media | Photos -->
+            <div class="tab-content" id="pills-tabContent">
+                <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
+                    {% for media in lvl.medias %}
+                        {% if media.type == 'Image' %}
+                            <img class="media-img" src="{{ asset('uploads/images/' ~ media.url)}}" alt="{{ media.Name }}">
+                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- Media | Videos -->
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    {% for media in lvl.medias %}
+                        {% if media.type == 'lienVideo' %}
+                            <object class="media-img">
+                                <param name="movie" value="{{ media.url }}">
+                            </object>
+                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- Media | Musics -->
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    {% for media in lvl.medias %}
+                        {% if media.type == 'lienMusique' %}
+                            <object class="media-img">
+                                <param name="movie" value="{{ media.url }}">
+                            </object>
+                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Informations utilisateur -->
+        <div class="profile-body justify-content-center">
+            <h2>Renseignements supplémentaires</h2>
+            <div class="col-12 row container-rs">
+                <div class="col-md-5 col-12 row rs-body">
+                    <div class="rs-left">
+                        <ul>
+                            <li>Nom de scène :</li>
+                            <li>Nombre de personnes :</li><br>
+
+                            <li>Nom :</li>
+                            <li>Prénom :</li>
+                            <li>Age :</li><br>
+
+                            <li>Adresse :</li>
+                            <li>Code Postal :</li>
+                            <li>Ville :</li><br>
+
+                            <li>Téléphone :</li>
+                            <li>Email :</li><br>
+
+                            <li>Zone d'activité :</li>
+                            <li>Tarif :</li>
+                            <li>Type de facturation :</li><br>
+                        </ul>
+                    </div>
+                    <div class="rs-rigth">
+                        {{ lvl.artistname }}<br>
+                        {{ lvl.personsNumber }}<br><br>
+
+                        {{ lvl.lastname }}<br>
+                        {{ lvl.firstname }}<br>
+                        {{ lvl.getAge }} {% if lvl.getAge %}Ans{% endif %}<br><br>
+
+                        {{ lvl.address }}<br>
+                        {{ lvl.posteCode }}<br>
+                        {{ lvl.city }}<br><br>
+
+                        {{ lvl.phoneNumber }}<br>
+                        {{ lvl.email }}<br><br>
+
+                        {{ lvl.geoArea }}<br>
+                        {{ lvl.price }} {% if lvl.price %}€{% endif %}<br>
+                        {{ lvl.billingType }}<br><br>
+                    </div>
+                </div>
                 <div class="col-md-6 col-12 array-rs">
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">Métier(s)</th>
                             <th scope="col">Accessoire(s)</th>
-                            <th scope="col">style(s): </th>
+                            <th scope="col">Style(s): </th>
+                            <th scope="col">Supprimer: </th>
                         </tr>
                         </thead>
                         <tbody>
-                            {% for activity in user.activities %}
-                                <tr>
-                                    <td>{% if activity.style.type is defined%}{{activity.domain.Name }} {% endif %}</td>
-                                    <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
-                                    <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
-                                </tr>
-                            {% endfor %}
+                        {% for activity in lvl.activities %}
+                            <tr>
+                                <td>{{activity.domain.Name }}</td>
+                                <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
+                                <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
+                                <td>
+                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
+                                        <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
-            <div class="col-10 rs-info-sup">
-                Zone géographique: {{ user.geoArea }} -
-                Nombre de perseonne: 5 -
-                Type de facturation: GUSO -
-                Prix: {{ user.price }}€ <Br>
-                Besoin téchnique: SONO DJ
+                {% if lvl.technicalNeeds %}
+                <div class="text-center">
+                    <ul>
+                        <li class="font-weight-bold">Besoin(s) technique(s) :</li> <br>{{ lvl.technicalNeeds }}
+                    </ul>
+                </div>
+                {% endif %}
             </div>
         </div>
+        <p class="copyright">Copyright@LesRatonsWilders</p>
     </div>
-    <p class="copyright">Copyright@LesRatonsWilders</p>
-</div>
 {% endblock %}
-

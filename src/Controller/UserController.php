@@ -6,35 +6,65 @@ use App\Entity\Activity;
 use App\Entity\Link;
 use App\Entity\Media;
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\LinkType;
 use App\Form\UserType;
 use App\Form\ActivityType;
+use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/user")
+ * @Route("/utilisateur", name="user_")
  */
 class UserController extends AbstractController
 {
 
     /**
-     * @Route("/", name="user_index", methods={"GET"})
-     * @param UserRepository $userRepository
+     * @Route("/", name="index", methods={"GET"})
      * @return Response
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(MediaRepository $mediaRepository): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+
+        $user = $this->getUser();
+
+        if (!$user->getEnable()) {
+            $this->addFlash(
+                'danger',
+                'Votre compte n\'est pas validé, merci de vérifier vos emails'
+            );
+
+            return $this->redirectToRoute('user_validation');
+        }
+
+        $id = $this->getUser()->getId();
+        $avatar = null;
+
+        if (!empty($mediaRepository->findLastAvatar($id))) {
+            $avatar = $mediaRepository->findLastAvatar($id);
+        }
+
+        return $this->render('user/show.html.twig', [
+            'avatar' => $avatar
         ]);
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @ROUTE("/validation", name="validation")
+     */
+    public function show()
+    {
+        return $this->render('security/validation_mail.html.twig');
+    }
+
+    /**
+     * @Route("/nouvel-utilisateur", name="new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -59,19 +89,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
-     * @param User $user
-     * @return Response
-     */
-    public function show(User $user): Response
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edition", name="edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
      * @return Response
@@ -82,13 +100,17 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->remove('password');
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->persist($user);
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->persist($user);
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index', [
-                'id' => $user->getId(),
-            ]);
+                return $this->redirectToRoute('user_index', [
+                    'id' => $user->getId(),
+                ]);
+            } else {
+                $this->addFlash('danger', 'L\'un des champs renseigné n\'est pas valide');
+            }
         }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
@@ -97,27 +119,36 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit_activities", name="user_edit_activities", methods={"GET","POST"})
+     * @Route("/{id}/ajout-activite", name="add_activity", methods={"GET","POST"})
      * @param Request $request
-     * @param Activity $activity
      * @return Response
      */
 
-    public function editActivities(Request $request, Activity $activity, User $user): Response
+    public function addActivity(Request $request): Response
     {
+        $activity = new Activity();
+        $user = $this->getUser();
+
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $activity = $form->getData();
+            $activity->setUser($user);
             $this->getDoctrine()->getManager()->persist($activity);
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre activité a bien été ajoutée'
+            );
 
             return $this->redirectToRoute('user_index', [
                 'id' => $activity->getId(),
             ]);
         }
 
-        return $this->render('user/edit_activities.html.twig', [
+        return $this->render('user/add_activity.html.twig', [
             'activity' => $activity,
             'user' => $user,
             'form' => $form->createView(),
@@ -125,9 +156,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit_links", name="user_edit_links", methods={"GET","POST"})
+     * @Route("/{id}/edition-liens", name="edit_links", methods={"GET","POST"})
      * @param Request $request
      * @param Link $links
+     * @param User $user
      * @return Response
      */
 
@@ -152,18 +184,51 @@ class UserController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/changement-mot-de-passe", methods={"GET", "POST"}, name="change_password")
      * @param Request $request
-     * @param User $user
+     * @param UserPasswordEncoderInterface $encoder
      * @return Response
      */
-    public function delete(Request $request, User $user): Response
+
+    public function changePassword(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($encoder->encodePassword($user, $form->get('newPassword')->getData()));
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Votre mot de passe a bien été modifié'
+            );
+            return $this->redirectToRoute('user_index');
+        }
+        return $this->render('user/change_password.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
+
+    /**
+     * @Route("/supprimer-activite/{id}", name="delete_activity")
+     * @param Activity $activity
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteActivity(Activity $activity, EntityManagerInterface $em, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
+            $em->remove($activity);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Vous avez bien supprimé cette activité'
+            );
         }
 
         return $this->redirectToRoute('user_index');

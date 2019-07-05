@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        {% for user in users %}
+            {% if user.roles.0 == 'ROLE_USER' %}
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="card">
+                    <a href="{{ path('admin_user_show', { 'id': user.id }) }}">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('build/images/Photos_CV_Xavier.png') }}"
+                                 class="card-img-top rounded-circle w-75 mx-auto mt-3" alt="{{ user.firstname }}">
+                            <h5 class="card-title text-center pt-2">{{ user.artistName }}</h5>
+                            <h5 class="card-title text-center pt-2">{{ user.lastname | upper }} {{ user.firstname }}</h5>
+                            <hr>
+                            <div class="card-text text-center">{{ user.price }} {% if user.price %}€ - {% endif %}{{  user.billingType }}</div>
+                            <p class="card-text text-center">{{ user.email }}</p>
+                            <div class="card-text text-center">
+                                <ul class="activities">
+                                    {% set shown = [] %}
+                                    {% for activity in user.activities %}
+                                        {% if activity.domain.name not in shown %}
+                                            {% set shown = shown|merge([activity.domain.name]) %}
+                                            <li>{{ activity.domain.name }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for activity in user.activities %}
+                                        {% if activity.style and activity.style.type not in shown %}
+                                            {% set shown = shown|merge([activity.style.type]) %}
+                                            <li>{{ activity.style.type }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for activity in user.activities %}
+                                        {% if activity.skill and activity.skill.name not in shown %}
+                                            {% set shown = shown|merge([activity.skill.name]) %}
+                                            <li>{{ activity.skill.name }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

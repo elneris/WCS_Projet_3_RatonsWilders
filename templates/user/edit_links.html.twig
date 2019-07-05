@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editer mes liens{% endblock %}
+{% block title %}Éditer mes liens{% endblock %}
 
 {% block body %}
+
+        <div class="class body-edit">
+
     <h1>Editer mes liens</h1>
 
     <div class="container-fluid">
@@ -22,7 +25,7 @@
                         </form>
                         </td>
                         <td>
-                            <button class="btn btn-secondary" onclick="editRow(this)">Edit</button>
+                            <button class="btn btn-secondary" onclick="editRow(this)">Éditer</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -45,4 +48,5 @@
         $(btn).parent().find('form').toggle();
     }
 </script>
+        </div>
 {% endblock %}

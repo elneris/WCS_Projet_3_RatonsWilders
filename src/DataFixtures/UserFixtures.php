@@ -9,6 +9,44 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    const USERS = [
+        [
+            'firstname' => 'Elnéris',
+            'lastname' => 'Dang',
+            'role' => 'ROLE_USER',
+
+        ],
+        [
+            'firstname' => 'Cha',
+            'lastname' => 'Marvu',
+            'role' => 'ROLE_USER',
+        ],
+        [
+            'firstname' => 'Florent',
+            'lastname' => 'Duval',
+            'role' => 'ROLE_USER',
+        ],
+        [
+            'firstname' => 'Maxime',
+            'lastname' => 'Vasseur',
+            'role' => 'ROLE_USER',
+        ],
+        [
+            'firstname' => 'Pascal',
+            'lastname' => 'Encinas',
+            'role' => 'ROLE_USER',
+        ],
+        [
+            'firstname' => 'Xavier',
+            'lastname' => 'Crochet',
+            'role' => 'ROLE_USER',
+        ],
+        [
+            'firstname' => 'raton',
+            'lastname' => 'admin',
+            'role' => 'ROLE_ADMIN',
+        ],
+    ];
     /**
      * @param ObjectManager $manager
      */
@@ -22,31 +60,27 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i <5; $i++) {
+        foreach (self::USERS as $key => $artist) {
             $user = new User();
-            $email = 'test' . $i . '@test.fr';
+            $firstname = $artist['firstname'];
+            $lastname = $artist['lastname'];
+            $email = $firstname . '@gmail.com';
             $user->setEmail($email);
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
-            $user->setFirstname('test');
-            $user->setLastname($i);
-            $user->setArtistName("test $i");
-            $user->setRoles(['ROLE_USER']);
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
+            $user->setArtistName($firstname . rand(1, 100));
+            $user->setRoles([$artist['role']]);
+            $user->setEnable(true);
 
-
+            if ($artist['role'] == 'ROLE_ADMIN') {
+                $this->addReference('admin', $user);
+            } else {
+                $this->addReference('user_' . $key, $user);
+            }
             $manager->persist($user);
-            $this->addReference('user_' . $i, $user);
         }
-        $admin = new User();
-        $email = 'test_admin@test.fr';
-        $admin->setEmail($email);
-        $admin->setPassword($this->passwordEncoder->encodePassword($admin, 'root'));
-        $admin->setFirstname('test');
-        $admin->setLastname($i);
-        $admin->setArtistName("testAdmin");
-        $admin->setRoles(['ROLE_ADMIN']);
 
-        $manager->persist($admin);
-        $this->addReference('admin', $admin);
 
         $manager->flush();
     }

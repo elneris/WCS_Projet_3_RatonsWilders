@@ -17,27 +17,28 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, ['attr' => ['placeholder' => 'Email', 'autofocus' => true,]])
+
             ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe doivent être identiques',
-                'required' => true,
-                'first_options' => ['label' => 'Mot de passe' , 'attr' => ['class' => 'form-control']],
-                'second_options' => ['label' => 'Confirmation du mot de passe', 'attr' => ['class' => 'form-control']],
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
+
+                    'type' => PasswordType::class,
+                    'invalid_message' => 'Les mots de passe doivent être identiques',
+                    'required' => true,
+                    'first_options' => [
+                                         'attr' => ['placeholder' => 'Mot de passe']],
+
+                    'second_options' => [
+                                         'attr' => ['placeholder' => 'Confirmation du mot de passe']],
+                    'mapped' => false,
+                    'constraints' => [ new NotBlank([
+                                                    'message' => 'Entrer un mot de passe',
                     ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
-        ;
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères',
+                            'max' => 4096,]),
+                        ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

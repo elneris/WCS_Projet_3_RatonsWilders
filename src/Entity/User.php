@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -32,26 +33,46 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      max = 25,
+     *      maxMessage = "le champ prénom ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "le champ nom ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "le champ nom d'artiste ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $artistName;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     *  @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "le champ email ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$/",
+     *     message="N° invalide (ex :0610101010 où +33610101010)")
+     *
      */
     private $phoneNumber;
 
@@ -62,6 +83,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Length(
+     *      max = 5,
+     *      min = 5,
+     *      maxMessage = "le code postal doit contenir 5 chiffres",
+     *      minMessage = "le code postal doit contenir 5 chiffres"
+     * )
      */
     private $posteCode;
 
@@ -72,6 +99,10 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *  @Assert\Length(
+     *      max = 40,
+     *      maxMessage = "le champ adresse ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $address;
 
@@ -92,7 +123,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "La description ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
+
     private $about;
 
     /**
@@ -120,6 +156,35 @@ class User implements UserInterface
      */
     private $medias;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enable = false;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $sentToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $personsNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $billingType;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $technicalNeeds;
 
     public function getId(): ?int
     {
@@ -422,5 +487,90 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getEnable(): ?bool
+    {
+        return $this->enable;
+    }
+
+    public function setEnable(bool $enable): self
+    {
+        $this->enable = $enable;
+
+        return $this;
+    }
+  
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    public function getSentToken(): ?\DateTimeInterface
+    {
+        return $this->sentToken;
+    }
+
+    public function setSentToken(\DateTimeInterface $sentToken): self
+    {
+        $this->sentToken = $sentToken;
+        return $this;
+    }
+
+    public function expiredReset()
+    {
+        $interval = new \DateInterval('PT24H');
+        return $this->sentToken->add($interval) >= new \DateTime();
+    }
+
+    public function getPersonsNumber(): ?string
+    {
+        return $this->personsNumber;
+    }
+
+    public function setPersonsNumber(?string $personsNumber): self
+    {
+        $this->personsNumber = $personsNumber;
+
+        return $this;
+    }
+
+    public function getBillingType(): ?string
+    {
+        return $this->billingType;
+    }
+
+    public function setBillingType(?string $billingType): self
+    {
+        $this->billingType = $billingType;
+
+        return $this;
+    }
+
+    public function getTechnicalNeeds(): ?string
+    {
+        return $this->technicalNeeds;
+    }
+
+    public function setTechnicalNeeds(?string $technicalNeeds): self
+    {
+        $this->technicalNeeds = $technicalNeeds;
+
+        return $this;
+    }
+
+    public function getAge()
+    {
+        if ($this->birthdate) {
+            $dateInterval = $this->birthdate->diff(new \DateTime());
+            return $dateInterval->y;
+        }
     }
 }

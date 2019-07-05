@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des médias{% endblock %}
+
+{% block body %}
+
+
+    <h1>Insérer votre image au format : jpg, jpeg ou png</h1>
+
+
+
+    {{ include('media/_formImage.html.twig') }}
+
+{% endblock %}
+
+{% block javascripts %}
+ {{ parent() }}
+{% endblock %}

@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Link;
 use App\Entity\Media;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -32,43 +34,56 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
 
-                'label' => 'Prénom'
+                'label' => 'Prénom',
+                'required'=>false
             ])
 
             ->add('lastname', TextType::class, [
 
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'required'=>false
             ])
             ->add('artistName', TextType::class, [
 
-                'label'=>"Nom d'artiste"
+                'label'=>'Nom d\'artiste',
+                'required'=>false
             ])
 
             ->add('email', EmailType::class)
 
             ->add('phoneNumber', TelType::class, [
 
-                'label' => 'N° de téléphone'
+                'label' => 'N° de téléphone',
+                'required'=>false
             ])
 
-            ->add('city', CountryType::class, [
+            ->add('city', EntityType::class, [
+                'label'=>'Ville',
+                'class' => City::class,
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
 
-                'label'=>'Ville'
             ])
 
             ->add('posteCode', NumberType::class, [
 
-                'label'=>'Code postal'
+                'label'=>'Code postal',
+                'required'=>false,
             ])
 
             ->add('birthdate', BirthdayType::class, [
 
-                'label'=>'Date de naissance'
+                'label'=>'Date de naissance',
+                'required'=>false
             ])
 
             ->add('address', TextType::class, [
 
-                'label'=>'Adresse'
+                'label'=>'Adresse',
+                'required'=>false
             ])
 
             ->add('password', RepeatedType::class, [
@@ -80,29 +95,59 @@ class UserType extends AbstractType
             ])
 
             ->add('geoArea', ChoiceType::class, [
+                'label' => 'Zone de déplacement',
                 'choices'  => [
-                    'Région Nord' => true,
-                    'Région Nord Ouest' => true,
-                    'Région Nord Est' => true,
-                    'Région Centre' => true,
-                    'Région Sud' => true,
-                    'Région Sud Ouest' => true,
-                    'Région Sud Est' => true,
+                    'Région Nord' => 'Région Nord',
+                    'Région Nord Ouest' => 'Région Nord Ouest',
+                    'Région Nord Est' => 'Région Nord Est',
+                    'Région Centre' => 'Région Centre',
+                    'Région Sud' => 'Région Sud',
+                    'Région Sud Ouest' => 'Région Sud Ouest',
+                    'Région Sud Est' => 'Région Sud Est',
 
 
                 ]])
 
             ->add('price', MoneyType::class, [
 
-                'divisor' => 100,
                 'label' => 'Tarif',
+                'required'=>false
             ])
 
             ->add('about', TextareaType::class, [
 
                 'label'=>'Description',
+                'required'=>false
 
-            ]);
+            ])
+
+            ->add('personsNumber', ChoiceType::class, [
+                'label' => 'Nombre de personnes',
+                'choices'  => [
+                    'Solo' => 'Solo',
+                    'Duo' => 'Duo',
+                    'Trio' => 'Trio',
+                    'Quatuor' => 'Quatuor',
+                    '5 +' => '5 +',
+                ],
+                'required'=>false,
+            ])
+
+            ->add('billingType', ChoiceType::class, [
+                'label' => 'Type de facturation',
+                'choices' => [
+                    'Guso' => 'Guso',
+                    'Facture' => 'Facture',
+                    'Autres' => 'Autres',
+                ],
+                'required'=>false,
+            ])
+
+            ->add('technicalNeeds', TextareaType::class, [
+                'label' => 'Besoin(s) technique(s)',
+                'required' => false,
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

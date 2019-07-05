@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\FilterType;
 use App\Form\UserSearchType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,18 +17,36 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+
     /**
      * @Route("/", name="index")
      * @return Response A response instance
      */
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
-        $arrayUser = $this->getDoctrine()
-            ->getRepository(User::class);
+        $users = $userRepository->findLastTenUsers();
 
-        $users = $arrayUser->findBy([], ['id' => 'DESC'], 5);
+        return $this->render('admin/index.html.twig', [
+            'users' => $users
+        ]);
+    }
 
-        return $this->render('Admin/index.html.twig', [
+    /**
+     * @Route("/filtrer", name="filter")
+     **/
+    public function filter(Request $request, UserRepository $userRepository)
+    {
+        $filter = $this->createForm(FilterType::class);
+        $users = [];
+
+        $form = $filter->handleRequest($request);
+
+        if ($form->isSubmitted() && $filter->isValid()) {
+            $users = $userRepository->myFilter($filter->getData());
+        }
+
+        return $this->render('admin/filter.html.twig', [
+            'filterDomainForm' => $filter->createView(),
             'users' => $users
         ]);
     }
@@ -35,6 +54,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/rechercher", name="search")
      * @param Request $request
+     * @param UserRepository $userRepository
      * @return Response
      */
     public function search(Request $request, UserRepository $userRepository): Response
@@ -44,11 +64,24 @@ class AdminController extends AbstractController
         $users = $userRepository->searchByNames($form->getData()['searchField']);
 
             return $this->render(
-                'Admin/search.html.twig',
+                'admin/search.html.twig',
                 [
                     'users'=> $users,
                     'form' => $form->createView()
                 ]
             );
+    }
+
+    /**
+     * @Route("/{id}", name="user_show")
+     * @param User $user
+     * @return Response
+     */
+    public function show(User $user): Response
+    {
+        return $this->render('admin/show.html.twig', [
+                'user' => $user
+
+        ]);
     }
 }
