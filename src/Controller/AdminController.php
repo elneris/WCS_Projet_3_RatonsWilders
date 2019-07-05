@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Media;
 use App\Entity\User;
 use App\Form\FilterType;
 use App\Form\UserSearchType;
+use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +22,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/", name="index")
+     * @param UserRepository $userRepository
      * @return Response A response instance
      */
     public function index(UserRepository $userRepository): Response
@@ -33,7 +36,10 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/filtrer", name="filter")
-     **/
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @return Response
+     */
     public function filter(Request $request, UserRepository $userRepository)
     {
         $filter = $this->createForm(FilterType::class);
@@ -63,13 +69,13 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         $users = $userRepository->searchByNames($form->getData()['searchField']);
 
-            return $this->render(
-                'admin/search.html.twig',
-                [
-                    'users'=> $users,
-                    'form' => $form->createView()
-                ]
-            );
+        return $this->render(
+            'admin/search.html.twig',
+            [
+                'users'=> $users,
+                'form' => $form->createView()
+            ]
+        );
     }
 
     /**
