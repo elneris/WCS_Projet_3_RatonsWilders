@@ -151,7 +151,7 @@ class UserController extends AbstractController
                     'Votre activité a bien été ajoutée'
                 );
             }
-            return $this->redirectToRoute('user_add_activity', [
+            return $this->redirectToRoute('user_index', [
                 'id' => $user->getId(),
             ]);
         }
