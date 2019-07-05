@@ -22,7 +22,7 @@
         <div class="container-middle">
             <div class="profile">
                 {% if avatar is empty %}
-                <img class="avatar" src="{{ asset('/uploads/avatars/avatar.jpg')}}" alt="card image">
+                <img class="avatar" src="{{ asset('uploads/avatars/avatar.jpg')}}" alt="card image">
                 {% else %}
                 <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}}" alt="card image">
                 {% endif %}
