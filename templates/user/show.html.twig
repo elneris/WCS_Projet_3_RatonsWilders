@@ -13,7 +13,6 @@
 
             <p>
                 {% for userlink in app.user.links %}
-                    {{ dump(app) }}
                     <a href="{{ userlink.url }}" target=_blank>
                         <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
                     </a>
