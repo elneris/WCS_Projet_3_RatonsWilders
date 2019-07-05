@@ -205,12 +205,21 @@
 
 .link-media-p:hover,
 .link-media-v:hover,
-.link-media-m:hover {
+.link-media-m:hover
+{
   color: #566f7c;
   border-bottom: 5px solid #566f7c;
   text-decoration: none;
 }
 
+.link-media-p.active,
+.link-media-v.active,
+.link-media-m.active
+{
+  color: #566f7c;
+  border-bottom: 5px solid #566f7c;
+  text-decoration: none;
+}
 .profile-body H2 {
   color: #4b626d;
 }
