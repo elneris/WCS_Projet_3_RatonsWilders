@@ -27,6 +27,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @param MediaRepository $mediaRepository
      * @return Response
      */
     public function index(MediaRepository $mediaRepository): Response
