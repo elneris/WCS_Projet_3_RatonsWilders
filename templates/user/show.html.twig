@@ -13,6 +13,7 @@
 
             <p>
                 {% for userlink in app.user.links %}
+                    {{ dump(app) }}
                     <a href="{{ userlink.url }}" target=_blank>
                         <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
                     </a>
@@ -22,7 +23,7 @@
         <div class="container-middle">
             <div class="profile">
                 {% if avatar is empty %}
-                <img class="avatar" src="{{ asset('/uploads/avatars/a')}}" alt="card image">
+                <img class="avatar" src="{{ asset('/uploads/avatars/')}}" alt="card image">
                 {% else %}
                 <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}}" alt="card image">
                 {% endif %}
