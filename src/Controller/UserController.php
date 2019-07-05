@@ -135,7 +135,6 @@ class UserController extends AbstractController
                     'danger',
                     'Votre activité existe déjà'
                 );
-
             } else {
                 $activity->setUser($user);
 
@@ -146,7 +145,6 @@ class UserController extends AbstractController
                     'success',
                     'Votre activité a bien été ajoutée'
                 );
-
             }
             return $this->redirectToRoute('user_add_activity', [
                 'id' => $user->getId(),
