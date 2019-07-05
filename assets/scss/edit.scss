@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
 h1{
   color: white;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  padding-bottom: 60px;
 }
 .edition{
   color: white;
@@ -14,9 +19,17 @@ h1{
   margin: 25px;
 }
 
+
 body{
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/assets/img/raton.jpg");
 }
+
+@media (min-width: 1200px) {
+  body{
+    background-size: cover;
+  }
+}
+
 
 .edition{
   .nav-tabs{
@@ -27,7 +40,7 @@ body{
   }
   .form-control{
     padding: 0.375rem 0.75rem;
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 600;
     line-height: 1.5;
     color: #ffffff;
@@ -61,7 +74,10 @@ body{
       border: 1px solid white;
     }
   }
-}
 
+}
+  .custom-file-label::after{
+  content: "Parcourir";
+}
 
 
