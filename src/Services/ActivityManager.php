@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Entity\Activity;
+use App\Entity\User;
 use App\Repository\ActivityRepository;
 
 class ActivityManager
@@ -13,19 +15,15 @@ class ActivityManager
         $this->activityRepository = $activityRepository;
     }
 
-    public function activityExist($activity)
+    public function activityExists(Activity $activity, User $user)
     {
-        $useractivities = $this->activityRepository->findAll();
+        $userActivity = $this->activityRepository->findOneBy([
+            'user' => $user,
+            'domain' => $activity->getDomain(),
+            'style' => $activity->getStyle(),
+            'skill' => $activity->getSkill(),
+        ]);
 
-        foreach ($useractivities as $useractivity) {
-            if ($useractivity->getUser() === $activity->getUser() &&
-                $useractivity->getDomain() === $activity->getdomain() &&
-                $useractivity->getskill() === $activity->getskill() &&
-                $useractivity->getStyle() === $activity->getStyle()
-            ) {
-                return true;
-            }
-        }
-        return false;
+        return !empty($userActivity);
     }
 }

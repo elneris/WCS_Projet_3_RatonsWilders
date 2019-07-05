@@ -130,10 +130,15 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $activity = $form->getData();
-            $activity->setUser($user);
+            if ($activityManager->activityExists($activity, $user)) {
+                $this->addFlash(
+                    'danger',
+                    'Votre activité existe déjà'
+                );
 
-            if (!$activityManager->activityExist($activity)) {
+            } else {
+                $activity->setUser($user);
+
                 $this->getDoctrine()->getManager()->persist($activity);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -141,18 +146,12 @@ class UserController extends AbstractController
                     'success',
                     'Votre activité a bien été ajoutée'
                 );
-            } else {
-                $this->addFlash(
-                    'danger',
-                    'Votre activité existe déjà'
-                );
-            }
 
-            return $this->redirectToRoute('user_index', [
-                'id' => $activity->getId(),
+            }
+            return $this->redirectToRoute('user_add_activity', [
+                'id' => $user->getId(),
             ]);
         }
-
         return $this->render('user/add_activity.html.twig', [
             'activity' => $activity,
             'user' => $user,
@@ -226,7 +225,7 @@ class UserController extends AbstractController
      */
     public function deleteActivity(Activity $activity, EntityManagerInterface $em, Request $request)
     {
-        if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $activity->getId(), $request->request->get('_token'))) {
             $em->remove($activity);
             $em->flush();
 
