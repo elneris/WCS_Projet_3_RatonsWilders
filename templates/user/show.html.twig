@@ -1,24 +1,33 @@
 {% extends 'base.html.twig' %}
 {% block title %} Bienvenue sur votre page profil{% endblock %}
 {% block body%}
+    {% if app.user.roles.0 == 'ROLE_USER' %}
+        {% set lvl = app.user %}
+    {% else %}
+        {% set lvl = user %}
+    {% endif %}
+
     <div class="body_show">
+
         <div class=" container-top">
-            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': app.user.id}) }}">Éditer</a> </button>
+            {% if lvl.roles.0 == 'ROLE_USER' %}
+            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': lvl.id}) }}">Éditer</a> </button>
             <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">Changer le mot de passe</a> </button>
             <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">Changer l'avatar</a> </button>
             <button class="btn badge-light"> <a href="{{ path('image_new') }}">Ajouter des images</a> </button>
             <button class="btn badge-light"> <a href="{{ path('video_new') }}">Ajouter des vidéos</a> </button>
             <button class="btn badge-light"> <a href="{{ path('musique_new') }}">Ajouter des musiques</a> </button>
             <button class="btn badge-light"> <a href="{{ path('app_logout') }}">Se déconnecter</a> </button>
-
+            {% endif %}
             <p>
-                {% for userlink in app.user.links %}
+                {% for userlink in lvl.links %}
                     <a href="{{ userlink.url }}" target=_blank>
                         <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
                     </a>
                 {% endfor %}
             </p>
         </div>
+
         <div class="container-middle">
             <div class="profile">
                 {% if avatar is empty %}
@@ -27,27 +36,27 @@
                 <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}}" alt="card image">
                 {% endif %}
 
-                <h2>{{ app.user.firstname | upper }} {{ app.user.lastname | upper  }}</h2>
-                <h2>{% for activity in app.user.activities %}
+                <h2>{{ lvl.firstname | upper }} {{ lvl.lastname | upper  }}</h2>
+                <h2>{% for activity in lvl.activities %}
                         {{ activity.Domain.Name | capitalize }}
                     {% endfor %}</h2>
-                <h4 class="col-xl-6 col-md-8 text-center m-auto"> {{ app.user.about }} </h4>
+                <h4 class="col-xl-6 col-md-8 text-center m-auto"> {{ lvl.about }} </h4>
             </div>
         </div>
         <div class="container-bottom ">
             <div class="row justify-content-center">
                 <div>
                     <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
-                    {{ app.user.email }}
+                    {{ lvl.email }}
                 </div>
                 <div>
-                    {% if app.user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
+                    {% if lvl.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
                         <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
-                        {{ app.user.phoneNumber }}
+                        {{ lvl.phoneNumber }}
                     {% endif %}
                 </div>
                 <div>
-                    {% for media in app.user.medias %}
+                    {% for media in lvl.medias %}
                         {% if media.type == 'internet' %}
                             <a class="lien" href="{{ media.url }}"  target=_blank>
                                 <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
@@ -77,7 +86,7 @@
             <!-- Media | Photos -->
             <div class="tab-content" id="pills-tabContent">
                 <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
-                    {% for media in app.user.medias %}
+                    {% for media in lvl.medias %}
                         {% if media.type == 'Image' %}
                             <img class="media-img" src="{{ asset('uploads/images/' ~ media.url)}}" alt="{{ media.Name }}">
                             <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
@@ -90,7 +99,7 @@
                 </div>
                 <!-- Media | Videos -->
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    {% for media in app.user.medias %}
+                    {% for media in lvl.medias %}
                         {% if media.type == 'lienVideo' %}
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
@@ -105,7 +114,7 @@
                 </div>
                 <!-- Media | Musics -->
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    {% for media in app.user.medias %}
+                    {% for media in lvl.medias %}
                         {% if media.type == 'lienMusique' %}
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
@@ -143,30 +152,27 @@
 
                             <li>Zone d'activité :</li>
                             <li>Tarif :</li>
-                            <li>Besoin(s) technique(s) :</li>
                             <li>Type de facturation :</li><br>
-                            <li>Besoin technique(s) :</li>
                         </ul>
                     </div>
                     <div class="rs-rigth">
-                        {{ app.user.artistname }}<br>
-                        {{ app.user.personsNumber }}<br><br>
+                        {{ lvl.artistname }}<br>
+                        {{ lvl.personsNumber }}<br><br>
 
-                        {{ app.user.lastname }}<br>
-                        {{ app.user.firstname }}<br>
-                        {{ app.user.birthdate }}<br><br>
+                        {{ lvl.lastname }}<br>
+                        {{ lvl.firstname }}<br>
+                        {{ lvl.getAge }} {% if lvl.getAge %}Ans{% endif %}<br><br>
 
-                        {{ app.user.address }}<br>
-                        {{ app.user.posteCode }}<br>
-                        {{ app.user.city }}<br><br>
+                        {{ lvl.address }}<br>
+                        {{ lvl.posteCode }}<br>
+                        {{ lvl.city }}<br><br>
 
-                        {{ app.user.phoneNumber }}<br>
-                        {{ app.user.email }}<br><br>
+                        {{ lvl.phoneNumber }}<br>
+                        {{ lvl.email }}<br><br>
 
-                        {{ app.user.geoArea }}<br>
-                        {{ app.user.price }} {% if app.user.price %}€{% endif %}<br>
-                        {{ app.user.billingType }}<br>
-                        {{ app.user.technicalNeeds }}<br>
+                        {{ lvl.geoArea }}<br>
+                        {{ lvl.price }} {% if lvl.price %}€{% endif %}<br>
+                        {{ lvl.billingType }}<br><br>
                     </div>
                 </div>
                 <div class="col-md-6 col-12 array-rs">
@@ -180,7 +186,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for activity in app.user.activities %}
+                        {% for activity in lvl.activities %}
                             <tr>
                                 <td>{{activity.domain.Name }}</td>
                                 <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
@@ -197,6 +203,13 @@
                         </tbody>
                     </table>
                 </div>
+                {% if lvl.technicalNeeds %}
+                <div class="text-center">
+                    <ul>
+                        <li class="font-weight-bold">Besoin(s) technique(s) :</li> <br>{{ lvl.technicalNeeds }}
+                    </ul>
+                </div>
+                {% endif %}
             </div>
         </div>
         <p class="copyright">Copyright@LesRatonsWilders</p>

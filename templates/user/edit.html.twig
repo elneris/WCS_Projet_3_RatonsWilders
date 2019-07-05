@@ -6,6 +6,7 @@
 
     <h1 class="text-center p-4">Éditer mon profil</h1>
 
+
     {% for media in user.medias %}
         {% if media.type == 'photo' | e %}
             <div class="d-flex justify-content-center"> <img src="{{ media.url }}" alt="profil" class="w-25"> </div>
@@ -17,7 +18,7 @@
 
         <nav class="d-flex justify-content-center">
             <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Informations personnelles</a>
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Informations personnelles</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-infoperso" role="tab" aria-controls="nav-infoperso" aria-selected="false">Informations professionnelles</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Coordonnées</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Liens et médias</a>
@@ -91,11 +92,6 @@
                 {% endblock %}
                 {% block javascripts  %}
                 {{ parent() }}
-                <script>
-                    function editRow(btn) {
-                        $(btn).parent().find('form').toggle();
-                    }
-                </script>
 
                 <button class="btn btn-secondary m-4">{{ button_label|default('Valider') }}</button>
                 <a class="btn btn-secondary" href="{{ path('user_index') }}">Retour au profil</a>

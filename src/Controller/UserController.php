@@ -101,13 +101,17 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->remove('password');
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->persist($user);
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->persist($user);
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index', [
-                'id' => $user->getId(),
-            ]);
+                return $this->redirectToRoute('user_index', [
+                    'id' => $user->getId(),
+                ]);
+            } else {
+                $this->addFlash('danger', 'L\'un des champs renseigné n\'est pas valide');
+            }
         }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
