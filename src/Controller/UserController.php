@@ -150,10 +150,10 @@ class UserController extends AbstractController
                     'success',
                     'Votre activité a bien été ajoutée'
                 );
+                return $this->redirectToRoute('user_index', [
+                    'id' => $user->getId(),
+                ]);
             }
-            return $this->redirectToRoute('user_add_activity', [
-                'id' => $user->getId(),
-            ]);
         }
         return $this->render('user/add_activity.html.twig', [
             'activity' => $activity,
