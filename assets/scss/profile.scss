@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans&display=swap');
 
+body{
+  background: $secondary-color;
+}
+
 .h2{
   font-family: 'Open Sans', sans-serif;
 }
