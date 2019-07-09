@@ -95,7 +95,8 @@
                         {% if media.type == 'Image' %}
                             <img class="media-img" src="{{ asset('uploads/images/' ~ media.url) }}"
                                  alt="{{ media.Name }}">
-                            {% if lvl == 'app.user' %}
+                            {% if app.user.roles.0 == 'ROLE_USER' %}
+
                                 <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
                                       onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
                                     <input type="hidden" name="_method" value="DELETE">
@@ -113,7 +114,7 @@
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
                             </object>
-                            {% if lvl == 'app.user' %}
+                            {% if app.user.roles.0 == 'ROLE_USER' %}
                                 <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
                                       onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
                                     <input type="hidden" name="_method" value="DELETE">
@@ -131,7 +132,7 @@
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
                             </object>
-                            {% if lvl == 'app.user' %}
+                            {% if app.user.roles.0 == 'ROLE_USER' %}
                                 <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
                                       onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
                                     <input type="hidden" name="_method" value="DELETE">
@@ -202,7 +203,7 @@
                             <th scope="col">Métier(s)</th>
                             <th scope="col">Accessoire(s)</th>
                             <th scope="col">Style(s):</th>
-                            {% if lvl == 'app.user' %}
+                            {% if app.user.roles.0 == 'ROLE_USER' %}
                                 <th scope="col">Supprimer:</th>{% endif %}
                         </tr>
                         </thead>
@@ -212,7 +213,7 @@
                                 <td>{{ activity.domain.Name }}</td>
                                 <td>{% if activity.skill.Name is defined %}{{ activity.skill.Name }}{% endif %}</td>
                                 <td>{% if activity.style.type is defined %}{{ activity.style.type }}{% endif %}</td>
-                                {% if lvl == 'app.user' %}
+                                {% if app.user.roles.0 == 'ROLE_USER' %}
                                     <td>
                                     <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}"
                                           onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
