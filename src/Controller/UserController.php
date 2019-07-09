@@ -14,6 +14,7 @@ use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use App\Services\ActivityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,9 @@ class UserController extends AbstractController
      */
     public function index(MediaRepository $mediaRepository): Response
     {
-
+        /**
+         * @var User $user
+         */
         $user = $this->getUser();
 
         if (!$user->getEnable()) {

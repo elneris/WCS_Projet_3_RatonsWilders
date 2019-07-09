@@ -99,9 +99,7 @@
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     {% for media in user.medias %}
                         {% if media.type == 'lienVideo' %}
-                            <object class="media-img">
-                                <param name="movie" value="{{ media.url }}">
-                            </object>
+                            {{ media.url|embed|raw }}
                             {% if is_granted('ONLY_USER', user) %}
                                 <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
                                       onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">

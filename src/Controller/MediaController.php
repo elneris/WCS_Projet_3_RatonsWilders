@@ -6,6 +6,7 @@ use App\Entity\Media;
 use App\Form\ImageType;
 use App\Form\LinkMediaType;
 use Doctrine\ORM\EntityManagerInterface;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -142,8 +143,10 @@ class MediaController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newVideo(Request $request, EntityManagerInterface $em): Response
-    {
+    public function newVideo(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
         $media = new Media();
         $form = $this->createForm(LinkMediaType::class, $media);
         $form->handleRequest($request);
@@ -246,7 +249,7 @@ class MediaController extends AbstractController
      */
     public function delete(EntityManagerInterface $entityManager, Request $request, Media $media): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$media->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $media->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($media);
             $entityManager->flush();
