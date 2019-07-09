@@ -21,7 +21,7 @@ security:
                 target: app_login
             guard:
                 authenticators:
-                    - App\Security\LoginFormAdminAuthenticator
+                    - App\Security\LoginFormAuthenticator
 
 
             # activate different ways to authenticate

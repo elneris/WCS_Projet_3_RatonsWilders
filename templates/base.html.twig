@@ -23,17 +23,7 @@
 
     {% endif %}
 
-        <div class="row">
-            <div class="col-6 offset-3 mt-5">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ label }} text-center">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-            </div>
-        </div>
+        {% include 'inc/_flashMessages.html.twig' %}
 
         {% block body %}{% endblock %}
         {% if is_granted('ROLE_ADMIN') %}
