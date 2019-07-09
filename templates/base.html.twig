@@ -13,30 +13,35 @@
 <body>
 <div>
 
-{% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="wrapper">
         {% include 'navbar.html.twig' %}
-{% endif %}
 
-    <div class="row">
-        <div class="col-6 offset-3 mt-5">
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} text-center">
-                        {{ message }}
-                    </div>
+    {% elseif is_granted('ROLE_USER') %}
+
+        {% include 'navbarUser.html.twig' %}
+
+    {% endif %}
+
+        <div class="row">
+            <div class="col-6 offset-3 mt-5">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }} text-center">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </div>
-    </div>
-
-    {% block body %}{% endblock %}
-    {% if is_granted('ROLE_ADMIN') %}
             </div>
         </div>
-    {% endif %}
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+
+        {% block body %}{% endblock %}
+        {% if is_granted('ROLE_ADMIN') %}
+    </div>
+</div>
+{% endif %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </body>
 </html>

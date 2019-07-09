@@ -22,7 +22,6 @@
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Informations personnelles</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-infoperso" role="tab" aria-controls="nav-infoperso" aria-selected="false">Informations professionnelles</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Coordonnées</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Liens et médias</a>
             </div>
         </nav>
 
@@ -72,20 +71,6 @@
                         <div class="col-md-4 col-sm-12">{{ form_row(form.posteCode) }}</div>
 
                     </div>
-                </div>
-
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
-                    <div class="upload">
-                        <ul>
-
-                            <li><a href="{{ path('avatar_new') }}">Ajouter un avatar </a></li>
-                            <li><a href="{{ path('image_new') }}">Ajouter une image</a></li>
-                            <li><a href="{{ path('video_new') }}">Ajouter une vidéo</a></li>
-                            <li><a href="{{ path('musique_new') }}">Ajouter une musique <i class="fa fa-music fa-lg"></i></a></li>
-                        </ul>
-                    </div>
-
                 </div>
                 {{ form_rest(form) }}
 
