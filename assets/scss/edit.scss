@@ -21,8 +21,9 @@ h1{
 }
 
 
-body{
+.edit{
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/assets/img/raton.jpg");
+  padding-bottom: 150px;
 }
 
 @media (min-width: 1200px) {

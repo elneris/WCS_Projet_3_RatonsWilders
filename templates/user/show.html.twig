@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %} Bienvenue sur votre page profil{% endblock %}
-{% block body%}
+{% block body %}
     {% if app.user.roles.0 == 'ROLE_USER' %}
         {% set lvl = app.user %}
     {% else %}
@@ -10,11 +10,11 @@
     <div class="body_show">
 
         <div class=" container-top">
-
             <p>
                 {% for userlink in lvl.links %}
                     <a href="{{ userlink.url }}" target=_blank>
-                        <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
+                        <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}"
+                             alt="card image">
                     </a>
                 {% endfor %}
             </p>
@@ -23,12 +23,12 @@
         <div class="container-middle">
             <div class="profile">
                 {% if avatar is empty %}
-                <img class="avatar" src="{{ asset('uploads/avatars/avatar.jpg')}}" alt="card image">
+                    <img class="avatar" src="{{ asset('uploads/avatars/avatar.jpg') }}" alt="card image">
                 {% else %}
-                <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}}" alt="card image">
+                    <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url) }}" alt="card image">
                 {% endif %}
 
-                <h2>{{ lvl.firstname | upper }} {{ lvl.lastname | upper  }}</h2>
+                <h2>{{ lvl.firstname | upper }} {{ lvl.lastname | upper }}</h2>
                 <h2>{% for activity in lvl.activities %}
                         {{ activity.Domain.Name | capitalize }}
                     {% endfor %}</h2>
@@ -50,8 +50,9 @@
                 <div>
                     {% for media in lvl.medias %}
                         {% if media.type == 'internet' %}
-                            <a class="lien" href="{{ media.url }}"  target=_blank>
-                                <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
+                            <a class="lien" href="{{ media.url }}" target=_blank>
+                                <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}"
+                                     alt="icon-internet">
                                 {{ media.url }}</a>
                         {% endif %}
                     {% endfor %}
@@ -63,7 +64,8 @@
             <h2>Portfolio</h2>
             <ul class="nav nav-pills pills-media mb-3 sm-5 " id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="link-media-p active" id="pills-photo-tab" data-toggle="pill" href="#pills-photo" role="tab"
+                    <a class="link-media-p active" id="pills-photo-tab" data-toggle="pill" href="#pills-photo"
+                       role="tab"
                        aria-selected="true">Photos</a>
                 </li>
                 <li class="nav-item">
@@ -77,15 +79,20 @@
             </ul>
             <!-- Media | Photos -->
             <div class="tab-content" id="pills-tabContent">
-                <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
+                <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel"
+                     aria-labelledby="pills-photo-tab">
                     {% for media in lvl.medias %}
                         {% if media.type == 'Image' %}
-                            <img class="media-img" src="{{ asset('uploads/images/' ~ media.url)}}" alt="{{ media.Name }}">
-                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                            </form>
+                            <img class="media-img" src="{{ asset('uploads/images/' ~ media.url) }}"
+                                 alt="{{ media.Name }}">
+                            {% if lvl == 'app.user' %}
+                                <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
+                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                    <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                </form>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -96,11 +103,14 @@
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
                             </object>
-                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                            </form>
+                            {% if lvl == 'app.user' %}
+                                <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
+                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                    <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                </form>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -111,11 +121,14 @@
                             <object class="media-img">
                                 <param name="movie" value="{{ media.url }}">
                             </object>
-                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                            </form>
+                            {% if lvl == 'app.user' %}
+                                <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
+                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                    <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                </form>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -129,22 +142,27 @@
                     <div class="rs-left">
                         <ul>
                             <li>Nom de scène :</li>
-                            <li>Nombre de personnes :</li><br>
+                            <li>Type de groupe :</li>
+                            <br>
 
                             <li>Nom :</li>
                             <li>Prénom :</li>
-                            <li>Age :</li><br>
+                            <li>Age :</li>
+                            <br>
 
                             <li>Adresse :</li>
                             <li>Code Postal :</li>
-                            <li>Ville :</li><br>
+                            <li>Ville :</li>
+                            <br>
 
                             <li>Téléphone :</li>
-                            <li>Email :</li><br>
+                            <li>Email :</li>
+                            <br>
 
                             <li>Zone d'activité :</li>
                             <li>Tarif :</li>
-                            <li>Type de facturation :</li><br>
+                            <li>Type de facturation :</li>
+                            <br>
                         </ul>
                     </div>
                     <div class="rs-rigth">
@@ -173,34 +191,39 @@
                         <tr>
                             <th scope="col">Métier(s)</th>
                             <th scope="col">Accessoire(s)</th>
-                            <th scope="col">Style(s): </th>
-                            <th scope="col">Supprimer: </th>
+                            <th scope="col">Style(s):</th>
+                            {% if lvl == 'app.user' %}
+                                <th scope="col">Supprimer:</th>{% endif %}
                         </tr>
                         </thead>
                         <tbody>
                         {% for activity in lvl.activities %}
                             <tr>
-                                <td>{{activity.domain.Name }}</td>
-                                <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
-                                <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
-                                <td>
-                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                <td>{{ activity.domain.Name }}</td>
+                                <td>{% if activity.skill.Name is defined %}{{ activity.skill.Name }}{% endif %}</td>
+                                <td>{% if activity.style.type is defined %}{{ activity.style.type }}{% endif %}</td>
+                                {% if lvl == 'app.user' %}
+                                    <td>
+                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}"
+                                          onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
                                         <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ activity.id) }}">
                                         <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
                                     </form>
-                                </td>
+                                    </td>{% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 {% if lvl.technicalNeeds %}
-                <div class="text-center">
-                    <ul>
-                        <li class="font-weight-bold">Besoin(s) technique(s) :</li> <br>{{ lvl.technicalNeeds }}
-                    </ul>
-                </div>
+                    <div class="text-center">
+                        <ul>
+                            <li class="font-weight-bold">Besoin(s) technique(s) :</li>
+                            <br>{{ lvl.technicalNeeds }}
+                        </ul>
+                    </div>
                 {% endif %}
             </div>
         </div>
