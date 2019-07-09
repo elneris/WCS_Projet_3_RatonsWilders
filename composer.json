@@ -10,6 +10,7 @@
         "phpstan/phpstan": "^0.11.8",
         "phpstan/phpstan-doctrine": "^0.11.5",
         "phpstan/phpstan-symfony": "^0.11.6",
+        "ricardofiorani/php-video-url-parser": "^1.0",
         "sensio/framework-extra-bundle": "^5.1",
         "squizlabs/php_codesniffer": "^3.4",
         "symfony/asset": "4.2.*",

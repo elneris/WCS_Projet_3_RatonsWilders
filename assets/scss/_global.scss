@@ -1,15 +1,21 @@
-ul{
-  li{
-    list-style-type: none;
-    }
-
- }
-
-.bloc-admin{
-  padding:40px 115px 0 115px;
+body {
+  &.public {
+    padding-top: 70px;
+  }
 }
 
-.btn-primary{
+ul {
+  li {
+    list-style-type: none;
+  }
+
+}
+
+.bloc-admin {
+  padding: 40px 115px 0 115px;
+}
+
+.btn-primary {
   color: #fff;
   background-color: #6c757d;
   border-color: #6c757d;
@@ -21,3 +27,4 @@ ul{
   background-color: #5a6268;
   border-color: #545b62;
 }
+

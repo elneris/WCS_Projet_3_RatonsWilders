@@ -19,7 +19,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class LoginFormAdminAuthenticator extends AbstractFormLoginAuthenticator
+class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
@@ -68,12 +68,20 @@ class LoginFormAdminAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
+        /**
+         * @var User $user
+         */
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['username']]);
 
-        if (!$user) {
+        if (!($user instanceof User)) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
+
+        if (!$user->getEnable()) {
+            throw new CustomUserMessageAuthenticationException('Compte utilisateur non confirmé.');
+        }
+
         return $user;
     }
 
