@@ -2,3 +2,23 @@
   position: absolute;
   right: 0;
 }
+
+.navbar_user {
+  padding: 0.2rem;
+  background: #111;
+
+
+  button {
+    transition: 0.5s;
+    color: white;
+  }
+
+  button:hover {
+    background: #fbfafa;
+    border-radius: 0;
+    color: black;
+  }
+  .burger:hover{
+    background: black;
+  }
+}
