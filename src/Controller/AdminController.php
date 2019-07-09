@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\FilterType;
 use App\Form\UserSearchType;
+use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,11 +81,17 @@ class AdminController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function show(User $user): Response
+    public function show(int $id, User $user, MediaRepository $mediaRepository): Response
     {
-        return $this->render('admin/show.html.twig', [
-            'user' => $user
+        $avatar = null;
 
+        if (!empty($mediaRepository->findLastAvatar($id))) {
+            $avatar = $mediaRepository->findLastAvatar($id);
+        }
+
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+            'avatar' => $avatar
         ]);
     }
 }
