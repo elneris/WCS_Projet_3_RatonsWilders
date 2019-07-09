@@ -1,0 +1,22 @@
+{% block body %}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="{{ path('user_index') }}"><img class=" navbar-brand avatar_navbar w-25" src="{{ asset('assets/img/logo_lesratons.png') }}" alt="card image">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav text-center">
+                <a href="{{ path('user_edit', {'id': app.user.id}) }}"><button class="btn badge-light">Éditer</button></a>
+                <a href="{{ path('user_change_password') }}"> <button class="btn badge-light"> Changer le mot de passe</button></a>
+                <a href="{{ path('avatar_new') }}"><button class="btn badge-light">Changer l'avatar</button></a>
+                <a href="{{ path('image_new') }}"><button class="btn badge-light">Ajouter des images</button></a>
+                <a href="{{ path('video_new') }}"><button class="btn badge-light">Ajouter des vidéos</button></a>
+                <a href="{{ path('musique_new') }}"><button class="btn badge-light">Ajouter des musiques</button></a>
+                <a href="{{ path('app_logout') }}" class="user_logout"><button class="btn badge-light mr-1"><i class="fas fa-power-off fa-2x mr-2"></i></button></a>
+            </div>
+        </div>
+    </nav>
+
+{% endblock %}

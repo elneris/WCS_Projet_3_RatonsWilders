@@ -10,15 +10,7 @@
     <div class="body_show">
 
         <div class=" container-top">
-            {% if lvl.roles.0 == 'ROLE_USER' %}
-            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': lvl.id}) }}">Éditer</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">Changer le mot de passe</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">Changer l'avatar</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('image_new') }}">Ajouter des images</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('video_new') }}">Ajouter des vidéos</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('musique_new') }}">Ajouter des musiques</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('app_logout') }}">Se déconnecter</a> </button>
-            {% endif %}
+
             <p>
                 {% for userlink in lvl.links %}
                     <a href="{{ userlink.url }}" target=_blank>
