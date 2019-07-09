@@ -53,7 +53,8 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/show.html.twig', [
-            'avatar' => $avatar
+            'avatar' => $avatar,
+            'user' => $user,
         ]);
     }
 

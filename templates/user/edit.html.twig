@@ -79,8 +79,8 @@
                 {% block javascripts  %}
                 {{ parent() }}
 
-                <button class="btn btn-secondary m-4">{{ button_label|default('Valider') }}</button>
                 <a class="btn btn-secondary" href="{{ path('user_index') }}">Retour au profil</a>
+                <button class="btn btn-success m-4">{{ button_label|default('Valider') }}</button>
             </div>
         </form>
     </div>
