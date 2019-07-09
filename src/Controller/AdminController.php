@@ -81,7 +81,7 @@ class AdminController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function show($id, User $user, MediaRepository $mediaRepository): Response
+    public function show(int $id, User $user, MediaRepository $mediaRepository): Response
     {
         $avatar = null;
 
