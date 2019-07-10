@@ -9,9 +9,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 class SkillFixtures extends Fixture
 {
     const DATA = [
-        'guitare',
-        'basse',
-        'violon',
+        'Guitare',
+        'Basse',
+        'Violon',
     ];
 
     /**
