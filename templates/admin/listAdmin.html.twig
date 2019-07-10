@@ -47,7 +47,6 @@
 
     <script>
          function changeRole(url, userId) {
-             console.log(document.getElementById('admin' + userId))
             fetch(url)
                 .then(response => response.json())
                 .then(json => {
