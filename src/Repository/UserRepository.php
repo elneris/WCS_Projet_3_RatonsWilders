@@ -33,8 +33,12 @@ class UserRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('user')
                     ->join('user.activities', 'activities')
-                    ->where('activities.domain = :activitiesDomain')
         ;
+
+        if ($filters['metier']) {
+            $qb->andWhere('activities.domain = :activitiesDomain')
+                ->setParameter("activitiesDomain", $filters['metier']);
+        }
 
         if ($filters['skill']) {
             $qb->andWhere('activities.skill = :activitiesSkill')
@@ -46,23 +50,13 @@ class UserRepository extends ServiceEntityRepository
                 ->setParameter("activitiesStyle", $filters['style']);
         }
 
-        return $qb->setParameter("activitiesDomain", $filters['metier'])
-                  ->getQuery()->getResult();
-    }
+        if ($filters['searchField']) {
+            $qb->orHaving('user.lastname LIKE :val')
+                ->orHaving('user.firstname LIKE :val')
+                ->orHaving('user.artistName LIKE :val')
+                ->setParameter('val', '%'.$filters['searchField'].'%');
+        }
 
-    /**
-     * @param string $value
-     * @return User[] Returns an array of User objects
-     */
-    public function searchByNames(string $value = null)
-    {
-        return $this->createQueryBuilder('u')
-            ->where('u.lastname LIKE :val')
-            ->orWhere('u.firstname LIKE :val')
-            ->orWhere('u.artistName LIKE :val')
-            ->setParameter('val', '%'.$value.'%')
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult();
+        return $qb->getQuery()->getResult();
     }
 }
