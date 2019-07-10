@@ -573,4 +573,14 @@ class User implements UserInterface
             return $dateInterval->y;
         }
     }
+
+    public function isAdmin(): bool
+    {
+        if ($this->getRoles()[0] == 'ROLE_ADMIN') {
+            $role = true;
+        } else {
+            $role = false;
+        }
+        return $role;
+    }
 }
