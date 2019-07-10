@@ -186,6 +186,11 @@ class User implements UserInterface
      */
     private $technicalNeeds;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -582,5 +587,17 @@ class User implements UserInterface
             $role = false;
         }
         return $role;
+    }
+
+    public function getAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
+
+        return $this;
     }
 }

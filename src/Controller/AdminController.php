@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\AdminType;
 use App\Form\SearchType;
 use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
@@ -22,10 +23,19 @@ class AdminController extends AbstractController
      * @param UserRepository $userRepository
      * @return Response
      */
-    public function showAdmin(UserRepository $userRepository): Response
+    public function showAdmin(Request $request, UserRepository $userRepository): Response
     {
-        $users = $userRepository->findAll();
+        $filter = $this->createForm(AdminType::class);
+        $users = $userRepository->findBy([], ['admin' => 'DESC', 'email' => 'ASC']);
+
+        $form = $filter->handleRequest($request);
+
+        if ($form->isSubmitted() && $filter->isValid()) {
+            $users = $userRepository->adminFilter($filter->getData());
+        }
+
         return $this->render('admin/listAdmin.html.twig', [
+            'filterDomainForm' => $filter->createView(),
             'users' => $users,
         ]);
     }
@@ -95,13 +105,20 @@ class AdminController extends AbstractController
      */
     public function changeRole(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
+        $actualUser = $this->getUser();
         $user = $userRepository->find($id);
-        if (($user->getRoles()[0] == 'ROLE_ADMIN')) {
-            $user->setRoles(['ROLE_USER']) ;
-        } else {
-            $user->setRoles(['ROLE_ADMIN']) ;
+        if ($actualUser !== $user) {
+            if (($user->getRoles()[0] == 'ROLE_ADMIN')) {
+                $user->setRoles(['ROLE_USER']) ;
+                $user->setAdmin(false) ;
+            } else {
+                $user->setRoles(['ROLE_ADMIN']) ;
+                $user->setAdmin(true) ;
+            }
+            $entityManager->flush();
         }
-        $entityManager->flush();
+
+
         return $this->json([
             'isAdmin' => $user->isAdmin()
         ]);

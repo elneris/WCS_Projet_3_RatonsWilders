@@ -6,6 +6,18 @@
     <div class="bloc-admin">
 
     <h1>Liste des utilisateurs</h1>
+
+    <div class=" filter">
+            {{ form_start(filterDomainForm) }}
+            <div class="form-row ">
+                <div class="col-12">
+                    {{ form_row(filterDomainForm.searchField, { 'attr': {'class': 'form-control col'} }) }}
+                </div>
+
+            </div>
+            {{ form_end(filterDomainForm) }}
+        </div>
+
     <table>
         <thead>
         <tr>
