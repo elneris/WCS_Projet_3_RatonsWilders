@@ -15,6 +15,20 @@
             <a href="{{ path('admin_filter') }}">Filtrer un Artiste</a>
         </li>
         <li>
+            <a href="#listSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Activités</a>
+            <ul class="collapse list-unstyled" id="listSubmenu">
+                <li>
+                    <a href="{{ path('domain_index') }}">Liste des Métiers</a>
+                </li>
+                <li>
+                    <a href="{{ path('skill_index') }}">Liste des Accessoires</a>
+                </li>
+                <li>
+                    <a href="{{ path('style_index') }}">Liste des styles</a>
+                </li>
+            </ul>
+        </li>
+        <li>
             <a href="{{ path('app_logout') }}"><i class="fas fa-power-off"></i></a>
         </li>
     </ul>

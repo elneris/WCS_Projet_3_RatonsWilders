@@ -24,7 +24,7 @@ class Domain
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="domain")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="domain", cascade={"remove"})
      */
     private $activities;
 

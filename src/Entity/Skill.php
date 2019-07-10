@@ -24,7 +24,7 @@ class Skill
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="skill")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="skill", cascade={"remove"})
      */
     private $activities;
 
