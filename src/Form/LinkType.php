@@ -13,15 +13,9 @@ class LinkType extends AbstractType
     {
         $builder
             ->add('url', TextType::class, [
-                'label' => 'url :'
+                'label' => 'url :',
 
-            ])
-            ->add('url', TextType::class, [
-                'label' => 'url :'
-
-            ])
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
