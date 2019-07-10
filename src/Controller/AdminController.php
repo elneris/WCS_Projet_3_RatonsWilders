@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\FilterType;
-use App\Form\UserSearchType;
+use App\Form\SearchType;
 use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,14 +32,14 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/filtrer", name="filter")
+     * @Route("/rechercher", name="search")
      * @param Request $request
      * @param UserRepository $userRepository
      * @return Response
      */
-    public function filter(Request $request, UserRepository $userRepository)
+    public function search(Request $request, UserRepository $userRepository)
     {
-        $filter = $this->createForm(FilterType::class);
+        $filter = $this->createForm(SearchType::class);
         $users = [];
 
         $form = $filter->handleRequest($request);
@@ -49,31 +48,10 @@ class AdminController extends AbstractController
             $users = $userRepository->myFilter($filter->getData());
         }
 
-        return $this->render('admin/filter.html.twig', [
+        return $this->render('admin/search.html.twig', [
             'filterDomainForm' => $filter->createView(),
             'users' => $users
         ]);
-    }
-
-    /**
-     * @Route("/rechercher", name="search")
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @return Response
-     */
-    public function search(Request $request, UserRepository $userRepository): Response
-    {
-        $form = $this->createForm(UserSearchType::class);
-        $form->handleRequest($request);
-        $users = $userRepository->searchByNames($form->getData()['searchField']);
-
-        return $this->render(
-            'admin/search.html.twig',
-            [
-                'users' => $users,
-                'form' => $form->createView()
-            ]
-        );
     }
 
     /**
