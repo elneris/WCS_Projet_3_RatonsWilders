@@ -54,6 +54,7 @@ class UserRepository extends ServiceEntityRepository
             $qb->orHaving('user.lastname LIKE :val')
                 ->orHaving('user.firstname LIKE :val')
                 ->orHaving('user.artistName LIKE :val')
+                ->orHaving('user.email LIKE :val')
                 ->setParameter('val', '%'.$filters['searchField'].'%');
         }
 
