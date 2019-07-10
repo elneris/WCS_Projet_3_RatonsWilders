@@ -9,12 +9,12 @@
                                 {% for media in user.medias %}
                                     {% if media.type == 'avatar' %}
                                         <img src="{{ asset('uploads/avatars/'~ media.url) }}"
-                                             class="card-img-top rounded-circle w-75 mx-auto mt-3"
+                                             class="card-img-top rounded-circle w-75 mx-auto mt-3 avatar"
                                              alt="{{ user.firstname }}">
                                     {% endif %}
                                 {% else %}
                                     <img src="{{ asset('assets/img/avatar.jpg') }}"
-                                         class="card-img-top rounded-circle w-75 mx-auto mt-3"
+                                         class="card-img-top rounded-circle w-75 mx-auto mt-3 avatar"
                                          alt="{{ user.firstname }}">
                                 {% endfor %}
                                 <h5 class="card-title text-center pt-2">{{ user.artistName }}</h5>

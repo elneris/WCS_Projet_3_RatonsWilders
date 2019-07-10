@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FilterType extends AbstractType
+class SearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -21,7 +21,9 @@ class FilterType extends AbstractType
                 [
                     'class' => Domain::class,
                     'choice_label' => 'name',
-                    'label' => 'Domaine (Danse, Musique..)'
+                    'label' => 'Domaine (Danse, Musique..)',
+                    'required' => false,
+                    'placeholder' => 'Tous'
                 ]
             )
             ->add(
@@ -46,6 +48,14 @@ class FilterType extends AbstractType
                     'placeholder' => 'Tous'
                 ]
             )
-            ->add('Filtrer', SubmitType::class);
+            ->add(
+                'searchField',
+                null,
+                [
+                    'label' => 'Recherche par : Nom, Email ...',
+                    'required' => false
+                ]
+            )
+            ->add('Rechercher', SubmitType::class);
     }
 }
