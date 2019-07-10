@@ -21,4 +21,14 @@
   .burger:hover{
     background: black;
   }
+  .dropdown-menu{
+    background: black;
+    button{
+      color: white;
+      font-size: 1.1em;
+    }
+    button:hover{
+      color: black;
+    }
+  }
 }
