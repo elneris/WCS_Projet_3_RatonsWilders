@@ -152,13 +152,12 @@ class MediaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $file stores the uploaded JPG file
-
-            if (preg_match('#(https?://)([\w\d.&:\#@%/;$~_?\+-=]*)#', $media->getType())) {
+            if (preg_match('/^(http:\/\/|https:\/\/)(vimeo\.com|youtu\.be|www\.youtube\.com)\/([\w\/]+)([\?].*)
+            ?$/i', $media->getUrl())) {
                 // updates the 'media' property to store the JPG file name
                 // instead of its contents
                 $media->setName('VideoUser');
-                $media->setUrl(str_replace('watch?v=', 'embed/', $media->getType()));
+                $media->setUrl(str_replace('watch?v=', 'embed/', $media->getUrl()));
                 $media->setType('lienVideo');
                 $media->setUser($this->getUser());
 
@@ -170,7 +169,7 @@ class MediaController extends AbstractController
                     'Votre lien a bien été enregistré'
                 );
 
-                // ... persist the $media variable or any other work
+
                 return $this->redirect($this->generateUrl('user_index'));
             } else {
                 $this->addFlash(
