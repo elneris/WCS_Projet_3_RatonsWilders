@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Style;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method Style|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +21,40 @@ class StyleRepository extends ServiceEntityRepository
         parent::__construct($registry, Style::class);
     }
 
-    // /**
-    //  * @return Style[] Returns an array of Style objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllPaginationAndTrie($page, $nbMaxByPage)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        if (!is_numeric($page)) {
+            throw new \InvalidArgumentException(
+                'La valeur de la page est incorrecte'
+            );
+        }
 
-    /*
-    public function findOneBySomeField($value): ?Style
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if ($page < 1) {
+            throw new \InvalidArgumentException(
+                'La page demandée n\'existe pas'
+            );
+        }
+
+        if (!is_numeric($nbMaxByPage)) {
+            throw new \InvalidArgumentException(
+                'La valeur de la page max est incorrecte'
+            );
+        }
+
+        $qb = $this->createQueryBuilder('style')
+            ->orderBy('style.type', 'ASC');
+
+        $query = $qb->getQuery();
+
+        $firstResult = ($page - 1) * $nbMaxByPage;
+        $query->setFirstResult($firstResult)->setMaxResults($nbMaxByPage);
+
+        $paginator = new Paginator($query);
+
+        if (($paginator->count() <= $firstResult) && $page != 1) {
+            throw new NotFoundHttpException('La page demandée n\'existe pas.');
+        }
+
+        return $paginator;
     }
-    */
 }
