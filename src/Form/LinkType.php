@@ -13,7 +13,7 @@ class LinkType extends AbstractType
     {
         $builder
             ->add('url', TextType::class, [
-                'label' => 'url :',
+                'label' => 'Facebook, Twitter, Instagram, chaîne Youtube :',
 
             ]);
     }

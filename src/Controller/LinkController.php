@@ -68,10 +68,24 @@ class LinkController extends AbstractController
                     'success',
                     'Votre lien a bien été enregistré'
                 );
+            } elseif (preg_match(
+                '/(https?:\/\/)?(www\.)?youtu((\.be)|(be\..{2,5}))\/((user)|(channel))\//',
+                $link->getUrl()
+            )) {
+                $link->setUrl($link->getUrl());
+                $link->setType('youtube');
+                $link->setUser($this->getUser());
+                $em->persist($link);
+                $em->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre lien a bien été enregistré'
+                );
             } else {
                 $this->addFlash(
                     'danger',
-                    'Erreur lors de l\'upload'
+                    'Erreur lors de l\'upload (uniquement Facebook, Twitter, Instagram, chaîne Youtube)'
                 );
                 $this->redirect($this->generateUrl('socialNetwork_new'));
             }
