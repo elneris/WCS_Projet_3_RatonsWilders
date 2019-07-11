@@ -30,7 +30,8 @@
         <tr>
 
             <td data-label="Email">{{ user.email }}</td>
-            <td><a onclick="changeRole('{{ path('admin_change_role', {'id': user.id}) }}', {{ user.id }})">
+            <td>
+                <a data-id="{{ user.id}}" class="changeRole">
             {% if  user.isAdmin %}
                         <i id="admin{{ user.id}}" class="fas fa-check-circle text-success"></i>
                     {% else %}
@@ -41,34 +42,4 @@
         {% endfor %}
         </tbody>
     </table>
-{% endblock %}
-
-{% block javascripts %}
-
-    <script>
-         function changeRole(url, userId) {
-            fetch(url)
-                .then(response => response.json())
-                .then(json => {
-                    let admin = document.getElementById('admin' + userId);
-                    if (json.isAdmin) {
-                        admin.classList.remove('far');
-                        admin.classList.remove('fa-times-circle');
-                        admin.classList.remove('text-danger');
-                        admin.classList.add('fas');
-                        admin.classList.add('fa-check-circle');
-                        admin.classList.add('text-success');
-                    }
-                    else {
-                        admin.classList.remove('fas');
-                        admin.classList.remove('fa-check-circle');
-                        admin.classList.remove('text-success');
-                        admin.classList.add('far');
-                        admin.classList.add('fa-times-circle');
-                        admin.classList.add('text-danger');
-                    }
-                });
-        }
-    </script>
-    {{ parent() }}
 {% endblock %}
