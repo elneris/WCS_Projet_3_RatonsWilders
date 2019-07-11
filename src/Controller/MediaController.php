@@ -152,16 +152,12 @@ class MediaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $file stores the uploaded JPG file
-
-            if (preg_match('#(https?://)([\w\d.&:\#@%/;$~_?\+-=]*)#', $media->getType())) {
-                // updates the 'media' property to store the JPG file name
-                // instead of its contents
+            if (preg_match('/^(http:\/\/|https:\/\/)(vimeo\.com|youtu\.be|www\.dailymotion\.com|www\.youtube\.
+            com)\/([\w\/]+)([\?].*)?$/i', $media->getUrl())) {
                 $media->setName('VideoUser');
-                $media->setUrl(str_replace('watch?v=', 'embed/', $media->getType()));
+                $media->setUrl(str_replace('watch?v=', 'embed/', $media->getUrl()));
                 $media->setType('lienVideo');
                 $media->setUser($this->getUser());
-
                 $em->persist($media);
                 $em->flush();
 
@@ -170,12 +166,12 @@ class MediaController extends AbstractController
                     'Votre lien a bien été enregistré'
                 );
 
-                // ... persist the $media variable or any other work
+
                 return $this->redirect($this->generateUrl('user_index'));
             } else {
                 $this->addFlash(
                     'danger',
-                    'Erreur lors de l\'upload'
+                    'Erreur lors de l\'upload (uniquement youtube, vimeo, dailymotion)'
                 );
                 $this->redirect($this->generateUrl('video_new'));
             }
