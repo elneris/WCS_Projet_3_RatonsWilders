@@ -9,6 +9,8 @@
     </button>
     <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
         <div class="navbar-nav text-center">
+            <div class="retour"><a href="http://lesratonsguincheurs.fr/"><button class="btn">Retour sur le site</button></a></div>
+
             <a href="{{ path('user_edit', {'id': app.user.id}) }}">
                 <button class="btn">Éditer mon profil</button>
             </a>
@@ -35,8 +37,6 @@
                     </a>
                 </div>
             </div>
-
-
             <a href="{{ path('app_logout') }}" class="user_logout">
                 <button class="btn mr-2"><i class="fas fa-power-off fa-2x"></i></button>
             </a>
