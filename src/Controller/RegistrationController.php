@@ -97,7 +97,7 @@ class RegistrationController extends AbstractController
         $manager->flush();
 
         $this->addFlash(
-            'notice',
+            'danger',
             "La clé de validation est expirée, inscrivez-vous à nouveau"
         );
 
