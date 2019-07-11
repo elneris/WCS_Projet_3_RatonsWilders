@@ -39,7 +39,7 @@ class StyleController extends AbstractController
             if ($activityManager->styleExist($style)) {
                 $this->addFlash(
                     'danger',
-                    'L\'accessoire existe déjà'
+                    'Le style existe déjà'
                 );
             } else {
                 $entityManager = $this->getDoctrine()->getManager();
