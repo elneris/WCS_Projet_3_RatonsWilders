@@ -24,7 +24,7 @@
 
                 <h2>{{ user.firstname | upper }} {{ user.lastname | upper }}</h2>
                 <h2>{% for activity in user.activities %}
-                        {{ activity.Domain.Name | capitalize }}
+                        {{ activity.Domain.Name | capitalize }}<br>
                     {% endfor %}</h2>
                 <h4 class="col-xl-6 col-md-8 text-center m-auto"> {{ user.about }} </h4>
             </div>
@@ -70,160 +70,158 @@
                     <a class="link-media-v" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
                        aria-controls="pills-profile" aria-selected="false">Vidéos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="link-media-m" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-                       aria-controls="pills-contact" aria-selected="false">Musiques</a>
-                </li>
             </ul>
             <!-- Media | Photos -->
             <div class="tab-content" id="pills-tabContent">
                 <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel"
                      aria-labelledby="pills-photo-tab">
-                    {% for media in user.medias %}
-                        {% if media.type == 'Image' %}
-                            <img class="media-img" src="{{ asset('uploads/images/' ~ media.url) }}"
-                                 alt="{{ media.Name }}">
-                            {% if is_granted('ONLY_USER', user) %}
-
-                                <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
-                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                    <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                                </form>
+                    <div class="row">
+                        {% for media in user.medias %}
+                            {% if media.type == 'Image' %}
+                                <div class="col-md-6 col-12">
+                                    <img class="media-img" src="{{ asset('uploads/images/' ~ media.url) }}"
+                                         alt="{{ media.Name }}">
+                                    {% if is_granted('ONLY_USER', user) %}
+                                        <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
+                                              onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                            <button class="btn delete-btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                        </form>
+                                    {% endif %}
+                                </div>
                             {% endif %}
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
                 <!-- Media | Videos -->
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    {% for media in user.medias %}
-                        {% if media.type == 'lienVideo' %}
-                            {{ media.url|embed|raw }}
-                            {% if is_granted('ONLY_USER', user) %}
-                                <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
-                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                    <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                                </form>
+                <div class="col-12 tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="row">
+                        {% for media in user.medias %}
+                            {% if media.type == 'lienVideo' %}
+                                <div class="col-md-6 col-12">
+                                    {{ media.url|embed|raw }}
+                                    {% if is_granted('ONLY_USER', user) %}
+                                        <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
+                                              onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                            <button class="btn delete-btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                        </form>
+                                    {% endif %}
+                                </div>
                             {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <!-- Media | Musics -->
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    {% for media in user.medias %}
-                        {% if media.type == 'lienMusique' %}
-                            <object class="media-img">
-                                <param name="movie" value="{{ media.url }}">
-                            </object>
-                            {% if is_granted('ONLY_USER', user) %}
-                                <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
-                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                    <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                                </form>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Informations utilisateur -->
         <div class="profile-body justify-content-center">
             <h2>Renseignements supplémentaires</h2>
-            <div class="col-12 row container-rs">
-                <div class="col-md-5 col-12 row rs-body">
-                    <div class="rs-left">
-                        <ul>
-                            <li>Nom de scène :</li>
-                            <li>Type de groupe :</li>
-                            <br>
-
-                            <li>Nom :</li>
-                            <li>Prénom :</li>
-                            <li>Age :</li>
-                            <br>
-
-                            <li>Adresse :</li>
-                            <li>Code Postal :</li>
-                            <li>Ville :</li>
-                            <br>
-
-                            <li>Téléphone :</li>
-                            <li>Email :</li>
-                            <br>
-
-                            <li>Zone d'activité :</li>
-                            <li>Tarif :</li>
-                            <li>Type de facturation :</li>
-                            <br>
-                        </ul>
-                    </div>
-                    <div class="rs-rigth">
-                        {{ user.artistname }}<br>
-                        {{ user.personsNumber }}<br><br>
-
-                        {{ user.lastname }}<br>
-                        {{ user.firstname }}<br>
-                        {{ user.getAge }} {% if user.age %}Ans{% endif %}<br><br>
-
-                        {{ user.address }}<br>
-                        {{ user.posteCode }}<br>
-                        {{ user.city }}<br><br>
-
-                        {{ user.phoneNumber }}<br>
-                        {{ user.email }}<br><br>
-
-                        {{ user.geoArea }}<br>
-                        {{ user.price }} {% if user.price %}€{% endif %}<br>
-                        {{ user.billingType }}<br><br>
-                    </div>
-                </div>
-                <div class="col-md-6 col-12 array-rs">
-                    <table class="table table-striped">
-                        <thead>
+            <div class="col-12 container-rs">
+                <div class="array-rs col-12 table-user">
+                    <table>
+                        <tbody class="information-artiste">
                         <tr>
-                            <th scope="col">Métier(s)</th>
-                            <th scope="col">Accessoire(s)</th>
-                            <th scope="col">Style(s):</th>
-                            {% if app.user.roles.0 == 'ROLE_USER' %}
-                                <th scope="col">Supprimer:</th>{% endif %}
+                            <th>Nom de scène</th>
+                            <td>{{ user.artistname }}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for activity in user.activities %}
-                            <tr>
-                                <td>{{ activity.domain.Name }}</td>
-                                <td>{% if activity.skill.Name is defined %}{{ activity.skill.Name }}{% endif %}</td>
-                                <td>{% if activity.style.type is defined %}{{ activity.style.type }}{% endif %}</td>
-                                {% if is_granted('ONLY_USER', user) %}
-                                    <td>
-                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}"
-                                          onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token"
-                                               value="{{ csrf_token('delete' ~ activity.id) }}">
-                                        <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                                    </form>
-                                    </td>{% endif %}
-                            </tr>
-                        {% endfor %}
+                        <tr>
+                            <th>Composition de groupe</th>
+                            <td>{{ user.personsNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ user.lastname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom</th>
+                            <td>{{ user.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ user.getAge }} {% if user.age %}ans{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse</th>
+                            <td>{{ user.address }}</td>
+                        </tr>
+                        <tr>
+                            <th>Code Postal</th>
+                            <td>{{ user.posteCode }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ville</th>
+                            <td>{{ user.city }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone</th>
+                            <td>{{ user.phoneNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Zone d'activité</th>
+                            <td>{{ user.geoArea }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tarif</th>
+                            <td>{{ user.price }} {% if user.price %}€{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Type de facturation</th>
+                            <td>{{ user.billingType }}</td>
+                        </tr>
                         </tbody>
+
                     </table>
                 </div>
-                {% if user.technicalNeeds %}
-                    <div class="text-center">
-                        <ul>
-                            <li class="font-weight-bold">Besoin(s) technique(s) :</li>
-                            <br>{{ user.technicalNeeds }}
-                        </ul>
-                    </div>
-                {% endif %}
+            </div>
+
+            <div class="container-fluid table-responsive">
+                <table class="table table-activities">
+                    <thead class="col-6">
+                    <tr>
+                        <th scope="col">Métier</th>
+                        <th scope="col">Accessoire</th>
+                        <th scope="col">Style</th>
+                        {% if app.user.roles.0 == 'ROLE_USER' %}
+                            <th scope="col">Supprimer</th>{% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for activity in user.activities %}
+                        <tr>
+                            <td data-label="Métier">{{ activity.domain.Name }}</td>
+                            <td data-label="Accessoires">{% if activity.skill.Name is defined %}{{ activity.skill.Name }}{% endif %}</td>
+                            <td data-label="Style">{% if activity.style.type is defined %}{{ activity.style.type }}{% endif %}</td>
+                            {% if is_granted('ONLY_USER', user) %}
+                                <td data-label="Supprimer">
+                                <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}"
+                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token"
+                                           value="{{ csrf_token('delete' ~ activity.id) }}">
+                                    <button class="btn btn-supprimer-activities"><i class="far fa-trash-alt text-danger"></i></button>
+                                </form>
+                                </td>{% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-        <p class="copyright">Copyright@LesRatonsWilders</p>
+        {% if user.technicalNeeds %}
+            <div class="text-center">
+                <h4>Besoin(s) technique(s) :</h4>
+                <br><p class="besoin-technique">{{ user.technicalNeeds }}</p>
+            </div>
+        {% endif %}
+    </div>
+    </div>
+    <p class="copyright">Copyright@LesRatonsWilders</p>
     </div>
 {% endblock %}

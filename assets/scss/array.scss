@@ -15,6 +15,13 @@ table caption {
   margin: .5em 0 .75em;
 }
 
+.table-user{
+  table tr {
+    border: 1px solid #b3a2a2;
+    padding: .35em;
+  }
+}
+
 table tr {
   border: 1px solid black;
   padding: .35em;
