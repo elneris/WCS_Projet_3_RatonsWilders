@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LinkController extends AbstractController
 {
+    const ALLOW_NETWORKS = ['facebook','twitter','instagram','youtube'];
 
     /**
      * @Route("/nouveau-lien", name="socialNetwork_new", methods={"GET","POST"})
@@ -25,69 +26,43 @@ class LinkController extends AbstractController
         $form = $this->createForm(LinkType::class, $link);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
-            if (preg_match(
-                ' /(?:https?:\/\/)?(?:www\.)?facebook\.com\/.(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/ ',
-                $link->getUrl()
-            )) {
-                $link->setUrl($link->getUrl());
-                $link->setType('facebook');
-                $link->setUser($this->getUser());
-                $em->persist($link);
-                $em->flush();
+            $found = false;
 
-                $this->addFlash(
-                    'success',
-                    'Votre lien a bien été enregistré'
-                );
-            } elseif (preg_match(
-                ' /(?:https?:\/\/)?(?:www\.)?twitter\.com\/.(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/ ',
-                $link->getUrl()
-            )) {
-                $link->setUrl($link->getUrl());
-                $link->setType('twitter');
-                $link->setUser($this->getUser());
-                $em->persist($link);
-                $em->flush();
+            foreach (self::ALLOW_NETWORKS as $network) {
+                $regex = '/(?:https?:\/\/)?(?:www\.)?';
+                $regex .= $network.'\.com\/.(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/';
 
-                $this->addFlash(
-                    'success',
-                    'Votre lien a bien été enregistré'
-                );
-            } elseif (preg_match(
-                ' /(?:https?:\/\/)?(?:www\.)?instagram\.com\/.(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/ ',
-                $link->getUrl()
-            )) {
-                $link->setUrl($link->getUrl());
-                $link->setType('instagram');
-                $link->setUser($this->getUser());
-                $em->persist($link);
-                $em->flush();
+                $regexYoutube =  '/(https?:\/\/)?(www\.)?youtu((\.be)|(be\..{2,5}))\/((user)|(channel))\//';
 
-                $this->addFlash(
-                    'success',
-                    'Votre lien a bien été enregistré'
-                );
-            } elseif (preg_match(
-                '/(https?:\/\/)?(www\.)?youtu((\.be)|(be\..{2,5}))\/((user)|(channel))\//',
-                $link->getUrl()
-            )) {
-                $link->setUrl($link->getUrl());
-                $link->setType('youtube');
-                $link->setUser($this->getUser());
-                $em->persist($link);
-                $em->flush();
+                if (preg_match($regex, $link->getUrl())
+                     or
+                    (preg_match($regexYoutube, $link->getUrl() && $network === 'youtube'))) {
+                    $found = true;
 
-                $this->addFlash(
-                    'success',
-                    'Votre lien a bien été enregistré'
-                );
-            } else {
+                    $link->setUrl($link->getUrl());
+                    $link->setType($network);
+                    $link->setUser($this->getUser());
+                    $em->persist($link);
+                    $em->flush();
+
+
+                    $this->addFlash(
+                        'success',
+                        'Votre lien a bien été enregistré'
+                    );
+
+                    break;
+                }
+            }
+
+            if (!$found) {
                 $this->addFlash(
                     'danger',
                     'Erreur lors de l\'upload (uniquement Facebook, Twitter, Instagram, chaîne Youtube)'
                 );
-                $this->redirect($this->generateUrl('socialNetwork_new'));
+                return $this->redirect($this->generateUrl('socialNetwork_new'));
             }
         }
 
