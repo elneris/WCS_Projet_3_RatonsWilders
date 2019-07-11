@@ -18,13 +18,13 @@
             <a href="#listSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Activités</a>
             <ul class="collapse list-unstyled" id="listSubmenu">
                 <li>
-                    <a href="{{ path('domain_index') }}">Liste des Métiers</a>
+                    <a href="{{ path('domain_index', {'page': 1}) }}">Liste des Métiers</a>
                 </li>
                 <li>
-                    <a href="{{ path('skill_index') }}">Liste des Accessoires</a>
+                    <a href="{{ path('skill_index', {'page': 1}) }}">Liste des Accessoires</a>
                 </li>
                 <li>
-                    <a href="{{ path('style_index') }}">Liste des styles</a>
+                    <a href="{{ path('style_index', {'page': 1}) }}">Liste des styles</a>
                 </li>
             </ul>
         </li>

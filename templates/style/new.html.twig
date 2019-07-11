@@ -7,5 +7,5 @@
 
     {{ include('style/_form.html.twig') }}
 
-    <a class="btn btn-primary mt-4" href="{{ path('style_index') }}">Retour aux styles</a>
+    <a class="btn btn-primary mt-4" href="{{ path('style_index', {'page': 1}) }}">Retour aux styles</a>
 {% endblock %}

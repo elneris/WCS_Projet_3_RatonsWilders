@@ -7,5 +7,5 @@
 
     {{ include('skill/_form.html.twig') }}
 
-    <a class="btn btn-primary mt-4" href="{{ path('skill_index') }}">Retour à la liste</a>
+    <a class="btn btn-primary mt-4" href="{{ path('skill_index', {'page': 1}) }}">Retour à la liste</a>
 {% endblock %}
