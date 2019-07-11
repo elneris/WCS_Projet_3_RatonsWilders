@@ -45,7 +45,7 @@ class Style
 
     public function setType(?string $type): self
     {
-        $this->type = $type;
+        $this->type = ucfirst(strtolower($type));
 
         return $this;
     }

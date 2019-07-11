@@ -7,6 +7,6 @@
 
     {{ include('skill/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a class="btn btn-primary mt-4" href="{{ path('skill_index') }}">Retour aux accessoires</a>
+    <a class="btn btn-primary mt-4" href="{{ path('skill_index', {'page': 1}) }}">Retour aux accessoires</a>
 
 {% endblock %}

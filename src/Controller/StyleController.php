@@ -17,12 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class StyleController extends AbstractController
 {
     /**
-     * @Route("/index", name="style_index", methods={"GET"})
+     * @Route("/index/{page}", requirements={"page" = "\d+"}, name="style_index", methods={"GET"})
      */
-    public function index(StyleRepository $styleRepository): Response
+    public function index(int $page, StyleRepository $styleRepository): Response
     {
+        $maxByPage = $this->getParameter('max_page');
+        $styles = $styleRepository->findAllPaginationAndTrie($page, $maxByPage);
+
+        $pagination = [
+            'page' => $page,
+            'nbPages' => ceil(count($styles) / $maxByPage),
+            'nameRoute' => 'style_index',
+            'paramsRoute' => []
+        ];
+
         return $this->render('style/index.html.twig', [
-            'styles' => $styleRepository->findAll(),
+            'styles' => $styles,
+            'pagination' => $pagination
         ]);
     }
 
@@ -50,8 +61,7 @@ class StyleController extends AbstractController
                     'success',
                     'Le style a bien été ajouté'
                 );
-
-                return $this->redirectToRoute('style_index');
+                return $this->redirectToRoute('style_index', ['page' => 1]);
             }
         }
 
@@ -73,7 +83,7 @@ class StyleController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('style_index', [
-                'id' => $style->getId(),
+                'page' => 1,
             ]);
         }
 
@@ -94,6 +104,6 @@ class StyleController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('style_index');
+        return $this->redirectToRoute('style_index', ['page' => 1]);
     }
 }

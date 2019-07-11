@@ -17,12 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class SkillController extends AbstractController
 {
     /**
-     * @Route("/index", name="skill_index", methods={"GET"})
+     * @Route("/index/{page}", requirements={"page" = "\d+"}, name="skill_index", methods={"GET"})
      */
-    public function index(SkillRepository $skillRepository): Response
+    public function index(int $page, SkillRepository $skillRepository): Response
     {
+        $maxByPage = $this->getParameter('max_page');
+        $skills = $skillRepository->findAllPaginationAndTrie($page, $maxByPage);
+
+        $pagination = [
+            'page' => $page,
+            'nbPages' => ceil(count($skills) / $maxByPage),
+            'nameRoute' => 'skill_index',
+            'paramsRoute' => []
+        ];
+
         return $this->render('skill/index.html.twig', [
-            'skills' => $skillRepository->findAll(),
+            'skills' => $skills,
+            'pagination' => $pagination
         ]);
     }
 
@@ -50,8 +61,7 @@ class SkillController extends AbstractController
                     'success',
                     'l\'accessoire a bien été ajouté'
                 );
-
-                return $this->redirectToRoute('skill_index');
+                return $this->redirectToRoute('skill_index', ['page' => 1]);
             }
         }
 
@@ -73,7 +83,7 @@ class SkillController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('skill_index', [
-                'id' => $skill->getId(),
+                'page' => 1,
             ]);
         }
 
@@ -94,6 +104,6 @@ class SkillController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('skill_index');
+        return $this->redirectToRoute('skill_index', ['page' => 1]);
     }
 }

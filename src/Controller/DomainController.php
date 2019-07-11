@@ -17,12 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class DomainController extends AbstractController
 {
     /**
-     * @Route("/index", name="domain_index", methods={"GET"})
+     * @Route("/index/{page}", requirements={"page" = "\d+"}, name="domain_index", methods={"GET"})
      */
-    public function index(DomainRepository $domainRepository): Response
+    public function index(int $page, DomainRepository $domainRepository): Response
     {
+        $maxByPage = $this->getParameter('max_page');
+        $domains = $domainRepository->findAllPaginationAndTrie($page, $maxByPage);
+
+        $pagination = [
+            'page' => $page,
+            'nbPages' => ceil(count($domains) / $maxByPage),
+            'nameRoute' => 'domain_index',
+            'paramsRoute' => []
+        ];
+
         return $this->render('domain/index.html.twig', [
-            'domains' => $domainRepository->findAll(),
+            'domains' => $domains,
+            'pagination' => $pagination
         ]);
     }
 
@@ -51,7 +62,7 @@ class DomainController extends AbstractController
                     'Le métier a bien été ajouté'
                 );
 
-                return $this->redirectToRoute('domain_index');
+                return $this->redirectToRoute('domain_index', ['page' => 1]);
             }
         }
 
@@ -73,7 +84,7 @@ class DomainController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('domain_index', [
-                'id' => $domain->getId(),
+                'page' => 1,
             ]);
         }
 
@@ -94,6 +105,6 @@ class DomainController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('domain_index');
+        return $this->redirectToRoute('domain_index', ['page' => 1]);
     }
 }

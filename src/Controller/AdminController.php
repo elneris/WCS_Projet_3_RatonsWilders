@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\AdminType;
 use App\Form\SearchType;
 use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +18,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
+    /**
+     * @Route("/liste-admin", name="show_admin" )
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function showAdmin(Request $request, UserRepository $userRepository): Response
+    {
+        $filter = $this->createForm(AdminType::class);
+        $users = $userRepository->findBy([], ['admin' => 'DESC', 'email' => 'ASC']);
+
+        $form = $filter->handleRequest($request);
+
+        if ($form->isSubmitted() && $filter->isValid()) {
+            $users = $userRepository->adminFilter($filter->getData());
+        }
+
+        return $this->render('admin/listAdmin.html.twig', [
+            'filterDomainForm' => $filter->createView(),
+            'users' => $users,
+        ]);
+    }
 
     /**
      * @Route("/", name="index")
@@ -44,8 +67,8 @@ class AdminController extends AbstractController
 
         $form = $filter->handleRequest($request);
 
-        if ($form->isSubmitted() && $filter->isValid()) {
-            $users = $userRepository->myFilter($filter->getData());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $users = $userRepository->myFilter($form->getData());
         }
 
         return $this->render('admin/search.html.twig', [
@@ -69,7 +92,35 @@ class AdminController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
-            'avatar' => $avatar
+            'avatar' => $avatar,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/changement-role", name="change_role")
+     * @param int $id
+     * @param UserRepository $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function changeRole(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    {
+        $actualUser = $this->getUser();
+        $user = $userRepository->find($id);
+        if ($actualUser !== $user) {
+            if (($user->getRoles()[0] == 'ROLE_ADMIN')) {
+                $user->setRoles(['ROLE_USER']) ;
+                $user->setAdmin(false) ;
+            } else {
+                $user->setRoles(['ROLE_ADMIN']) ;
+                $user->setAdmin(true) ;
+            }
+            $entityManager->flush();
+        }
+
+
+        return $this->json([
+            'isAdmin' => $user->isAdmin()
         ]);
     }
 }

@@ -7,5 +7,5 @@
 
     {{ include('domain/_form.html.twig') }}
 
-    <a class="btn btn-primary mt-4" href="{{ path('domain_index') }}">Retour aux métiers</a>
+    <a class="btn btn-primary mt-4" href="{{ path('domain_index', {'page': 1}) }}">Retour aux métiers</a>
 {% endblock %}

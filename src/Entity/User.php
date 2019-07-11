@@ -186,6 +186,11 @@ class User implements UserInterface
      */
     private $technicalNeeds;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -572,5 +577,22 @@ class User implements UserInterface
             $dateInterval = $this->birthdate->diff(new \DateTime());
             return $dateInterval->y;
         }
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->getRoles()[0] == 'ROLE_ADMIN';
+    }
+
+    public function getAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
+
+        return $this;
     }
 }
