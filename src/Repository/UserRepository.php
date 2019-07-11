@@ -49,6 +49,10 @@ class UserRepository extends ServiceEntityRepository
             $qb->andWhere('activities.style = :activitiesStyle')
                 ->setParameter("activitiesStyle", $filters['style']);
         }
+        if ($filters['zone']) {
+            $qb->andWhere('user.geoArea = :geoArea')
+                ->setParameter("geoArea", $filters['zone']);
+        }
 
         if ($filters['searchField']) {
             $qb->orHaving('user.lastname LIKE :val')
