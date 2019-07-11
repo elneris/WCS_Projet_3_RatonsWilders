@@ -581,12 +581,7 @@ class User implements UserInterface
 
     public function isAdmin(): bool
     {
-        if ($this->getRoles()[0] == 'ROLE_ADMIN') {
-            $role = true;
-        } else {
-            $role = false;
-        }
-        return $role;
+        return $this->getRoles()[0] == 'ROLE_ADMIN';
     }
 
     public function getAdmin(): ?bool
