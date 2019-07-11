@@ -24,7 +24,7 @@ class Style
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="style")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="style", cascade={"remove"})
      */
     private $activities;
 
