@@ -124,7 +124,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Length(
-     *      max = 255,
+     *      max = 1000,
      *      maxMessage = "La description ne peut pas contenir plus de {{ limit }} caractères"
      * )
      */

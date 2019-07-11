@@ -5,12 +5,16 @@ body{
   background: $secondary-color;
 }
 
-.h2{
+h2{
   font-family: 'Open Sans', sans-serif;
 }
 
-.h4{
+h4{
   font-family: 'Fira Sans', sans-serif;
+}
+
+.avatar{
+  margin-bottom: 20px;
 }
 
 .main-page{
@@ -35,6 +39,10 @@ body{
 
 .table{
   background-color: white;
+}
+
+.trash-button-profile{
+  margin-top: -25px;
 }
 
 .body-profile{
@@ -189,10 +197,14 @@ body{
 }
 
 /* ==================================== Page profile - NavBar Media ======================================*/
-.media-img {
-  height: 200px;
+
+.media-img{
+  display: inline-block;
+  max-width: 98%;
+  height: auto;
+  width: 30%;
   max-height: 200px;
-  margin: 10px;
+  margin: 2%;
 }
 
 .pills-media {
@@ -249,6 +261,45 @@ body{
   justify-content: center;
 }
 
+.table-activities {
+  margin-top: 30px;
+  margin-left: 4.5%;
+  width: 90%; }
+
+@media screen and (max-width: 700px) {
+  .table-activities {
+    width: 95%;
+    margin-left: 2.5%;
+    font-size: 13.5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  table thead {
+    display: none;
+  }
+}
+
+.media-img{
+  display: inline-block;
+  height: auto;
+  width: 70%;
+  max-width: 100%;
+  margin: 2%;
+}
+
+.delete-btn{
+  margin-top: -15px;
+}
+
+.besoin-technique{
+  font-family: 'Fira Sans', sans-serif;
+  color: white;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  width: 70%;
+}
+
 .rs-body {
   width: 30%;
   margin: 5px;
@@ -284,3 +335,4 @@ body{
   text-align: center;
 
 }
+
