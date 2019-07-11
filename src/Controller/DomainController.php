@@ -71,7 +71,7 @@ class DomainController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('domain_index', [
-                'id' => $domain->getId(),
+                'page' => 1,
             ]);
         }
 

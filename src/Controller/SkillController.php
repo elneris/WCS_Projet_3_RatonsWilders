@@ -71,7 +71,7 @@ class SkillController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('skill_index', [
-                'id' => $skill->getId(),
+                'page' => 1,
             ]);
         }
 

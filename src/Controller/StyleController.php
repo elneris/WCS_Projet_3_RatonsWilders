@@ -71,7 +71,7 @@ class StyleController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('style_index', [
-                'id' => $style->getId(),
+                'page' => 1,
             ]);
         }
 
