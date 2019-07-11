@@ -16,11 +16,12 @@
                 <button class="btn"> Changer de mot de passe</button>
             </a>
             <a href="{{ path('avatar_new') }}">
-                <button class="btn">Changer l'avatar</button>
+                <button class="btn mr-3">Changer l'avatar</button>
             </a>
 
             <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                     Ajouter un média
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -32,6 +33,9 @@
                     </a>
                     <a href="{{ path('user_add_activity', {'id': app.user.id}) }}">
                         <button class="btn">Ajouter une activité</button>
+                    </a>
+                    <a href="{{ path('socialNetwork_new') }}">
+                        <button class="btn  mr-3">Ajouter un réseau social</button>
                     </a>
                 </div>
             </div>
