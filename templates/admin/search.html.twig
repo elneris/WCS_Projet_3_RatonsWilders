@@ -7,28 +7,32 @@
 
         <div class=" filter">
             {{ form_start(filterDomainForm) }}
-            <div class="form-row justify-content-center no-gutters">
-                <div class="col-12 col-lg-4">
-                    {{ form_row(filterDomainForm.metier, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-                <div class="col-12 col-lg-4">
-                    {{ form_row(filterDomainForm.style, { 'attr': {'class': 'form-control col'} }) }}
-                </div>
-                <div class="col-12 col-lg-4">
-                    {{ form_row(filterDomainForm.skill, { 'attr': {'class': 'form-control col'} }) }}
-                </div>
 
-            </div>
             <div class="form-row ">
-                <div class="col-12">
+                <div class="col-sm-12 col-lg-6">
                     {{ form_row(filterDomainForm.searchField, { 'attr': {'class': 'form-control col'} }) }}
                 </div>
-
+                <div class="col-12 col-lg-3">
+                    {{ form_row(filterDomainForm.metier, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-12 col-lg-3">
+                    {{ form_row(filterDomainForm.style, { 'attr': {'class': 'form-control col'} }) }}
+                </div>
             </div>
-            {{ form_end(filterDomainForm) }}
-
-
-            {% include 'inc/cardAdmin.html.twig' %}
+            <div class="form-row">
+                <div class="col-12 col-lg-3 offset-lg-6">
+                    {{ form_row(filterDomainForm.skill, { 'attr': {'class': 'form-control col'} }) }}
+                </div>
+                <div class="col-12 col-lg-3">
+                    {{ form_row(filterDomainForm.zone, { 'attr': {'class': 'form-control col'} }) }}
+                </div>
+            </div>
         </div>
+
+        {{ form_end(filterDomainForm) }}
+
+
+        {% include 'inc/cardAdmin.html.twig' %}
+    </div>
     </div>
 {% endblock %}
