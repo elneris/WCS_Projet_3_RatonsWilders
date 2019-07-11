@@ -38,7 +38,7 @@ class LinkController extends AbstractController
 
                 if (preg_match($regex, $link->getUrl())
                      or
-                    (preg_match($regexYoutube, $link->getUrl() && $network === 'youtube'))) {
+                    (preg_match($regexYoutube, $link->getUrl()) && $network === 'youtube')) {
                     $found = true;
 
                     $link->setUrl($link->getUrl());
