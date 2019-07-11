@@ -19,9 +19,12 @@ class ActivityManager
     private $skillRepository;
     private $styleRepository;
 
-    public function __construct(ActivityRepository $activityRepository, DomainRepository $domainRepository,
-                                SkillRepository $skillRepository, StyleRepository $styleRepository)
-    {
+    public function __construct(
+        ActivityRepository $activityRepository,
+        DomainRepository $domainRepository,
+        SkillRepository $skillRepository,
+        StyleRepository $styleRepository
+    ) {
         $this->activityRepository = $activityRepository;
         $this->domainRepository = $domainRepository;
         $this->skillRepository = $skillRepository;
