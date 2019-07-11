@@ -78,6 +78,7 @@ class UserFixtures extends Fixture
                 $user->setAdmin(true);
             } else {
                 $this->addReference('user_' . $key, $user);
+                $user->setAdmin(false);
             }
             $manager->persist($user);
         }
