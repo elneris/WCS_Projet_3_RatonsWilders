@@ -60,4 +60,23 @@ class UserRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function adminFilter($filters)
+    {
+        $qb = $this->createQueryBuilder('user');
+
+        if ($filters['searchField']) {
+            $qb->orHaving('user.lastname LIKE :val')
+                ->orHaving('user.firstname LIKE :val')
+                ->orHaving('user.artistName LIKE :val')
+                ->orHaving('user.email LIKE :val')
+                ->setParameter('val', '%'.$filters['searchField'].'%');
+        }
+
+        $qb->orderBy('user.admin', 'DESC')
+            ->addOrderBy('user.email');
+
+
+        return $qb->getQuery()->getResult();
+    }
 }

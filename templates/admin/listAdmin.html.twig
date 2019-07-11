@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des admins{% endblock %}
+
+{% block body %}
+    <div class="bloc-admin">
+
+    <h1>Liste des utilisateurs</h1>
+
+    <div class=" filter">
+            {{ form_start(filterDomainForm) }}
+            <div class="form-row ">
+                <div class="col-12">
+                    {{ form_row(filterDomainForm.searchField, { 'attr': {'class': 'form-control col'} }) }}
+                </div>
+
+            </div>
+            {{ form_end(filterDomainForm) }}
+        </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Admin</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+
+            <td data-label="Email">{{ user.email }}</td>
+            <td>
+                <a data-id="{{ user.id}}" class="changeRole">
+            {% if  user.isAdmin %}
+                        <i id="admin{{ user.id}}" class="fas fa-check-circle text-success"></i>
+                    {% else %}
+                        <i id="admin{{user.id}}" class="far fa-times-circle text-danger"></i>
+                    {% endif %}
+            </a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
