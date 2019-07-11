@@ -39,7 +39,7 @@ class DomainController extends AbstractController
             if ($activityManager->domainExist($domain)) {
                 $this->addFlash(
                     'danger',
-                    'Le métier exist déjà'
+                    'Le métier existe déjà'
                 );
             } else {
                 $entityManager = $this->getDoctrine()->getManager();
