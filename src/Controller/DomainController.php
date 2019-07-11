@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Domain;
 use App\Form\DomainType;
 use App\Repository\DomainRepository;
+use App\Services\ActivityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,18 +40,30 @@ class DomainController extends AbstractController
     /**
      * @Route("/ajouter", name="domain_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ActivityManager $activityManager): Response
     {
         $domain = new Domain();
         $form = $this->createForm(DomainType::class, $domain);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($domain);
-            $entityManager->flush();
+            if ($activityManager->domainExist($domain)) {
+                $this->addFlash(
+                    'danger',
+                    'Le métier existe déjà'
+                );
+            } else {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($domain);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('domain_index', ['page' => 1]);
+                $this->addFlash(
+                    'success',
+                    'Le métier a bien été ajouté'
+                );
+
+                return $this->redirectToRoute('domain_index', ['page' => 1]);
+            }
         }
 
         return $this->render('domain/new.html.twig', [
