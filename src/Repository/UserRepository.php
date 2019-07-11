@@ -52,7 +52,6 @@ class UserRepository extends ServiceEntityRepository
         if ($filters['zone']) {
             $qb->andWhere('user.geoArea = :geoArea')
                 ->setParameter("geoArea", $filters['zone']);
-
         }
 
         if ($filters['searchField']) {
