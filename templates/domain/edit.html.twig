@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition métier{% endblock %}
+
+{% block body %}
+    <h1>Editer un métier</h1>
+
+    {{ include('domain/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a class="btn btn-primary mt-4" href="{{ path('domain_index') }}">Retour à la liste</a>
+
+{% endblock %}

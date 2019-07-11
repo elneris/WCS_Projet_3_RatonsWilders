@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index Métier{% endblock %}
+
+{% block body %}
+    <h1>Liste des Métiers</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Métiers</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for domain in domains %}
+            <tr>
+                <td>{{ domain.name }}</td>
+                <td class="row justify-content-center">
+                    <a class="btn" href="{{ path('domain_edit', {'id': domain.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                    <span class="btn">|</span>
+                    <form method="post" action="{{ path('domain_delete', {'id': domain.id}) }}" onsubmit="return confirm('Êtes vous sur de vouloir supprimer ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ domain.id) }}">
+                        <button class="btn"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun métier</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary mt-4" href="{{ path('domain_new') }}">Ajouter un métier</a>
+{% endblock %}

@@ -1,31 +1,46 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar_user fixed-top">
-    <a href="{{ path('user_index') }}"><img class=" navbar-brand avatar_navbar w-25"
-                                            src="{{ asset('assets/img/logo_lesratons.png') }}" alt="card image">
+    <a href="{{ path('user_index') }}">
+        <img class=" navbar-brand avatar_navbar"
+             src="{{ asset('assets/img/minilogo_lesratons.png') }}" alt="card image">
     </a>
     <button class="navbar-toggler burger" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
         <div class="navbar-nav text-center">
             <a href="{{ path('user_edit', {'id': app.user.id}) }}">
-                <button class="btn mr-3">Éditer mon profil</button>
+                <button class="btn">Éditer mon profil</button>
             </a>
             <a href="{{ path('user_change_password') }}">
-                <button class="btn mr-3"> Changer de mot de passe</button>
+                <button class="btn"> Changer de mot de passe</button>
             </a>
             <a href="{{ path('avatar_new') }}">
                 <button class="btn mr-3">Changer l'avatar</button>
             </a>
-            <a href="{{ path('image_new') }}">
-                <button class="btn mr-3">Ajouter une image</button>
-            </a>
-            <a href="{{ path('video_new') }}">
-                <button class="btn mr-3">Ajouter une vidéo</button>
-            </a>
-            <a href="{{ path('socialNetwork_new') }}">
-                <button class="btn  mr-3">Ajouter un réseau social</button>
-            </a>
+
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Ajouter un média
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="{{ path('image_new') }}">
+                        <button class="btn">Ajouter une image</button>
+                    </a>
+                    <a href="{{ path('video_new') }}">
+                        <button class="btn">Ajouter une vidéo</button>
+                    </a>
+                    <a href="{{ path('user_add_activity', {'id': app.user.id}) }}">
+                        <button class="btn">Ajouter une activité</button>
+                    </a>
+                    <a href="{{ path('socialNetwork_new') }}">
+                        <button class="btn  mr-3">Ajouter un réseau social</button>
+                    </a>
+                </div>
+            </div>
+
+
             <a href="{{ path('app_logout') }}" class="user_logout">
                 <button class="btn mr-2"><i class="fas fa-power-off fa-2x"></i></button>
             </a>
