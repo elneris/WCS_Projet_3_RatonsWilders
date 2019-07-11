@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Skill;
 use App\Form\SkillType;
 use App\Repository\SkillRepository;
+use App\Services\ActivityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,18 +29,30 @@ class SkillController extends AbstractController
     /**
      * @Route("/ajouter", name="skill_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ActivityManager $activityManager): Response
     {
         $skill = new Skill();
         $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($skill);
-            $entityManager->flush();
+            if ($activityManager->skillExist($skill)) {
+                $this->addFlash(
+                    'danger',
+                    'L\'accessoire exist déjà'
+                );
+            } else {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($skill);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('skill_index');
+                $this->addFlash(
+                    'success',
+                    'l\'accessoire a bien été ajouté'
+                );
+
+                return $this->redirectToRoute('skill_index');
+            }
         }
 
         return $this->render('skill/new.html.twig', [
