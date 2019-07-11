@@ -44,8 +44,8 @@ class AdminController extends AbstractController
 
         $form = $filter->handleRequest($request);
 
-        if ($form->isSubmitted() && $filter->isValid()) {
-            $users = $userRepository->myFilter($filter->getData());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $users = $userRepository->myFilter($form->getData());
         }
 
         return $this->render('admin/search.html.twig', [
