@@ -2,25 +2,24 @@
 
 namespace App\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Entity\Style;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LinkMediaType extends AbstractType
+class StyleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // ...
-            ->add('url', TextType::class, [
-                'label' => ' ']);
+            ->add('type')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => Style::class,
         ]);
     }
 }

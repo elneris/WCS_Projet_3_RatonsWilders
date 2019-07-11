@@ -21,6 +21,11 @@ class VideoExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @param string $url
+     * @return mixed
+     * @throws \Exception
+     */
     public function getEmbed(string $url)
     {
         $videoMatcher = new VideoServiceMatcher();
