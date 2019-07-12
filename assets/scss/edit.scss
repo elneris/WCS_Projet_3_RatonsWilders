@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans&display=swap');
 
 h1{
   color: white;
@@ -14,14 +15,15 @@ h1{
 }
 
 .tab-content{
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(194, 194, 194, 0.22);
   padding: 30px;
   margin: 25px;
 }
 
 
-body{
+.edit{
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/assets/img/raton.jpg");
+  padding-bottom: 150px;
 }
 
 @media (min-width: 1200px) {
@@ -80,4 +82,8 @@ body{
   content: "Parcourir";
 }
 
-
+.label-title{
+  font-family: 'Fira Sans', sans-serif;
+  color: white;
+  font-size: 1.2rem;
+}

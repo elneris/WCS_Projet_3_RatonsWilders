@@ -1,28 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %} Bienvenue sur votre page profil{% endblock %}
-{% block body%}
-    {% if app.user.roles.0 == 'ROLE_USER' %}
-        {% set lvl = app.user %}
-    {% else %}
-        {% set lvl = user %}
-    {% endif %}
-
+{% block body %}
     <div class="body_show">
 
         <div class=" container-top">
-            {% if lvl.roles.0 == 'ROLE_USER' %}
-            <button class="btn badge-light"> <a href="{{ path('user_edit', {'id': lvl.id}) }}">Éditer</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('user_change_password') }}">Changer le mot de passe</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('avatar_new') }}">Changer l'avatar</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('image_new') }}">Ajouter des images</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('video_new') }}">Ajouter des vidéos</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('musique_new') }}">Ajouter des musiques</a> </button>
-            <button class="btn badge-light"> <a href="{{ path('app_logout') }}">Se déconnecter</a> </button>
-            {% endif %}
             <p>
-                {% for userlink in lvl.links %}
+                {% for userlink in user.links %}
                     <a href="{{ userlink.url }}" target=_blank>
-                        <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}" alt="card image">
+                        <img class="icon-link" src="{{ asset('assets/img/Links/' ~ userlink.type ~ '_w.png') }}"
+                             alt="card image">
                     </a>
                 {% endfor %}
             </p>
@@ -31,35 +17,40 @@
         <div class="container-middle">
             <div class="profile">
                 {% if avatar is empty %}
-                <img class="avatar" src="{{ asset('uploads/avatars/avatar.jpg')}}" alt="card image">
+                    <img class="avatar" src="{{ asset('uploads/avatars/avatar.jpg') }}" alt="card image">
                 {% else %}
-                <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url)}}" alt="card image">
+                    <img class="avatar" src="{{ asset('uploads/avatars/' ~ avatar.url) }}" alt="card image">
                 {% endif %}
 
-                <h2>{{ lvl.firstname | upper }} {{ lvl.lastname | upper  }}</h2>
-                <h2>{% for activity in lvl.activities %}
-                        {{ activity.Domain.Name | capitalize }}
+                <h2>{{ user.firstname | upper }} {{ user.lastname | upper }}</h2>
+                <h2>{% for activity in user.activities %}
+                        {{ activity.Domain.Name | capitalize }}<br>
                     {% endfor %}</h2>
-                <h4 class="col-xl-6 col-md-8 text-center m-auto"> {{ lvl.about }} </h4>
+                <h4 class="col-xl-6 col-md-8 text-center m-auto"> {{ user.about }} </h4>
             </div>
         </div>
         <div class="container-bottom ">
             <div class="row justify-content-center">
                 <div>
-                    <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
-                    {{ lvl.email }}
+                    <a href="mailto:{{ user.email }}">
+                        <img class="icon-info" src="{{ asset('assets/img/Links/mail_w.png') }}" alt="icon-email">
+                        {{ user.email }}
+                    </a>
                 </div>
                 <div>
-                    {% if lvl.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
-                        <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
-                        {{ lvl.phoneNumber }}
+                    {% if user.phoneNumber | e %} <!-- Si le tableau n'est pas vide -->
+                        <a href="tel:{{ user.phoneNumber }}">
+                            <img class="icon-info" src="{{ asset('assets/img/Links/Tel_w.png') }}" alt="icon-phone">
+                            {{ user.phoneNumber }}
+                        </a>
                     {% endif %}
                 </div>
                 <div>
-                    {% for media in lvl.medias %}
+                    {% for media in user.medias %}
                         {% if media.type == 'internet' %}
-                            <a class="lien" href="{{ media.url }}"  target=_blank>
-                                <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}" alt="icon-internet">
+                            <a class="lien" href="{{ media.url }}" target=_blank>
+                                <img class="icon-info" src="{{ asset('assets/img/Links/internet_w.png') }}"
+                                     alt="icon-internet">
                                 {{ media.url }}</a>
                         {% endif %}
                     {% endfor %}
@@ -71,147 +62,166 @@
             <h2>Portfolio</h2>
             <ul class="nav nav-pills pills-media mb-3 sm-5 " id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="link-media-p active" id="pills-photo-tab" data-toggle="pill" href="#pills-photo" role="tab"
+                    <a class="link-media-p active" id="pills-photo-tab" data-toggle="pill" href="#pills-photo"
+                       role="tab"
                        aria-selected="true">Photos</a>
                 </li>
                 <li class="nav-item">
                     <a class="link-media-v" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
                        aria-controls="pills-profile" aria-selected="false">Vidéos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="link-media-m" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-                       aria-controls="pills-contact" aria-selected="false">Musiques</a>
-                </li>
             </ul>
             <!-- Media | Photos -->
             <div class="tab-content" id="pills-tabContent">
-                <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
-                    {% for media in lvl.medias %}
-                        {% if media.type == 'Image' %}
-                            <img class="media-img" src="{{ asset('uploads/images/' ~ media.url)}}" alt="{{ media.Name }}">
-                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                            </form>
-                        {% endif %}
-                    {% endfor %}
+                <div class="col-12 tab-pane show active" id="pills-photo" role="tabpanel"
+                     aria-labelledby="pills-photo-tab">
+                    <div class="row">
+                        {% for media in user.medias %}
+                            {% if media.type == 'Image' %}
+                                <div class="col-md-6 col-12">
+                                    <img class="media-img" src="{{ asset('uploads/images/' ~ media.url) }}"
+                                         alt="{{ media.Name }}">
+                                    {% if is_granted('ONLY_USER', user) %}
+                                        <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
+                                              onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                            <button class="btn delete-btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
                 <!-- Media | Videos -->
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    {% for media in lvl.medias %}
-                        {% if media.type == 'lienVideo' %}
-                            <object class="media-img">
-                                <param name="movie" value="{{ media.url }}">
-                            </object>
-                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                            </form>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <!-- Media | Musics -->
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    {% for media in lvl.medias %}
-                        {% if media.type == 'lienMusique' %}
-                            <object class="media-img">
-                                <param name="movie" value="{{ media.url }}">
-                            </object>
-                            <form method="post" action="{{ path('media_delete', {'id': media.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                            </form>
-                        {% endif %}
-                    {% endfor %}
+                <div class="col-12 tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="row">
+                        {% for media in user.medias %}
+                            {% if media.type == 'lienVideo' %}
+                                <div class="col-md-6 col-12">
+                                    {{ media.url|embed|raw }}
+                                    {% if is_granted('ONLY_USER', user) %}
+                                        <form method="post" action="{{ path('media_delete', {'id': media.id}) }}"
+                                              onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                            <button class="btn delete-btn"><i class="far fa-trash-alt text-danger"></i></button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Informations utilisateur -->
         <div class="profile-body justify-content-center">
             <h2>Renseignements supplémentaires</h2>
-            <div class="col-12 row container-rs">
-                <div class="col-md-5 col-12 row rs-body">
-                    <div class="rs-left">
-                        <ul>
-                            <li>Nom de scène :</li>
-                            <li>Nombre de personnes :</li><br>
-
-                            <li>Nom :</li>
-                            <li>Prénom :</li>
-                            <li>Age :</li><br>
-
-                            <li>Adresse :</li>
-                            <li>Code Postal :</li>
-                            <li>Ville :</li><br>
-
-                            <li>Téléphone :</li>
-                            <li>Email :</li><br>
-
-                            <li>Zone d'activité :</li>
-                            <li>Tarif :</li>
-                            <li>Type de facturation :</li><br>
-                        </ul>
-                    </div>
-                    <div class="rs-rigth">
-                        {{ lvl.artistname }}<br>
-                        {{ lvl.personsNumber }}<br><br>
-
-                        {{ lvl.lastname }}<br>
-                        {{ lvl.firstname }}<br>
-                        {{ lvl.getAge }} {% if lvl.getAge %}Ans{% endif %}<br><br>
-
-                        {{ lvl.address }}<br>
-                        {{ lvl.posteCode }}<br>
-                        {{ lvl.city }}<br><br>
-
-                        {{ lvl.phoneNumber }}<br>
-                        {{ lvl.email }}<br><br>
-
-                        {{ lvl.geoArea }}<br>
-                        {{ lvl.price }} {% if lvl.price %}€{% endif %}<br>
-                        {{ lvl.billingType }}<br><br>
-                    </div>
-                </div>
-                <div class="col-md-6 col-12 array-rs">
-                    <table class="table table-striped">
-                        <thead>
+            <div class="col-12 container-rs">
+                <div class="array-rs col-12 table-user">
+                    <table>
+                        <tbody class="information-artiste">
                         <tr>
-                            <th scope="col">Métier(s)</th>
-                            <th scope="col">Accessoire(s)</th>
-                            <th scope="col">Style(s): </th>
-                            <th scope="col">Supprimer: </th>
+                            <th>Nom de scène</th>
+                            <td>{{ user.artistname }}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for activity in lvl.activities %}
-                            <tr>
-                                <td>{{activity.domain.Name }}</td>
-                                <td>{% if activity.skill.Name is defined%}{{ activity.skill.Name }}{% endif %}</td>
-                                <td>{% if activity.style.type is defined%}{{activity.style.type }}{% endif %}</td>
-                                <td>
-                                    <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
-                                        <button class="btn"><i class="far fa-trash-alt text-danger"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% endfor %}
+                        <tr>
+                            <th>Composition de groupe</th>
+                            <td>{{ user.personsNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ user.lastname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom</th>
+                            <td>{{ user.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ user.getAge }} {% if user.age %}ans{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse</th>
+                            <td>{{ user.address }}</td>
+                        </tr>
+                        <tr>
+                            <th>Code Postal</th>
+                            <td>{{ user.posteCode }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ville</th>
+                            <td>{{ user.city }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone</th>
+                            <td>{{ user.phoneNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Zone d'activité</th>
+                            <td>{{ user.geoArea }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tarif</th>
+                            <td>{{ user.price }} {% if user.price %}€{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Type de facturation</th>
+                            <td>{{ user.billingType }}</td>
+                        </tr>
                         </tbody>
+
                     </table>
                 </div>
-                {% if lvl.technicalNeeds %}
-                <div class="text-center">
-                    <ul>
-                        <li class="font-weight-bold">Besoin(s) technique(s) :</li> <br>{{ lvl.technicalNeeds }}
-                    </ul>
-                </div>
-                {% endif %}
+            </div>
+
+            <div class="container-fluid table-responsive">
+                <table class="table table-activities">
+                    <thead class="col-6">
+                    <tr class="color-head-table">
+                        <th scope="col">Métier</th>
+                        <th scope="col">Accessoire</th>
+                        <th scope="col">Style</th>
+                        {% if app.user.roles.0 == 'ROLE_USER' %}
+                            <th scope="col">Supprimer</th>{% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for activity in user.activities %}
+                        <tr>
+                            <td data-label="Métier">{{ activity.domain.Name }}</td>
+                            <td data-label="Accessoires">{% if activity.skill.Name is defined %}{{ activity.skill.Name }}{% endif %}</td>
+                            <td data-label="Style">{% if activity.style.type is defined %}{{ activity.style.type }}{% endif %}</td>
+                            {% if is_granted('ONLY_USER', user) %}
+                                <td data-label="Supprimer">
+                                <form method="post" action="{{ path('user_delete_activity', {'id': activity.id}) }}"
+                                      onsubmit="return confirm('Êtes-vous sûr(e) de le supprimer ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token"
+                                           value="{{ csrf_token('delete' ~ activity.id) }}">
+                                    <button class="btn btn-supprimer-activities"><i class="far fa-trash-alt text-danger"></i></button>
+                                </form>
+                                </td>{% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-        <p class="copyright">Copyright@LesRatonsWilders</p>
+        {% if user.technicalNeeds %}
+            <div class="text-center">
+                <h4>Besoin(s) technique(s) :</h4>
+                <br><p class="besoin-technique">{{ user.technicalNeeds }}</p>
+            </div>
+        {% endif %}
     </div>
+
+    <p class="copyright">Copyright@LesRatonsWilders</p>
+
 {% endblock %}

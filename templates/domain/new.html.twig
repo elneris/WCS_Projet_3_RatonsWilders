@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ajouter métier{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un nouveau métier</h1>
+
+    {{ include('domain/_form.html.twig') }}
+
+    <a class="btn btn-primary mt-4" href="{{ path('domain_index', {'page': 1}) }}">Retour aux métiers</a>
+{% endblock %}

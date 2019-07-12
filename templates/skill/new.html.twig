@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ajout accessoire{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un accessoire</h1>
+
+    {{ include('skill/_form.html.twig') }}
+
+    <a class="btn btn-primary mt-4" href="{{ path('skill_index', {'page': 1}) }}">Retour à la liste</a>
+{% endblock %}

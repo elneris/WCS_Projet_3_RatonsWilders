@@ -1,39 +1,47 @@
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <a href="{{ path('admin_index') }}"><img class="avatar_navbar"
+                                                 src="{{ asset('assets/img/logo_lesratons.png') }}" alt="card image">
+        </a>
+    </div>
 
-{% block body %}
+    <ul class="list-unstyled components">
+        <li>
+            <a href="{{ path('admin_index') }}">Tableau de bord</a>
+        <li>
+            <a href="{{ path('admin_search') }}">Rechercher un Artiste</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_show_admin') }}">Liste des admins</a>
+        </li>
+        <li>
+            <a href="#listSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Activités</a>
+            <ul class="collapse list-unstyled" id="listSubmenu">
+                <li>
+                    <a href="{{ path('domain_index', {'page': 1}) }}">Liste des Métiers</a>
+                </li>
+                <li>
+                    <a href="{{ path('skill_index', {'page': 1}) }}">Liste des Accessoires</a>
+                </li>
+                <li>
+                    <a href="{{ path('style_index', {'page': 1}) }}">Liste des styles</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('app_logout') }}"><i class="fas fa-power-off"></i></a>
+        </li>
+    </ul>
+</nav>
 
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <a href="{{ path('admin_index') }}"><img class="avatar_navbar" src="{{ asset('assets/img/logo_lesratons.png') }}" alt="card image">
-            </a>
+<div id="content">
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-dark">
+                <i class="fas fa-align-left"></i>
+                <span>Menu</span>
+            </button>
         </div>
-
-        <ul class="list-unstyled components">
-            <li>
-                <a href="{{ path('admin_index') }}">Tableau de bord</a>
-            <li>
-                <a href="{{ path('admin_search') }}">Rechercher un Artiste</a>
-            </li>
-            <li>
-                <a href="{{ path('admin_filter') }}">Filtrer un Artiste</a>
-            </li>
-            <li>
-                <a href="{{ path('app_logout') }}"><i class="fas fa-power-off"></i></a>
-            </li>
-        </ul>
     </nav>
-
-    <div id="content">
-
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-dark">
-                    <i class="fas fa-align-left"></i>
-                    <span>Menu</span>
-                </button>
-            </div>
-        </nav>
-
-
-
-{% endblock %}

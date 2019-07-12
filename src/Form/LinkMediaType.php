@@ -13,7 +13,7 @@ class LinkMediaType extends AbstractType
     {
         $builder
             // ...
-            ->add('type', TextType::class, [
+            ->add('url', TextType::class, [
                 'label' => ' ']);
     }
 

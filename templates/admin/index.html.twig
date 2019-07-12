@@ -19,11 +19,16 @@
         <tbody>
         {% for user in users %}
         <tr>
-            <td scope="row" data-label="Prénom">{{ user.firstname | capitalize }}</td>
-            <td data-label="Nom">{{ user.lastname | upper }}</td>
-            <td data-label="Nom d'artiste">{{ user.artistName | capitalize }}</td>
-            <td data-label="Email">{{ user.email }}</td>
-            <td data-label="Téléphone">{{ user.phoneNumber }}</td>
+            <td scope="row" data-label="Prénom">
+                <a href="{{ path('admin_user_show', {id : user.id}) }}">{{ user.firstname | capitalize }}</a></td>
+            <td data-label="Nom">
+                <a href="{{ path('admin_user_show', {id : user.id}) }}">{{ user.lastname | upper }}</a></td>
+            <td data-label="Nom d'artiste">
+                <a href="{{ path('admin_user_show', {id : user.id}) }}">{{ user.artistName | capitalize }}</a></td>
+            <td data-label="Email">
+                <a Href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+            <td data-label="Téléphone">
+                <a href="tel:{{ user.phoneNumber }}">{{ user.phoneNumber }}</a></td>
             <td><a href="{{ path('admin_user_show', {id : user.id}) }}"><i class="far fa-eye"></i></a></td>
         </tr>
         {% endfor %}

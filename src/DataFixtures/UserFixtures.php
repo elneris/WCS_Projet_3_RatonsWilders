@@ -75,8 +75,10 @@ class UserFixtures extends Fixture
 
             if ($artist['role'] == 'ROLE_ADMIN') {
                 $this->addReference('admin', $user);
+                $user->setAdmin(true);
             } else {
                 $this->addReference('user_' . $key, $user);
+                $user->setAdmin(false);
             }
             $manager->persist($user);
         }

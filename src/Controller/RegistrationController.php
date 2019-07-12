@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setRoles(["ROLE_USER"]);
-            // encode the plain password
+            $user->setAdmin(false);
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -97,7 +97,7 @@ class RegistrationController extends AbstractController
         $manager->flush();
 
         $this->addFlash(
-            'notice',
+            'danger',
             "La clé de validation est expirée, inscrivez-vous à nouveau"
         );
 

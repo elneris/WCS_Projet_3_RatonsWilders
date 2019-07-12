@@ -18,7 +18,7 @@ class ActivityType extends AbstractType
         $builder
             ->add('domain', EntityType::class, [
 
-                'label' => 'Domaine',
+                'label' => 'Métier',
                 'class' => Domain::class,
                 'choice_label' => 'name',
 

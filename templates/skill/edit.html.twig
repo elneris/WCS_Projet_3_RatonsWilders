@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition accessoire{% endblock %}
+
+{% block body %}
+    <h1>Editer un accessoire</h1>
+
+    {{ include('skill/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a class="btn btn-primary mt-4" href="{{ path('skill_index', {'page': 1}) }}">Retour aux accessoires</a>
+
+{% endblock %}

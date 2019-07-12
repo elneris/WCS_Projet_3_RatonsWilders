@@ -1,18 +1,31 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans&display=swap');
 
-.h2{
+body{
+  background: $secondary-color;
+}
+
+h2{
   font-family: 'Open Sans', sans-serif;
 }
 
-.h4{
+h4{
   font-family: 'Fira Sans', sans-serif;
+}
+
+.avatar{
+  margin-bottom: 20px;
 }
 
 .main-page{
   position: relative;
   float: right;
   width:calc(100% - 200px);
+}
+
+.filter{
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 1.2rem;
 }
 
 .bloc-admin{
@@ -26,6 +39,10 @@
 
 .table{
   background-color: white;
+}
+
+.trash-button-profile{
+  margin-top: -25px;
 }
 
 .body-profile{
@@ -180,10 +197,14 @@
 }
 
 /* ==================================== Page profile - NavBar Media ======================================*/
-.media-img {
-  height: 200px;
+
+.media-img{
+  display: inline-block;
+  max-width: 98%;
+  height: auto;
+  width: 30%;
   max-height: 200px;
-  margin: 10px;
+  margin: 2%;
 }
 
 .pills-media {
@@ -200,12 +221,21 @@
 
 .link-media-p:hover,
 .link-media-v:hover,
-.link-media-m:hover {
+.link-media-m:hover
+{
   color: #566f7c;
   border-bottom: 5px solid #566f7c;
   text-decoration: none;
 }
 
+.link-media-p.active,
+.link-media-v.active,
+.link-media-m.active
+{
+  color: #566f7c;
+  border-bottom: 5px solid #566f7c;
+  text-decoration: none;
+}
 .profile-body H2 {
   color: #4b626d;
 }
@@ -230,6 +260,46 @@
 .container-rs {
   justify-content: center;
 }
+
+.table-activities {
+  margin-top: 30px;
+  margin-left: 4.5%;
+  width: 90%; }
+
+@media screen and (max-width: 700px) {
+  .table-activities {
+    width: 95%;
+    margin-left: 2.5%;
+    font-size: 13.5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  table thead {
+    display: none;
+  }
+}
+
+.media-img{
+  display: inline-block;
+  height: auto;
+  width: 70%;
+  max-width: 100%;
+  margin: 2%;
+}
+
+.delete-btn{
+  margin-top: -15px;
+}
+
+.besoin-technique{
+  font-family: 'Fira Sans', sans-serif;
+  color: white;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  width: 70%;
+}
+
 
 .rs-body {
   width: 30%;
@@ -266,3 +336,4 @@
   text-align: center;
 
 }
+

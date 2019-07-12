@@ -24,7 +24,7 @@ class Domain
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="domain")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="domain", cascade={"remove"})
      */
     private $activities;
 
@@ -45,7 +45,7 @@ class Domain
 
     public function setName(?string $name): self
     {
-        $this->name = $name;
+        $this->name = ucfirst(strtolower($name));
 
         return $this;
     }

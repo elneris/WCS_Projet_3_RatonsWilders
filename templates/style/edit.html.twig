@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Style{% endblock %}
+
+{% block body %}
+    <h1>Editer un style</h1>
+
+    {{ include('style/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a class="btn btn-primary mt-4" href="{{ path('style_index', {'page': 1}) }}">Retour à la liste</a>
+
+{% endblock %}

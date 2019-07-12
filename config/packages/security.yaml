@@ -21,7 +21,7 @@ security:
                 target: app_login
             guard:
                 authenticators:
-                    - App\Security\LoginFormAdminAuthenticator
+                    - App\Security\LoginFormAuthenticator
 
 
             # activate different ways to authenticate
@@ -41,4 +41,4 @@ security:
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/utilisateur, roles: ROLE_USER }

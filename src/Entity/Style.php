@@ -24,7 +24,7 @@ class Style
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="style")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="style", cascade={"remove"})
      */
     private $activities;
 
@@ -45,7 +45,7 @@ class Style
 
     public function setType(?string $type): self
     {
-        $this->type = $type;
+        $this->type = ucfirst(strtolower($type));
 
         return $this;
     }

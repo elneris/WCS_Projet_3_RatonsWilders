@@ -13,6 +13,9 @@ require('../scss/app.scss');
 const $ = require('jquery');
 
 import 'bootstrap';
+import './kitconfig_fontawesome.js';
+import changeRole from './_listAdmin';
+
 
 $('#image_type').on('change',function(){
     var fileName = $(this).val();
@@ -20,11 +23,21 @@ $('#image_type').on('change',function(){
 })
 
 /*
- * Js pour la sidebar
+ * Js pour la sidebar $ ListAdmin
  */
 
 $(document).ready(function () {
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
+
+    $('a.changeRole').click(function () {
+        let user_id = $(this).attr("data-id");
+        changeRole(user_id);
+    });
 });
+
+
+
+
+

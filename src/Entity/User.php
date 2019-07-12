@@ -124,7 +124,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Length(
-     *      max = 255,
+     *      max = 1000,
      *      maxMessage = "La description ne peut pas contenir plus de {{ limit }} caractères"
      * )
      */
@@ -185,6 +185,11 @@ class User implements UserInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $technicalNeeds;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin;
 
     public function getId(): ?int
     {
@@ -572,5 +577,22 @@ class User implements UserInterface
             $dateInterval = $this->birthdate->diff(new \DateTime());
             return $dateInterval->y;
         }
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->getRoles()[0] == 'ROLE_ADMIN';
+    }
+
+    public function getAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
+
+        return $this;
     }
 }

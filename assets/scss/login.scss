@@ -6,7 +6,7 @@
   outline: none;
 }
 
-.avatar{
+.avatar {
   width: 200px;
   height: 200px;
   max-width: 200px;
@@ -15,6 +15,8 @@
   -moz-border-radius: 50%;
   border-radius: 50%;
   border: white solid 5px;
+  object-fit: cover;
+
 }
 
 .login-body {
@@ -26,6 +28,7 @@
   margin: 20px auto;
   width: 300px;
 }
+
 .login-screen {
   background-color: #FFF;
   padding: 20px;
@@ -41,6 +44,7 @@
 .login-form {
   text-align: center;
 }
+
 .login-control-group {
   margin-bottom: - 15px;
 }
@@ -80,7 +84,7 @@
   width: 252px;
   margin: 0 auto;
 
-  :focus, :active{
+  :focus, :active {
     outline: none;
   }
 }

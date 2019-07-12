@@ -24,7 +24,7 @@ class Skill
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="skill")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="skill", cascade={"remove"})
      */
     private $activities;
 
@@ -45,7 +45,7 @@ class Skill
 
     public function setName(?string $name): self
     {
-        $this->name = $name;
+        $this->name = ucfirst(strtolower($name));
 
         return $this;
     }

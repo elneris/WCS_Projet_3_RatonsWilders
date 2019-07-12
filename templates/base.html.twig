@@ -5,38 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{% block title %}Bienvenue!{% endblock %}</title>
     {% block stylesheets %}
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         {{ encore_entry_link_tags('app') }}
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     {% endblock %}
 </head>
-
+<body class="{{ is_granted('ROLE_ADMIN') ? 'admin':'public' }}">
 <div>
 
-{% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="wrapper">
         {% include 'navbar.html.twig' %}
+
+    {% elseif is_granted('ROLE_USER') %}
+
+        {% include 'navbarUser.html.twig' %}
+
+    {% endif %}
+
+        {% include 'inc/_flashMessages.html.twig' %}
+
+        {% block body %}{% endblock %}
+        {% if is_granted('ROLE_ADMIN') %}
+    </div>
+</div>
 {% endif %}
 
-    <div class="row">
-        <div class="col-6 offset-3 mt-5">
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} text-center">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        </div>
-    </div>
-
-    {% block body %}{% endblock %}
-    {% if is_granted('ROLE_ADMIN') %}
-            </div>
-        </div>
-    {% endif %}
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </body>
 </html>
